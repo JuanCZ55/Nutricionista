@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="nutricionista">
+  <ClassDiagramComponents>
+    <Class name="Comida" package="nutricionista" visibility="public" xPosition="965.0" yPosition="26.0">
+      <Fields>
+        <Field name="idComida" type="int" visibility="private"/>
+        <Field name="nombre" type="String" visibility="private"/>
+        <Field name="cantCalorias" type="int" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="int" name="idComida"/>
+          <Argument type="String" name="nombre"/>
+          <Argument type="String" name="detalle"/>
+          <Argument type="int" name="cantCalorias"/>
+        </Constructor>
+        <Constructor visibility="public">
+          <Argument type="String" name="nombre"/>
+          <Argument type="String" name="detalle"/>
+          <Argument type="int" name="cantCalorias"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getIdComida" returnType="int" visibility="public"/>
+        <Method name="setIdComida" returnType="void" visibility="public">
+          <Argument type="int" name="idComida"/>
+        </Method>
+        <Method name="getNombre" returnType="String" visibility="public"/>
+        <Method name="setNombre" returnType="void" visibility="public">
+          <Argument type="String" name="nombre"/>
+        </Method>
+        <Method name="getDetalle" returnType="String" visibility="public"/>
+        <Method name="setDetalle" returnType="void" visibility="public">
+          <Argument type="String" name="detalle"/>
+        </Method>
+        <Method name="getCantCalorias" returnType="int" visibility="public"/>
+        <Method name="setCantCalorias" returnType="void" visibility="public">
+          <Argument type="int" name="cantCalorias"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Dieta" package="nutricionista" visibility="public" xPosition="96.0" yPosition="491.0">
+      <Fields>
+        <Field name="idDieta" type="int" visibility="private"/>
+        <Field name="nombre" type="String" visibility="private"/>
+        <Field name="paciente" type="Paciente" visibility="private"/>
+        <Field name="fechaInicial" type="LocalDate" visibility="private"/>
+        <Field name="pesoInicial" type="Double" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="int" name="idDieta"/>
+          <Argument type="String" name="nombre"/>
+          <Argument type="Paciente" name="paciente"/>
+          <Argument type="LocalDate" name="fechaInicial"/>
+          <Argument type="LocalDate" name="fechaFinal"/>
+          <Argument type="Double" name="pesoInicial"/>
+          <Argument type="Double" name="pesoFinal"/>
+        </Constructor>
+        <Constructor visibility="public">
+          <Argument type="String" name="nombre"/>
+          <Argument type="Paciente" name="paciente"/>
+          <Argument type="LocalDate" name="fechaInicial"/>
+          <Argument type="LocalDate" name="fechaFinal"/>
+          <Argument type="Double" name="pesoInicial"/>
+          <Argument type="Double" name="pesoFinal"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getIdDieta" returnType="int" visibility="public"/>
+        <Method name="setIdDieta" returnType="void" visibility="public">
+          <Argument type="int" name="idDieta"/>
+        </Method>
+        <Method name="getNombre" returnType="String" visibility="public"/>
+        <Method name="setNombre" returnType="void" visibility="public">
+          <Argument type="String" name="nombre"/>
+        </Method>
+        <Method name="getPaciente" returnType="Paciente" visibility="public"/>
+        <Method name="setPaciente" returnType="void" visibility="public">
+          <Argument type="Paciente" name="paciente"/>
+        </Method>
+        <Method name="getFechaInicial" returnType="LocalDate" visibility="public"/>
+        <Method name="setFechaInicial" returnType="void" visibility="public">
+          <Argument type="LocalDate" name="fechaInicial"/>
+        </Method>
+        <Method name="getFechaFinal" returnType="LocalDate" visibility="public"/>
+        <Method name="setFechaFinal" returnType="void" visibility="public">
+          <Argument type="LocalDate" name="fechaFinal"/>
+        </Method>
+        <Method name="getPesoInicial" returnType="Double" visibility="public"/>
+        <Method name="setPesoInicial" returnType="void" visibility="public">
+          <Argument type="Double" name="pesoInicial"/>
+        </Method>
+        <Method name="getPesoFinal" returnType="Double" visibility="public"/>
+        <Method name="setPesoFinal" returnType="void" visibility="public">
+          <Argument type="Double" name="pesoFinal"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="DietaComida" package="nutricionista" visibility="public" xPosition="965.0" yPosition="517.0">
+      <Fields>
+        <Field name="idDietaComida" type="int" visibility="private"/>
+        <Field name="comida" type="Comida" visibility="private"/>
+        <Field name="dieta" type="Dieta" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="Comida" name="comida"/>
+          <Argument type="Dieta" name="dieta"/>
+        </Constructor>
+        <Constructor visibility="public">
+          <Argument type="int" name="idDietaComida"/>
+          <Argument type="Comida" name="comida"/>
+          <Argument type="Dieta" name="dieta"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getIdDietaComida" returnType="int" visibility="public"/>
+        <Method name="setIdDietaComida" returnType="void" visibility="public">
+          <Argument type="int" name="idDietaComida"/>
+        </Method>
+        <Method name="getComida" returnType="Comida" visibility="public"/>
+        <Method name="setComida" returnType="void" visibility="public">
+          <Argument type="Comida" name="comida"/>
+        </Method>
+        <Method name="getDieta" returnType="Dieta" visibility="public"/>
+        <Method name="setDieta" returnType="void" visibility="public">
+          <Argument type="Dieta" name="dieta"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Nutricionista" package="nutricionista" visibility="public" xPosition="679.0" yPosition="56.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String[]" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Paciente" package="nutricionista" visibility="public" xPosition="128.0" yPosition="26.0">
+      <Fields>
+        <Field name="idPaciente" type="int" visibility="private"/>
+        <Field name="nombre" type="String" visibility="private"/>
+        <Field name="dni" type="int" visibility="private"/>
+        <Field name="domicilio" type="String" visibility="private"/>
+        <Field name="telefono" type="int" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="int" name="idPaciente"/>
+          <Argument type="String" name="nombre"/>
+          <Argument type="int" name="dni"/>
+          <Argument type="String" name="domicilio"/>
+          <Argument type="int" name="telefono"/>
+        </Constructor>
+        <Constructor visibility="public">
+          <Argument type="String" name="nombre"/>
+          <Argument type="int" name="dni"/>
+          <Argument type="String" name="domicilio"/>
+          <Argument type="int" name="telefono"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getIdPaciente" returnType="int" visibility="public"/>
+        <Method name="setIdPaciente" returnType="void" visibility="public">
+          <Argument type="int" name="idPaciente"/>
+        </Method>
+        <Method name="getNombre" returnType="String" visibility="public"/>
+        <Method name="setNombre" returnType="void" visibility="public">
+          <Argument type="String" name="nombre"/>
+        </Method>
+        <Method name="getDni" returnType="int" visibility="public"/>
+        <Method name="setDni" returnType="void" visibility="public">
+          <Argument type="int" name="dni"/>
+        </Method>
+        <Method name="getDomicilio" returnType="String" visibility="public"/>
+        <Method name="setDomicilio" returnType="void" visibility="public">
+          <Argument type="String" name="domicilio"/>
+        </Method>
+        <Method name="getTelefono" returnType="int" visibility="public"/>
+        <Method name="setTelefono" returnType="void" visibility="public">
+          <Argument type="int" name="telefono"/>
+        </Method>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <HasRelation name="tiene" source="nutricionista.DietaComida" target="nutricionista.Comida" type="Default" sourceCardinality="0..1" targetCardinality="1..*" collectionType="ArrayList"/>
+    <HasRelation name="tiene" source="nutricionista.Dieta" target="nutricionista.Paciente" type="Default" sourceCardinality="0..1" targetCardinality="1..1"/>
+    <HasRelation name="tiene" source="nutricionista.DietaComida" target="nutricionista.Dieta" type="Default" sourceCardinality="0..1" targetCardinality="1..*" collectionType="ArrayList"/>
+  </ClassDiagramRelations>
+</ClassDiagram>
