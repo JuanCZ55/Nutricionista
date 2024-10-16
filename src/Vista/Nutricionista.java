@@ -1,20 +1,20 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
 package Vista;
 
-/**
- *
- * @author juanz
- */
+import Modelo.Conexion;
+import Modelo.Paciente;
+import Persistencia.PacienteData;
+
 public class Nutricionista {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        // TODO code application logic here
+        
+        Conexion.getConexion();
+       
+        Paciente pac = new Paciente("Janito", 49999999, "En el cielo", 549549, true);
+        PacienteData pacDate = new PacienteData();
+        
+        //pacDate.guardarPaciente(pac);
+        pacDate.actualizarPaciente(pac);
     }
     
 }

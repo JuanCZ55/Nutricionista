@@ -14,6 +14,7 @@ public class Paciente {
     private int dni;
     private String domicilio;
     private int telefono;
+    private boolean estado;
 
     public Paciente() {
     }
@@ -26,11 +27,12 @@ public class Paciente {
         this.telefono = telefono;
     }
 
-    public Paciente(String nombre, int dni, String domicilio, int telefono) {
+    public Paciente(String nombre, int dni, String domicilio, int telefono, boolean estado) {
         this.nombre = nombre;
         this.dni = dni;
         this.domicilio = domicilio;
         this.telefono = telefono;
+        this.estado = estado;
     }
 
     public int getIdPaciente() {
@@ -71,6 +73,14 @@ public class Paciente {
 
     public void setTelefono(int telefono) {
         this.telefono = telefono;
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
     
 }
