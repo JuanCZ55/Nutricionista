@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-10-2024 a las 01:57:55
+-- Tiempo de generación: 21-10-2024 a las 22:22:12
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -26,14 +26,16 @@ USE `nutricionista`;
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `comida`
+-- Estructura de tabla para la tabla `alimento`
 --
 
-CREATE TABLE `comida` (
-  `idComida` int(11) NOT NULL,
+CREATE TABLE `alimento` (
+  `idAlimento` int(11) NOT NULL,
   `nombre` varchar(50) NOT NULL,
+  `tipoComida` varchar(50) NOT NULL,
+  `caloriasX100gr` int(11) NOT NULL,
   `detalle` varchar(150) NOT NULL,
-  `calorias` int(11) NOT NULL
+  `estado` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -44,24 +46,29 @@ CREATE TABLE `comida` (
 
 CREATE TABLE `dieta` (
   `idDieta` int(11) NOT NULL,
-  `nombre` varchar(50) NOT NULL,
+  `nombreD` varchar(60) NOT NULL,
+  `idMenu` int(11) NOT NULL,
   `idPaciente` int(11) NOT NULL,
-  `fechaInicial` date NOT NULL,
-  `fechaFinal` date NOT NULL,
-  `pesoIncial` double NOT NULL,
-  `pesoFinal` double NOT NULL
+  `fechaIni` date NOT NULL,
+  `fechaFin` date NOT NULL,
+  `pesoInicial` double NOT NULL,
+  `pesoFinal` double NOT NULL,
+  `totalCalorias` int(11) NOT NULL,
+  `estado` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `dietacomida`
+-- Estructura de tabla para la tabla `menudiario`
 --
 
-CREATE TABLE `dietacomida` (
-  `idDietaComida` int(11) NOT NULL,
-  `idComida` int(11) NOT NULL,
-  `idDieta` int(11) NOT NULL
+CREATE TABLE `menudiario` (
+  `idMenu` int(11) NOT NULL,
+  `dia` int(11) NOT NULL,
+  `idRenglon` int(11) NOT NULL,
+  `caloriasDelMenu` int(11) NOT NULL,
+  `estado` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -72,61 +79,74 @@ CREATE TABLE `dietacomida` (
 
 CREATE TABLE `paciente` (
   `idPaciente` int(11) NOT NULL,
-  `dni` bigint(20) NOT NULL,
   `nombre` varchar(50) NOT NULL,
-  `telefono` bigint(20) NOT NULL,
-  `domicilio` varchar(50) NOT NULL,
-  `estado` tinyint(1) NOT NULL
+  `edad` int(11) NOT NULL,
+  `altura` double NOT NULL,
+  `pesoActual` double NOT NULL,
+  `pesoBuscado` double NOT NULL,
+  `estado` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- Volcado de datos para la tabla `paciente`
+-- Estructura de tabla para la tabla `renglondemenu`
 --
 
-INSERT INTO `paciente` (`idPaciente`, `dni`, `nombre`, `telefono`, `domicilio`, `estado`) VALUES
-(1, 49999999, 'Janito', 549549, 'En el cielo', 1);
+CREATE TABLE `renglondemenu` (
+  `idRenglon` int(11) NOT NULL,
+  `idAlimento` int(11) NOT NULL,
+  `cantidadGrs` double NOT NULL,
+  `subtotalCalorias` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Índices para tablas volcadas
 --
 
 --
--- Indices de la tabla `comida`
+-- Indices de la tabla `alimento`
 --
-ALTER TABLE `comida`
-  ADD PRIMARY KEY (`idComida`);
+ALTER TABLE `alimento`
+  ADD PRIMARY KEY (`idAlimento`);
 
 --
 -- Indices de la tabla `dieta`
 --
 ALTER TABLE `dieta`
   ADD PRIMARY KEY (`idDieta`),
+  ADD KEY `idMenu` (`idMenu`),
   ADD KEY `idPaciente` (`idPaciente`);
 
 --
--- Indices de la tabla `dietacomida`
+-- Indices de la tabla `menudiario`
 --
-ALTER TABLE `dietacomida`
-  ADD PRIMARY KEY (`idDietaComida`),
-  ADD KEY `idDieta` (`idDieta`),
-  ADD KEY `idComida` (`idComida`);
+ALTER TABLE `menudiario`
+  ADD PRIMARY KEY (`idMenu`),
+  ADD KEY `idRenglon` (`idRenglon`);
 
 --
 -- Indices de la tabla `paciente`
 --
 ALTER TABLE `paciente`
-  ADD PRIMARY KEY (`idPaciente`),
-  ADD UNIQUE KEY `dni` (`dni`);
+  ADD PRIMARY KEY (`idPaciente`);
+
+--
+-- Indices de la tabla `renglondemenu`
+--
+ALTER TABLE `renglondemenu`
+  ADD PRIMARY KEY (`idRenglon`),
+  ADD KEY `idAlimento` (`idAlimento`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- AUTO_INCREMENT de la tabla `comida`
+-- AUTO_INCREMENT de la tabla `alimento`
 --
-ALTER TABLE `comida`
-  MODIFY `idComida` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `alimento`
+  MODIFY `idAlimento` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `dieta`
@@ -135,16 +155,22 @@ ALTER TABLE `dieta`
   MODIFY `idDieta` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `dietacomida`
+-- AUTO_INCREMENT de la tabla `menudiario`
 --
-ALTER TABLE `dietacomida`
-  MODIFY `idDietaComida` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `menudiario`
+  MODIFY `idMenu` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `paciente`
 --
 ALTER TABLE `paciente`
-  MODIFY `idPaciente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idPaciente` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `renglondemenu`
+--
+ALTER TABLE `renglondemenu`
+  MODIFY `idRenglon` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas
@@ -154,14 +180,20 @@ ALTER TABLE `paciente`
 -- Filtros para la tabla `dieta`
 --
 ALTER TABLE `dieta`
-  ADD CONSTRAINT `dieta_ibfk_1` FOREIGN KEY (`idPaciente`) REFERENCES `paciente` (`idPaciente`);
+  ADD CONSTRAINT `dieta_ibfk_1` FOREIGN KEY (`idMenu`) REFERENCES `menudiario` (`idMenu`),
+  ADD CONSTRAINT `dieta_ibfk_2` FOREIGN KEY (`idPaciente`) REFERENCES `paciente` (`idPaciente`);
 
 --
--- Filtros para la tabla `dietacomida`
+-- Filtros para la tabla `menudiario`
 --
-ALTER TABLE `dietacomida`
-  ADD CONSTRAINT `dietacomida_ibfk_1` FOREIGN KEY (`idDieta`) REFERENCES `dieta` (`idDieta`),
-  ADD CONSTRAINT `dietacomida_ibfk_2` FOREIGN KEY (`idComida`) REFERENCES `comida` (`idComida`);
+ALTER TABLE `menudiario`
+  ADD CONSTRAINT `menudiario_ibfk_1` FOREIGN KEY (`idRenglon`) REFERENCES `renglondemenu` (`idRenglon`);
+
+--
+-- Filtros para la tabla `renglondemenu`
+--
+ALTER TABLE `renglondemenu`
+  ADD CONSTRAINT `renglondemenu_ibfk_1` FOREIGN KEY (`idAlimento`) REFERENCES `alimento` (`idAlimento`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
