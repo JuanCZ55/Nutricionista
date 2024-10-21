@@ -17,7 +17,7 @@ public class PacienteData {
         con = (Connection) Conexion.getConexion();
     }
     
-    public void guardarPaciente(Paciente pac){
+   /* public void guardarPaciente(Paciente pac){
         String sql = "INSERT INTO paciente(dni, nombre, telefono, domicilio, estado) "
                 + "VALUES (?, ?, ?, ?, ?)";
         try {
@@ -63,5 +63,5 @@ public class PacienteData {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Paciente");
         }
-    }
+    }*/
 }

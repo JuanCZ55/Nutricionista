@@ -9,29 +9,42 @@ package Modelo;
  * @author juanz
  */
 public class Paciente {
+
     private int idPaciente;
     private String nombre;
-    private int dni;
-    private String domicilio;
-    private int telefono;
+    private int edad;
+    private double altura;
+    private double pesoActual;
+    private double pesoBuscado;
     private boolean estado;
 
     public Paciente() {
     }
 
-    public Paciente(int idPaciente, String nombre, int dni, String domicilio, int telefono) {
-        this.idPaciente = idPaciente;
+    public Paciente(String nombre, int edad, double altura, double pesoActual, double pesoBuscado) {
         this.nombre = nombre;
-        this.dni = dni;
-        this.domicilio = domicilio;
-        this.telefono = telefono;
+        this.edad = edad;
+        this.altura = altura;
+        this.pesoActual = pesoActual;
+        this.pesoBuscado = pesoBuscado;
     }
 
-    public Paciente(String nombre, int dni, String domicilio, int telefono, boolean estado) {
+    public Paciente(String nombre, int edad, double altura, double pesoActual, double pesoBuscado, boolean estado) {
         this.nombre = nombre;
-        this.dni = dni;
-        this.domicilio = domicilio;
-        this.telefono = telefono;
+        this.edad = edad;
+        this.altura = altura;
+        this.pesoActual = pesoActual;
+        this.pesoBuscado = pesoBuscado;
+        this.estado = estado;
+    }
+
+    public Paciente(int idPaciente, String nombre, int edad, double altura, double pesoActual, double pesoBuscado, boolean estado) {
+        this.idPaciente = idPaciente;
+        this.nombre = nombre;
+        this.edad = edad;
+        this.altura = altura;
+        this.pesoActual = pesoActual;
+        this.pesoBuscado = pesoBuscado;
         this.estado = estado;
     }
 
@@ -51,28 +64,36 @@ public class Paciente {
         this.nombre = nombre;
     }
 
-    public int getDni() {
-        return dni;
+    public int getEdad() {
+        return edad;
     }
 
-    public void setDni(int dni) {
-        this.dni = dni;
+    public void setEdad(int edad) {
+        this.edad = edad;
     }
 
-    public String getDomicilio() {
-        return domicilio;
+    public double getAltura() {
+        return altura;
     }
 
-    public void setDomicilio(String domicilio) {
-        this.domicilio = domicilio;
+    public void setAltura(double altura) {
+        this.altura = altura;
     }
 
-    public int getTelefono() {
-        return telefono;
+    public double getPesoActual() {
+        return pesoActual;
     }
 
-    public void setTelefono(int telefono) {
-        this.telefono = telefono;
+    public void setPesoActual(double pesoActual) {
+        this.pesoActual = pesoActual;
+    }
+
+    public double getPesoBuscado() {
+        return pesoBuscado;
+    }
+
+    public void setPesoBuscado(double pesoBuscado) {
+        this.pesoBuscado = pesoBuscado;
     }
 
     public boolean isEstado() {
@@ -82,5 +103,10 @@ public class Paciente {
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Paciente{" + "idPaciente=" + idPaciente + ", nombre=" + nombre + ", estado=" + estado + '}';
+    }
+
 }

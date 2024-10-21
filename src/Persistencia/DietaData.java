@@ -9,5 +9,5 @@ package Persistencia;
  * @author juanz
  */
 public class DietaData {
-    
+
 }
