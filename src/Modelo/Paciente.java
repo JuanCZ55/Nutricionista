@@ -20,6 +20,13 @@ public class Paciente {
 
     public Paciente() {
     }
+//constructor para actualizar al paciente
+    //ya que el peso se actualiza por otro
+    public Paciente(String nombre, int edad, double altura) {
+        this.nombre = nombre;
+        this.edad = edad;
+        this.altura = altura;
+    }
 
     public Paciente(String nombre, int edad, double altura, double pesoActual, double pesoBuscado) {
         this.nombre = nombre;
