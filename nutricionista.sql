@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-10-2024 a las 22:22:12
+-- Tiempo de generación: 24-10-2024 a las 01:48:58
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -68,7 +68,8 @@ CREATE TABLE `menudiario` (
   `dia` int(11) NOT NULL,
   `idRenglon` int(11) NOT NULL,
   `caloriasDelMenu` int(11) NOT NULL,
-  `estado` tinyint(1) NOT NULL
+  `estado` tinyint(1) NOT NULL,
+  `idDieta` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -87,6 +88,16 @@ CREATE TABLE `paciente` (
   `estado` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `paciente`
+--
+
+INSERT INTO `paciente` (`idPaciente`, `nombre`, `edad`, `altura`, `pesoActual`, `pesoBuscado`, `estado`) VALUES
+(1, 'Ariel', 21, 1.54, 900, 70.3, 1),
+(2, 'Raul', 3, 0.5, 73, 150.6, 1),
+(3, 'Raul', 2, 0.45, 8, 6.5, 1),
+(4, 'Juan', 25, 1.8, 72, 85.3, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -97,7 +108,8 @@ CREATE TABLE `renglondemenu` (
   `idRenglon` int(11) NOT NULL,
   `idAlimento` int(11) NOT NULL,
   `cantidadGrs` double NOT NULL,
-  `subtotalCalorias` int(11) NOT NULL
+  `subtotalCalorias` int(11) NOT NULL,
+  `idMenu` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -123,7 +135,8 @@ ALTER TABLE `dieta`
 --
 ALTER TABLE `menudiario`
   ADD PRIMARY KEY (`idMenu`),
-  ADD KEY `idRenglon` (`idRenglon`);
+  ADD KEY `idRenglon` (`idRenglon`),
+  ADD KEY `idDieta` (`idDieta`);
 
 --
 -- Indices de la tabla `paciente`
@@ -136,7 +149,8 @@ ALTER TABLE `paciente`
 --
 ALTER TABLE `renglondemenu`
   ADD PRIMARY KEY (`idRenglon`),
-  ADD KEY `idAlimento` (`idAlimento`);
+  ADD KEY `idAlimento` (`idAlimento`),
+  ADD KEY `idMenu` (`idMenu`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -164,7 +178,7 @@ ALTER TABLE `menudiario`
 -- AUTO_INCREMENT de la tabla `paciente`
 --
 ALTER TABLE `paciente`
-  MODIFY `idPaciente` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idPaciente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `renglondemenu`
@@ -177,23 +191,28 @@ ALTER TABLE `renglondemenu`
 --
 
 --
+-- Filtros para la tabla `alimento`
+--
+ALTER TABLE `alimento`
+  ADD CONSTRAINT `alimento_ibfk_1` FOREIGN KEY (`idAlimento`) REFERENCES `renglondemenu` (`idAlimento`);
+
+--
 -- Filtros para la tabla `dieta`
 --
 ALTER TABLE `dieta`
-  ADD CONSTRAINT `dieta_ibfk_1` FOREIGN KEY (`idMenu`) REFERENCES `menudiario` (`idMenu`),
-  ADD CONSTRAINT `dieta_ibfk_2` FOREIGN KEY (`idPaciente`) REFERENCES `paciente` (`idPaciente`);
+  ADD CONSTRAINT `dieta_ibfk_1` FOREIGN KEY (`idPaciente`) REFERENCES `paciente` (`idPaciente`);
 
 --
 -- Filtros para la tabla `menudiario`
 --
 ALTER TABLE `menudiario`
-  ADD CONSTRAINT `menudiario_ibfk_1` FOREIGN KEY (`idRenglon`) REFERENCES `renglondemenu` (`idRenglon`);
+  ADD CONSTRAINT `menudiario_ibfk_1` FOREIGN KEY (`idDieta`) REFERENCES `dieta` (`idDieta`);
 
 --
 -- Filtros para la tabla `renglondemenu`
 --
 ALTER TABLE `renglondemenu`
-  ADD CONSTRAINT `renglondemenu_ibfk_1` FOREIGN KEY (`idAlimento`) REFERENCES `alimento` (`idAlimento`);
+  ADD CONSTRAINT `renglondemenu_ibfk_1` FOREIGN KEY (`idMenu`) REFERENCES `menudiario` (`idMenu`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

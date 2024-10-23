@@ -46,7 +46,7 @@ public class PacienteData {
     }
 
     public void actualizarPaciente(Paciente pac) {//usar constructor con id sin estado 
-        String sql = "UPDATE `paciente` SET `nombre`=?,`edad`='?,`altura`=? WHERE `idPaciente`=?;";
+        String sql = "UPDATE  paciente  SET  nombre =?, edad =?, altura =? WHERE  idPaciente =?;";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
 
@@ -92,7 +92,7 @@ public class PacienteData {
             ps.setInt(1, id);
             int exito = ps.executeUpdate();
             if (exito == 1) {
-                JOptionPane.showMessageDialog(null, "Paciente Eliminado");
+                JOptionPane.showMessageDialog(null, "Paciente Habilitado");
             } else {
                 JOptionPane.showMessageDialog(null, "Paciente no encontrado");
             }
@@ -104,7 +104,7 @@ public class PacienteData {
     }
 
     public void cambiarPesoBuscado(int id, double pesoBuscado) {
-        String sql = "UPDATE `paciente` SET `pesoBuscado`=? WHERE `idPaciente`=?;";
+        String sql = "UPDATE  paciente  SET  pesoBuscado =? WHERE  idPaciente =?;";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setDouble(1, pesoBuscado);
@@ -121,7 +121,7 @@ public class PacienteData {
     }
 
     public void actualizarPesoAct(int id, double pesoAct) {
-        String sql = "UPDATE `paciente` SET `pesoActual`=? WHERE `idPaciente`=?;";
+        String sql = "UPDATE  paciente  SET  pesoActual =? WHERE  idPaciente =?;";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setDouble(1, pesoAct);
@@ -138,7 +138,7 @@ public class PacienteData {
     }
 
     public boolean seAcercaAlPaso(Dieta die, int id) {
-        String sql = "SELECT `idPaciente`, `nombre`, `edad`, `altura`, `pesoActual`, `pesoBuscado`, `estado` FROM `paciente` WHERE `idPaciente`=?;";
+        String sql = "SELECT  idPaciente ,  nombre ,  edad ,  altura ,  pesoActual ,  pesoBuscado ,  estado  FROM  paciente  WHERE  idPaciente =?;";
         Paciente pac = null;
         boolean llega = false;
         try {
@@ -181,7 +181,7 @@ public class PacienteData {
     }
 
     public Paciente buscarPaciente(int id) {
-        String sql = "SELECT `idPaciente`, `nombre`, `edad`, `altura`, `pesoActual`, `pesoBuscado`, `estado` FROM `paciente` WHERE `idPaciente`=?;";
+        String sql = "SELECT  idPaciente ,  nombre ,  edad ,  altura ,  pesoActual ,  pesoBuscado ,  estado  FROM  paciente  WHERE  idPaciente =?;";
         Paciente pac = null;
         try {
             PreparedStatement ps = con.prepareStatement(sql);

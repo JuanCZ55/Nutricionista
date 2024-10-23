@@ -23,4 +23,36 @@ public class RenglonDeMenu {
     public RenglonDeMenu() {
     }
 
+    public int getIdRenglon() {
+        return idRenglon;
+    }
+
+    public void setIdRenglon(int idRenglon) {
+        this.idRenglon = idRenglon;
+    }
+
+    public Alimento getAlimento() {
+        return alimento;
+    }
+
+    public void setAlimento(Alimento alimento) {
+        this.alimento = alimento;
+    }
+
+    public double getCantidadGrs() {
+        return cantidadGrs;
+    }
+
+    public void setCantidadGrs(double cantidadGrs) {
+        this.cantidadGrs = cantidadGrs;
+    }
+
+    public int getSubtotalCalorias() {
+        return subtotalCalorias;
+    }
+
+    public void setSubtotalCalorias(int subtotalCalorias) {
+        this.subtotalCalorias = subtotalCalorias;
+    }
+
 }
