@@ -3,6 +3,7 @@ package Persistencia;
 
 import Modelo.Conexion;
 import Modelo.Dieta;
+import Modelo.Paciente;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -67,6 +68,93 @@ public class DietaData {
         JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Dieta: " + ex.getMessage());
     }
 }
+    public Dieta buscarDieta(int idDieta) {
+        String sql = "SELECT * FROM dieta WHERE idDieta = ?;";
+        Dieta dieta = null;
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idDieta);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                dieta = new Dieta();
+                dieta.setIdDieta(rs.getInt("idDieta"));
+                dieta.setNombreD(rs.getString("nombre"));
+                dieta.setFechaIni(rs.getDate("fechaInicial").toLocalDate());
+                dieta.setFechaFin(rs.getDate("fechaFinal").toLocalDate());
+                dieta.setPesoInicial(rs.getDouble("pesoInicial"));
+                dieta.setPesoFinal(rs.getDouble("pesoFinal"));
+                dieta.setTotalCalorias(rs.getInt("totalCalorias"));
+                dieta.setEstado(rs.getBoolean("estado"));
+                
+                int idPaciente = rs.getInt("idPaciente"); //obtener el id del paciente
+                // Tenemos que buscar por su clave foranea un paciente 
+                PacienteData pacienteData = new PacienteData(); //instanciamos 
+                Paciente paciente = pacienteData.buscarPaciente(idPaciente); 
+                dieta.setPaciente(paciente);
+                JOptionPane.showMessageDialog(null, "Dieta encontrada");
+                
+            } else {
+                JOptionPane.showMessageDialog(null, "Dieta no encontrada");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Dieta: " + ex.getMessage());
+        }
+        return dieta;
+    }
+    public void bajaLogica(int idDieta) {
+        String sql = "UPDATE dieta SET estado = 0 WHERE idDieta = ?;";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idDieta);
+
+            int exito = ps.executeUpdate();
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(null, "Dieta desactivada");
+            } else {
+                JOptionPane.showMessageDialog(null, "Dieta no encontrada");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Dieta: " + ex.getMessage());
+        }
+    }
+
     
+    public void altaLogica(int idDieta) {
+        String sql = "UPDATE dieta SET estado = 1 WHERE idDieta = ?;";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idDieta);
+
+            int exito = ps.executeUpdate();
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(null, "Dieta reactivada");
+            } else {
+                JOptionPane.showMessageDialog(null, "Dieta no encontrada");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Dieta: " + ex.getMessage());
+        }
+    }
+
     
+    public void borrarDieta(int idDieta) {
+        String sql = "DELETE FROM dieta WHERE idDieta = ?;";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idDieta);
+
+            int exito = ps.executeUpdate();
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(null, "Dieta eliminada");
+            } else {
+                JOptionPane.showMessageDialog(null, "Dieta no encontrada");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al eliminar la dieta: " + ex.getMessage());
+        }
+    }
 }
