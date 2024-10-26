@@ -21,7 +21,7 @@ public class Paciente {
     public Paciente() {
     }
 //constructor para actualizar al paciente
-    //ya que el peso se actualiza por otro
+    //ya que los pesos se actualiza por otro
     public Paciente(String nombre, int edad, double altura) {
         this.nombre = nombre;
         this.edad = edad;
