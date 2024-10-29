@@ -5,35 +5,35 @@ import java.util.ArrayList;
 public class MenuDiario {
 private int idMenu;    
 private int dia;
-private ArrayList <RenglonDeMenu> comidas;
-private int caloriasDelMenu;
-private Dieta dieta;
+private ArrayList <Comidas> comidas;
+private double caloriasDelMenu;
+private int idDieta;
 private boolean estado;
 
     public MenuDiario() {
     }
 
-    public MenuDiario(int dia, ArrayList<RenglonDeMenu> comidas, int caloriasDelMenu, Dieta dieta) {
+    public MenuDiario(int dia, ArrayList<Comidas> comidas, double caloriasDelMenu, int idDieta) {
         this.dia = dia;
         this.comidas = comidas;
         this.caloriasDelMenu = caloriasDelMenu;
-        this.dieta = dieta;
+        this.idDieta = idDieta;
     }
 
-    public MenuDiario(int dia, ArrayList<RenglonDeMenu> comidas, int caloriasDelMenu, Dieta dieta, boolean estado) {
+    public MenuDiario(int dia, ArrayList<Comidas> comidas, double caloriasDelMenu, int idDieta, boolean estado) {
         this.dia = dia;
         this.comidas = comidas;
         this.caloriasDelMenu = caloriasDelMenu;
-        this.dieta = dieta;
+        this.idDieta = idDieta;
         this.estado = estado;
     }
 
-    public MenuDiario(int idMenu, int dia, ArrayList<RenglonDeMenu> comidas, int caloriasDelMenu, Dieta dieta, boolean estado) {
+    public MenuDiario(int idMenu, int dia, ArrayList<Comidas> comidas, double caloriasDelMenu, int idDieta, boolean estado) {
         this.idMenu = idMenu;
         this.dia = dia;
         this.comidas = comidas;
         this.caloriasDelMenu = caloriasDelMenu;
-        this.dieta = dieta;
+        this.idDieta = idDieta;
         this.estado = estado;
     }
 
@@ -53,28 +53,28 @@ private boolean estado;
         this.dia = dia;
     }
 
-    public ArrayList<RenglonDeMenu> getComidas() {
+    public ArrayList<Comidas> getComidas() {
         return comidas;
     }
 
-    public void setComidas(ArrayList<RenglonDeMenu> comidas) {
+    public void setComidas(ArrayList<Comidas> comidas) {
         this.comidas = comidas;
     }
 
-    public int getCaloriasDelMenu() {
+    public double getCaloriasDelMenu() {
         return caloriasDelMenu;
     }
 
-    public void setCaloriasDelMenu(int caloriasDelMenu) {
+    public void setCaloriasDelMenu(double caloriasDelMenu) {
         this.caloriasDelMenu = caloriasDelMenu;
     }
 
-    public Dieta getDieta() {
-        return dieta;
+    public int getIdDieta() {
+        return idDieta;
     }
 
-    public void setDieta(Dieta dieta) {
-        this.dieta = dieta;
+    public void setIdDieta(int idDieta) {
+        this.idDieta = idDieta;
     }
 
     public boolean isEstado() {
