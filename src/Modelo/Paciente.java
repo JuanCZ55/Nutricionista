@@ -1,8 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Modelo;
+
+import java.util.HashSet;
 
 /**
  *
@@ -14,44 +12,69 @@ public class Paciente {
     private String nombre;
     private int edad;
     private double altura;
+    HashSet<String> condicionSalud;
+    //la condicion de salud recordar usar
+    //Dividir (split): Usamos split(",") para dividir el String en un array condicionSalud.split(",")
+    //Unir (join): Finalmente, usamos String.join(",", condicionesList)
+    // para volver a unir los elementos de la lista en una cadena cuando sea necesario guardarla.
     private double pesoActual;
     private double pesoBuscado;
+    private double pesoInicial;
     private boolean estado;
 
     public Paciente() {
     }
-//constructor para actualizar al paciente
-    //ya que los pesos se actualiza por otro
-    public Paciente(String nombre, int edad, double altura) {
-        this.nombre = nombre;
-        this.edad = edad;
-        this.altura = altura;
-    }
 
-    public Paciente(String nombre, int edad, double altura, double pesoActual, double pesoBuscado) {
-        this.nombre = nombre;
-        this.edad = edad;
-        this.altura = altura;
-        this.pesoActual = pesoActual;
-        this.pesoBuscado = pesoBuscado;
-    }
-
-    public Paciente(String nombre, int edad, double altura, double pesoActual, double pesoBuscado, boolean estado) {
-        this.nombre = nombre;
-        this.edad = edad;
-        this.altura = altura;
-        this.pesoActual = pesoActual;
-        this.pesoBuscado = pesoBuscado;
-        this.estado = estado;
-    }
-
-    public Paciente(int idPaciente, String nombre, int edad, double altura, double pesoActual, double pesoBuscado, boolean estado) {
+    /**
+     * Constructor para actualizar datos de un paciente sin información de peso.
+     * Este constructor se usa para {@link PacienteData#actualizarPaciente()}.
+     *
+     * @param idPaciente El ID del paciente.
+     * @param nombre El nombre del paciente.
+     * @param edad La edad del paciente.
+     * @param altura La altura del paciente en metros.
+     * @param CondicionSalud Un conjunto de condiciones de salud del paciente.
+     */
+    public Paciente(int idPaciente, String nombre, int edad, double altura, HashSet<String> CondicionSalud) {
         this.idPaciente = idPaciente;
         this.nombre = nombre;
         this.edad = edad;
         this.altura = altura;
+        this.condicionSalud = CondicionSalud;
+    }
+
+    /**
+     * Constructor para crear un paciente.
+     *
+     * Este constructor se usa para un nuevo paciente para guardarPaciente()
+     *
+     * @param nombre El nombre del paciente.
+     * @param edad La edad del paciente.
+     * @param altura La altura del paciente en metros.
+     * @param pesoActual El peso actual del paciente en kilogramos.
+     * @param pesoBuscado El peso que el paciente desea alcanzar en kilogramos.
+     * @param pesoInicial El peso inicial del paciente al comenzar el
+     * tratamiento en kilogramos.
+     */
+    public Paciente(String nombre, int edad, double altura, HashSet<String> CondicionSalud, double pesoActual, double pesoBuscado, double pesoInicial) {
+        this.nombre = nombre;
+        this.edad = edad;
+        this.altura = altura;
+        this.condicionSalud = CondicionSalud;
         this.pesoActual = pesoActual;
         this.pesoBuscado = pesoBuscado;
+        this.pesoInicial = pesoInicial;
+    }
+
+    public Paciente(int idPaciente, String nombre, int edad, double altura, HashSet<String> CondicionSalud, double pesoActual, double pesoBuscado, double pesoInicial, boolean estado) {
+        this.idPaciente = idPaciente;
+        this.nombre = nombre;
+        this.edad = edad;
+        this.altura = altura;
+        this.condicionSalud = CondicionSalud;
+        this.pesoActual = pesoActual;
+        this.pesoBuscado = pesoBuscado;
+        this.pesoInicial = pesoInicial;
         this.estado = estado;
     }
 
@@ -101,6 +124,22 @@ public class Paciente {
 
     public void setPesoBuscado(double pesoBuscado) {
         this.pesoBuscado = pesoBuscado;
+    }
+
+    public HashSet<String> getCondicionSalud() {
+        return condicionSalud;
+    }
+
+    public void setCondicionSalud(HashSet<String> CondicionSalud) {
+        this.condicionSalud = CondicionSalud;
+    }
+
+    public double getPesoInicial() {
+        return pesoInicial;
+    }
+
+    public void setPesoInicial(double pesoInicial) {
+        this.pesoInicial = pesoInicial;
     }
 
     public boolean isEstado() {

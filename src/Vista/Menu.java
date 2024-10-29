@@ -4,6 +4,8 @@
  */
 package Vista;
 
+import javax.swing.JDesktopPane;
+
 /**
  *
  * @author Usuario
@@ -26,21 +28,102 @@ public class Menu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        JDPMenu = new javax.swing.JDesktopPane();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMIngreso = new javax.swing.JMenu();
+        jMIPaciente = new javax.swing.JMenuItem();
+        jMiDieta = new javax.swing.JMenuItem();
+        jMIMenuDiario = new javax.swing.JMenuItem();
+        jMIComidas = new javax.swing.JMenuItem();
+        jMIIngredientes = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        javax.swing.GroupLayout JDPMenuLayout = new javax.swing.GroupLayout(JDPMenu);
+        JDPMenu.setLayout(JDPMenuLayout);
+        JDPMenuLayout.setHorizontalGroup(
+            JDPMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 651, Short.MAX_VALUE)
+        );
+        JDPMenuLayout.setVerticalGroup(
+            JDPMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 666, Short.MAX_VALUE)
+        );
+
+        jMIngreso.setText("Ingresos");
+
+        jMIPaciente.setText("Pacientes");
+        jMIPaciente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIPacienteActionPerformed(evt);
+            }
+        });
+        jMIngreso.add(jMIPaciente);
+
+        jMiDieta.setText("Dieta");
+        jMIngreso.add(jMiDieta);
+
+        jMIMenuDiario.setText("MenuDiario");
+        jMIngreso.add(jMIMenuDiario);
+
+        jMIComidas.setText("Comidas");
+        jMIngreso.add(jMIComidas);
+
+        jMIIngredientes.setText("Ingredientes");
+        jMIIngredientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIIngredientesActionPerformed(evt);
+            }
+        });
+        jMIngreso.add(jMIIngredientes);
+
+        jMenuBar1.add(jMIngreso);
+
+        jMenu2.setText("Edit");
+
+        jMenuItem4.setText("jMenuItem4");
+        jMenu2.add(jMenuItem4);
+
+        jMenuBar1.add(jMenu2);
+
+        jMenu3.setText("jMenu3");
+
+        jMenuItem5.setText("jMenuItem5");
+        jMenu3.add(jMenuItem5);
+
+        jMenuBar1.add(jMenu3);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 587, Short.MAX_VALUE)
+            .addComponent(JDPMenu)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 459, Short.MAX_VALUE)
+            .addComponent(JDPMenu)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMIPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIPacienteActionPerformed
+        JDPMenu.removeAll();
+        JDPMenu.repaint();
+        GestionarPaciente paciente = new GestionarPaciente();
+        JDPMenu.add(paciente);
+        paciente.setVisible(true);
+    }//GEN-LAST:event_jMIPacienteActionPerformed
+
+    private void jMIIngredientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIIngredientesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMIIngredientesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,5 +161,17 @@ public class Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDesktopPane JDPMenu;
+    private javax.swing.JMenuItem jMIComidas;
+    private javax.swing.JMenuItem jMIIngredientes;
+    private javax.swing.JMenuItem jMIMenuDiario;
+    private javax.swing.JMenuItem jMIPaciente;
+    private javax.swing.JMenu jMIngreso;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMiDieta;
     // End of variables declaration//GEN-END:variables
 }
