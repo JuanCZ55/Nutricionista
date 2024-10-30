@@ -1,32 +1,44 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Modelo;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-/**
- *
- * @author juanz
- */
 public class Dieta {
 
     private int idDieta;
     private String nombreD;
     private ArrayList<MenuDiario> Menus;
+    private Paciente paciente;
     private LocalDate fechaIni;
     private LocalDate fechaFin;
     private double pesoInicial;
     private double pesoFinal;
     private int totalCalorias;
-    private Paciente paciente;
     private boolean estado;
 
     public Dieta() {
     }
 
+    public Dieta(int idDieta) {
+        this.idDieta = idDieta;
+    }
+
+    public Dieta(int idDieta, String nombreD, Paciente paciente, LocalDate fechaIni, LocalDate fechaFin, double pesoInicial, double pesoFinal, int totalCalorias, boolean estado) {
+        this.idDieta = idDieta;
+        this.nombreD = nombreD;
+        this.paciente = paciente;
+        this.fechaIni = fechaIni;
+        this.fechaFin = fechaFin;
+        this.pesoInicial = pesoInicial;
+        this.pesoFinal = pesoFinal;
+        this.totalCalorias = totalCalorias;
+        this.estado = estado;
+        this.Menus = new ArrayList<>();
+        
+    }
+    
+    
     public Dieta(String nombreD, ArrayList<MenuDiario> Menus, LocalDate fechaIni, LocalDate fechaFin, double pesoInicial, double pesoFinal, int totalCalorias, Paciente paciente) {
         this.nombreD = nombreD;
         this.Menus = Menus;
@@ -62,7 +74,7 @@ public class Dieta {
         this.paciente = paciente;
         this.estado = estado;
     }
-
+    
     public int getIdDieta() {
         return idDieta;
     }
@@ -143,4 +155,9 @@ public class Dieta {
         this.estado = estado;
     }
 
+    @Override
+    public String toString() {
+        return "Dieta{" + "idDieta=" + idDieta + ", nombreD=" + nombreD + ", Menus=" + Menus + ", paciente=" + paciente + ", fechaIni=" + fechaIni + ", fechaFin=" + fechaFin + ", pesoInicial=" + pesoInicial + ", pesoFinal=" + pesoFinal + ", totalCalorias=" + totalCalorias + ", estado=" + estado + '}';
+    }
+    
 }
