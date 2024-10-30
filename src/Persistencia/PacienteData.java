@@ -464,11 +464,58 @@ public class PacienteData {
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al listar los que llegaron");
-
         }
-
         return nollegaron;
     }
+
+    /**
+     * cuantoPesoFalta(double pesoActual, double pesoBuscado): Calcula la
+     * diferencia de peso entre el peso actual y el peso buscado, usando
+     * Math.abs para evitar valores negativos. Devuelve la cantidad de peso que
+     * falta para alcanzar el peso buscado, sin importar si el paciente necesita
+     * subir o bajar de peso.
+     *
+     * @param pesoActual - Double que representa el peso actual del paciente
+     * @param pesoBuscado - Double que representa el peso objetivo del paciente
+     * @return Double - la cantidad de peso que le falta para alcanzar el peso
+     * buscado
+     */
+    public String cuantoPesoFalta(Paciente pac) {
+        double pesoInicial = pac.getPesoInicial();
+        double pesoActual = pac.getPesoActual();
+        double pesoBuscado = pac.getPesoBuscado();
+        double peso = pesoBuscado - pesoActual;
+        String sms = "";
+        if (peso == 0) {
+            sms = "Llego a su peso buscado, felicitaciones";
+            return sms;
+        }
+        // Perder peso
+        if (pesoInicial > pesoBuscado) {
+            if (peso > 0) {
+                sms = "Supero su meta por " + Math.abs(peso) + " kg";
+            } else if (peso < 0) {
+                sms = "Te falta perder " + Math.abs(peso) + " kg para llegar a tu peso buscado";
+
+            }
+        } // Ganar peso
+        else if (pesoInicial < pesoBuscado) {
+            if (peso > 0) {
+                sms = "Te falta ganar " + Math.abs(peso) + " kg para llegar a tu peso buscado";
+            } else if (peso < 0) {
+                sms = "Supero su meta por " + Math.abs(peso) + " kg";
+
+            }
+        }
+
+        return sms;
+    }
+
+    public double imc(double peso, double altura) {
+        double imc = peso / (altura * altura);
+        return imc;
+    }
+//---------------------------------------------------------------------------------------------------------------
 
     /**
      * convertirStringSet(String cond): Convierte una cadena en un conjunto de
