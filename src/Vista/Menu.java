@@ -19,6 +19,7 @@ public class Menu extends javax.swing.JFrame {
         initComponents();
         this.setSize(800, 700);
         this.setLocationRelativeTo(null);
+        jDesktopPane1.setBorder(new ImagenFondo());
     }
 
     /**
@@ -30,7 +31,9 @@ public class Menu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
         JDPMenu = new javax.swing.JDesktopPane();
+        jDesktopPane1 = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMIngreso = new javax.swing.JMenu();
         jMIPaciente = new javax.swing.JMenuItem();
@@ -42,21 +45,36 @@ public class Menu extends javax.swing.JFrame {
         jMIListaPacientes = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMCuantoFalta = new javax.swing.JMenuItem();
+
+        jCheckBoxMenuItem1.setSelected(true);
+        jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
+        jDesktopPane1.setLayout(jDesktopPane1Layout);
+        jDesktopPane1Layout.setHorizontalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 651, Short.MAX_VALUE)
+        );
+        jDesktopPane1Layout.setVerticalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 660, Short.MAX_VALUE)
+        );
+
+        JDPMenu.setLayer(jDesktopPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout JDPMenuLayout = new javax.swing.GroupLayout(JDPMenu);
         JDPMenu.setLayout(JDPMenuLayout);
         JDPMenuLayout.setHorizontalGroup(
             JDPMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 651, Short.MAX_VALUE)
+            .addComponent(jDesktopPane1)
         );
         JDPMenuLayout.setVerticalGroup(
             JDPMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 666, Short.MAX_VALUE)
+            .addGroup(JDPMenuLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jDesktopPane1))
         );
 
         jMIngreso.setText("Ingresos");
@@ -70,6 +88,11 @@ public class Menu extends javax.swing.JFrame {
         jMIngreso.add(jMIPaciente);
 
         jMiDieta.setText("Dieta");
+        jMiDieta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMiDietaActionPerformed(evt);
+            }
+        });
         jMIngreso.add(jMiDieta);
 
         jMIMenuDiario.setText("MenuDiario");
@@ -107,26 +130,6 @@ public class Menu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu3);
 
-        jMenu1.setText("Adicionales");
-
-        jMenuItem1.setText("IMC");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem1);
-
-        jMCuantoFalta.setText("Cuanto Falta");
-        jMCuantoFalta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMCuantoFaltaActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMCuantoFalta);
-
-        jMenuBar1.add(jMenu1);
-
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -163,21 +166,13 @@ public class Menu extends javax.swing.JFrame {
         listP.setVisible(true);
     }//GEN-LAST:event_jMIListaPacientesActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void jMiDietaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMiDietaActionPerformed
         JDPMenu.removeAll();
         JDPMenu.repaint();
-        IMC imc = new IMC();
-        JDPMenu.add(imc);
-        imc.setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
-
-    private void jMCuantoFaltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMCuantoFaltaActionPerformed
-        JDPMenu.removeAll();
-        JDPMenu.repaint();
-        CuantoPesoFalta cpf = new CuantoPesoFalta();
-        JDPMenu.add(cpf);
-        cpf.setVisible(true);
-    }//GEN-LAST:event_jMCuantoFaltaActionPerformed
+        Dieta listP = new Dieta();
+        JDPMenu.add(listP);
+        listP.setVisible(true);
+    }//GEN-LAST:event_jMiDietaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -216,18 +211,17 @@ public class Menu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane JDPMenu;
-    private javax.swing.JMenuItem jMCuantoFalta;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
+    private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JMenuItem jMIComidas;
     private javax.swing.JMenuItem jMIIngredientes;
     private javax.swing.JMenuItem jMIListaPacientes;
     private javax.swing.JMenuItem jMIMenuDiario;
     private javax.swing.JMenuItem jMIPaciente;
     private javax.swing.JMenu jMIngreso;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMiDieta;
     // End of variables declaration//GEN-END:variables
