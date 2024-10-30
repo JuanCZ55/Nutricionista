@@ -44,13 +44,16 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu2">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Edit"/>
+            <Property name="text" type="java.lang.String" value="Listas"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem4">
+            <MenuItem class="javax.swing.JMenuItem" name="jMIListaPacientes">
               <Properties>
-                <Property name="text" type="java.lang.String" value="jMenuItem4"/>
+                <Property name="text" type="java.lang.String" value="Lista de Pacientes"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMIListaPacientesActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

@@ -26,7 +26,7 @@ public class Conexion {
         }
 
         try {
-            con = DriverManager.getConnection("jdbc:mariadb://localhost/Nutricionista", "root", "");
+            con = DriverManager.getConnection("jdbc:mariadb://localhost/Nutricionista2.0", "root", "");
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error: error al conectarse a la base de datos");
         }

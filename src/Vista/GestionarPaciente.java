@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
  */
 public class GestionarPaciente extends javax.swing.JInternalFrame {
 
-    HashSet<String> listaSet = new HashSet<>();
+    private HashSet<String> listaSet = new HashSet<>();
 
     private boolean flag = false;
     private PacienteData pd = new PacienteData();
@@ -112,12 +112,6 @@ public class GestionarPaciente extends javax.swing.JInternalFrame {
 
         jTFCondiciones.setEditable(false);
         jTFCondiciones.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        jTFCondiciones.setText("Diabetes");
-        jTFCondiciones.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTFCondicionesActionPerformed(evt);
-            }
-        });
 
         jCBQuitarCronicas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione" }));
         jCBQuitarCronicas.addActionListener(new java.awt.event.ActionListener() {
@@ -327,8 +321,7 @@ public class GestionarPaciente extends javax.swing.JInternalFrame {
     private void jBNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBNuevoActionPerformed
         try {
             if (jTFNombre.getText().isEmpty() || jTFEdad.getText().isEmpty()
-                    || jTFAltura.getText().isEmpty() || jTFCondiciones.getText().isEmpty()
-                    || jTFActual.getText().isEmpty() || jTFBuscado.getText().isEmpty()) {
+                    || jTFAltura.getText().isEmpty() || jTFActual.getText().isEmpty() || jTFBuscado.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Complete todos los campos");
                 return;
             }
@@ -345,6 +338,7 @@ public class GestionarPaciente extends javax.swing.JInternalFrame {
             double PBuscado = Double.parseDouble(jTFBuscado.getText());
             double PInicial = Double.parseDouble(jTFActual.getText());
             Paciente pac = new Paciente(nombre, edad, altura, listaCond, PActual, PBuscado, PInicial);
+            pd.guardarPaciente(pac);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Uno de los campos numericos no contiene un valor valido.");
         } catch (NullPointerException e) {
@@ -356,10 +350,8 @@ public class GestionarPaciente extends javax.swing.JInternalFrame {
 //boton "Actualizar"
     private void jBActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBActualizarActionPerformed
         try {
-            if (jTFID.getText().isEmpty() || jTFNombre.getText().isEmpty() || jTFEdad.getText().isEmpty()
-                    || jTFAltura.getText().isEmpty() || jTFCondiciones.getText().isEmpty()) {
-
-                JOptionPane.showMessageDialog(this, "Complete todos los campos");
+            if (jTFID.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Ingrese el ID");
                 return;
             }
             int id = Integer.parseInt(jTFID.getText());
@@ -367,7 +359,7 @@ public class GestionarPaciente extends javax.swing.JInternalFrame {
             int edad = Integer.parseInt(jTFEdad.getText());
             if (edad <= 0) {
                 JOptionPane.showMessageDialog(this, "La edad debe ser un numero mayor a cero.");
-                
+
                 return;
             }
             double altura = Double.parseDouble(jTFAltura.getText());
@@ -375,6 +367,7 @@ public class GestionarPaciente extends javax.swing.JInternalFrame {
             HashSet<String> listaCond = pd.convertirStringSet(condicionSalud);
 
             Paciente pac = new Paciente(id, nombre, edad, altura, listaCond);
+            pd.actualizarPaciente(pac);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Uno de los campos numericos no contiene un valor valido.");
         } catch (NullPointerException e) {
@@ -400,7 +393,7 @@ public class GestionarPaciente extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Complete el campo de ID");
             return;
         }
-        pd.bajaLogica(id);
+        pd.altaLogica(id);
     }//GEN-LAST:event_jBAltaLogicaActionPerformed
 
     private void jBActualizarActualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBActualizarActualActionPerformed
@@ -433,10 +426,6 @@ public class GestionarPaciente extends javax.swing.JInternalFrame {
         pd.cambiarPesoBuscado(id, Pbuscado);
     }//GEN-LAST:event_jBABuscadoActionPerformed
 
-    private void jTFCondicionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFCondicionesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTFCondicionesActionPerformed
-
     private void JBbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBbuscarActionPerformed
         try {
             if (jTFID.getText().isEmpty()) {
@@ -451,12 +440,28 @@ public class GestionarPaciente extends javax.swing.JInternalFrame {
                 jTFAltura.setText(String.valueOf(paci.getAltura()));
                 jTFActual.setText(String.valueOf(paci.getPesoActual()));
                 jTFBuscado.setText(String.valueOf(paci.getPesoBuscado()));
-                HashSet<String> listCond = paci.getCondicionSalud();
+                //Como pasar de HashSet a String
+                //Creo un HashSet
+                listaSet = paci.getCondicionSalud();
+                //Creo una cadena vacia en donde se guardara lista de las condiciones del paciente
                 String condiciones = "";
-                if (listCond != null && !listCond.isEmpty()) {
-                    condiciones = String.join(",", listCond);
+                //Verfico que no se nula y no este vacia
+                if (listaSet != null && !listaSet.isEmpty()) {
+                    //Junto cada contenido de listaCond con separacion por comas en condiciones
+                    condiciones = String.join(",", listaSet);
                 }
+                //Seteo el esas condiciones en textfield correspondientes y si esta vacia es por que no tiene ninguna condicion
                 jTFCondiciones.setText(condiciones);
+                //seteo de jCBQuitarCronicas
+                jCBQuitarCronicas.removeAllItems();
+                jCBQuitarCronicas.addItem("Seleccione");
+                String[] auxs = jTFCondiciones.getText().split(",");
+                for (String aux : auxs) {
+                    aux = aux.trim();
+                    if (!aux.isEmpty()) {
+                        jCBQuitarCronicas.addItem(aux);
+                    }
+                }
             }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Uno de los campos numericos no contiene un valor valido.");

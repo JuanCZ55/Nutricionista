@@ -68,7 +68,7 @@ public class Nutricionista {
         System.out.println("<----------------------------------------->");
         System.out.println("Se acerca al peso buscado");
         //Dieta      id 
-        pacienteData.seAcercaAlPaso(new Dieta("Dietobich", null, null, null, 65.8, 90, 4500, paciente), 3);
+        pacienteData.seAcercaAlPeso(new Dieta("Dietobich", null, null, null, 65.8, 90, 4500, paciente), 3);
         
         */
         //--------------------------------------------------------------

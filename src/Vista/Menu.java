@@ -17,6 +17,8 @@ public class Menu extends javax.swing.JFrame {
      */
     public Menu() {
         initComponents();
+        this.setSize(800, 700);
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -37,7 +39,7 @@ public class Menu extends javax.swing.JFrame {
         jMIComidas = new javax.swing.JMenuItem();
         jMIIngredientes = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        jMIListaPacientes = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
 
@@ -83,10 +85,15 @@ public class Menu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMIngreso);
 
-        jMenu2.setText("Edit");
+        jMenu2.setText("Listas");
 
-        jMenuItem4.setText("jMenuItem4");
-        jMenu2.add(jMenuItem4);
+        jMIListaPacientes.setText("Lista de Pacientes");
+        jMIListaPacientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIListaPacientesActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMIListaPacientes);
 
         jMenuBar1.add(jMenu2);
 
@@ -124,6 +131,14 @@ public class Menu extends javax.swing.JFrame {
     private void jMIIngredientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIIngredientesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMIIngredientesActionPerformed
+
+    private void jMIListaPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIListaPacientesActionPerformed
+        JDPMenu.removeAll();
+        JDPMenu.repaint();
+        ListaPacientes listP = new ListaPacientes();
+        JDPMenu.add(listP);
+        listP.setVisible(true);
+    }//GEN-LAST:event_jMIListaPacientesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -164,13 +179,13 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JDesktopPane JDPMenu;
     private javax.swing.JMenuItem jMIComidas;
     private javax.swing.JMenuItem jMIIngredientes;
+    private javax.swing.JMenuItem jMIListaPacientes;
     private javax.swing.JMenuItem jMIMenuDiario;
     private javax.swing.JMenuItem jMIPaciente;
     private javax.swing.JMenu jMIngreso;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMiDieta;
     // End of variables declaration//GEN-END:variables

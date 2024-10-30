@@ -14,8 +14,18 @@ public class PacienteData {
     public PacienteData() {
         con = (Connection) Conexion.getConexion();
     }
-//Inserta un nuevo paciente en la base de datos
 
+//Inserta un nuevo paciente en la base de datos
+    /**
+     * guardarPaciente(Paciente paciente): Inserta un nuevo paciente en la base
+     * de datos.
+     *
+     * Agrega un nuevo registro con los datos del paciente, y si la inserción es
+     * exitosa, asigna el ID generado al objeto Paciente. Muestra un mensaje de
+     * éxito o error según el resultado de la operación.
+     *
+     * @param paciente - Objeto Paciente con los datos a guardar.
+     */
     public void guardarPaciente(Paciente paciente) {//usar el constructor sin id y estado
         String sql = "INSERT INTO paciente(Nombre, Edad, Altura, CondicionSalud, PesoActual, PesoBuscado, PesoInical) VALUES (?, ?, ?, ?, ?, ?, ?);";
         try {
@@ -33,9 +43,6 @@ public class PacienteData {
             if (rs.next()) {
                 paciente.setIdPaciente(rs.getInt(1));
                 JOptionPane.showMessageDialog(null, "Paciente Guardado Existosamente");
-            } //No influye
-            else {
-                JOptionPane.showMessageDialog(null, "El Paciente ya existe");
             }
             //
             ps.close();
@@ -43,8 +50,18 @@ public class PacienteData {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Paciente");
         }
     }
-//Actualiza el nombre, edad, altura, condicion de salud de un paciente
 
+//Actualiza el nombre, edad, altura, condicion de salud de un paciente
+    /**
+     * actualizarPaciente(Paciente pac): Actualiza los datos de un paciente en
+     * la base de datos.
+     *
+     * Modifica el nombre, edad, altura y condición de salud del paciente con el
+     * ID especificado. Muestra un mensaje de éxito o error según el resultado
+     * de la operación.
+     *
+     * @param pac - Objeto Paciente con los nuevos datos.
+     */
     public void actualizarPaciente(Paciente pac) {//usar constructor con id sin estado 
         String sql = "UPDATE  paciente  SET  Nombre =?, Edad =?, Altura =?,CondicionSalud=? WHERE  IdPaciente  =?;";
         try {
@@ -68,6 +85,14 @@ public class PacienteData {
         }
     }
 
+    /**
+     * bajaLogica(int id): Deshabilita a un paciente en la base de datos.
+     *
+     * Actualiza el estado del paciente con el ID especificado a deshabilitado.
+     * Muestra un mensaje de éxito o error según el resultado de la operación.
+     *
+     * @param id - ID del paciente a deshabilitar.
+     */
     public void bajaLogica(int id) {
         String sql = "UPDATE paciente SET Estado = 0 WHERE IdPaciente =?";
         try {
@@ -86,6 +111,14 @@ public class PacienteData {
         }
     }
 
+    /**
+     * altaLogica(int id): Habilita a un paciente en la base de datos.
+     *
+     * Actualiza el estado del paciente con el ID especificado a habilitado.
+     * Muestra un mensaje de éxito o error según el resultado de la operación.
+     *
+     * @param id ID del paciente a habilitar.
+     */
     public void altaLogica(int id) {
         String sql = "UPDATE paciente SET Estado = 1 WHERE IdPaciente =?";
         try {
@@ -105,6 +138,15 @@ public class PacienteData {
     }
 //modifica el peso buscado
 
+    /**
+     * cambiarPesoBuscado(int id, double pesoBuscado): Cambia el peso buscado de
+     * un paciente. Actualiza el peso buscado en la base de datos para el
+     * paciente con el ID especificado. Muestra un mensaje de éxito o error
+     * según el resultado de la operación.
+     *
+     * @param id - ID del paciente a actualizar.
+     * @param pesoBuscado - Nuevo peso buscado del paciente.
+     */
     public void cambiarPesoBuscado(int id, double pesoBuscado) {
         String sql = "UPDATE  paciente  SET  PesoBuscado =? WHERE  IdPaciente  =?;";
         try {
@@ -123,8 +165,18 @@ public class PacienteData {
     }
 //sirve para actualizar el peso actual
 
+    /**
+     * actualizarPesoActual(int id, double pesoAct): Actualiza el peso actual de
+     * un paciente. Modifica el peso actual en la base de datos para el paciente
+     * con el ID especificado. Muestra un mensaje de éxito o error según el
+     * resultado de la operación.
+     *
+     *
+     * @param id ID del paciente a actualizar.
+     * @param pesoAct Nuevo peso actual del paciente.
+     */
     public void actualizarPesoActual(int id, double pesoAct) {
-        String sql = "UPDATE  paciente  SET  pesoActual =? WHERE  IdPaciente  =?;";
+        String sql = "UPDATE  paciente  SET  pesoActual =? WHERE  IdPaciente=?;";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setDouble(1, pesoAct);
@@ -139,9 +191,17 @@ public class PacienteData {
             JOptionPane.showMessageDialog(null, "Error al actualizar el peso buscado");
         }
     }
-//verifica si acerca al peso sin importar si sube o baja
 
-    public boolean seAcercaAlPaso(int id) {
+//verifica si acerca al peso sin importar si sube o baja
+    /**
+     * seAcercaAlPaso(int id): Verifica si un paciente está cerca de alcanzar su
+     * peso buscado. Realiza la consulta de sql y verifica si busca bajar o
+     * subir de peso y luego si acerca al peso devuelve true sino false
+     *
+     * @param id ID del paciente a verificar
+     * @return boolean true si se acerca al peso sino false
+     */
+    public boolean seAcercaAlPeso(int id) {
         String sql = "SELECT  * FROM  paciente  WHERE  IdPaciente  =?;";
         Paciente pac = null;
         boolean llega = false;
@@ -179,8 +239,18 @@ public class PacienteData {
         return llega;
     }
 
+    /**
+     * buscarPaciente(int id): Busca un paciente utilizando su ID.
+     *
+     * Realiza la consulta en la base de datos. Si se encuentra el paciente,
+     * devuelve un Paciente sino se muestra el mensaje que "No existe ese
+     * Alumno".
+     *
+     * @param id ID del paciente a buscar
+     * @return Paciente El paciente encontrado o null si no existe.
+     */
     public Paciente buscarPaciente(int id) {
-        String sql = "SELECT  *  FROM  paciente  WHERE  IdPaciente  =?;";
+        String sql = "SELECT * FROM  paciente WHERE IdPaciente=?;";
         Paciente pac = null;
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -188,7 +258,7 @@ public class PacienteData {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 pac = new Paciente();
-                pac.setIdPaciente(rs.getInt("IdPaciente "));
+                pac.setIdPaciente(rs.getInt("IdPaciente"));
                 pac.setNombre(rs.getString("Nombre"));
                 pac.setEdad(rs.getInt("Edad"));
                 pac.setAltura(rs.getDouble("Altura"));
@@ -204,12 +274,20 @@ public class PacienteData {
             rs.close();
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al buscar paciente");
+            JOptionPane.showMessageDialog(null, "Error al buscar paciente" + ex.getMessage());
         }
         return pac;
     }
-//Lista todos los pacientes
 
+//Lista todos los pacientes
+    /**
+     * listarPacientes(): Obtiene la lista de todos los paciente registrados en
+     * BD Realiza la consulta de la tabla paciente y guarda todos los resultados
+     * dentro un ArrayList<Paciente>. Si no se encuentra muestra un mensaje
+     * indicado que no hay pacientes registrados
+     *
+     * @return ArrayList<Paciente> Lista de todos los pacientes registrados.
+     */
     public ArrayList<Paciente> listarPacientes() {
         String sql = "SELECT * FROM paciente";
         int x = 0;
@@ -220,7 +298,7 @@ public class PacienteData {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 paciente = new Paciente();
-                paciente.setIdPaciente(rs.getInt("IdPaciente "));
+                paciente.setIdPaciente(rs.getInt("IdPaciente"));
                 paciente.setNombre(rs.getString("Nombre"));
                 paciente.setEdad(rs.getInt("Edad"));
                 paciente.setAltura(rs.getDouble("Altura"));
@@ -258,7 +336,7 @@ public class PacienteData {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 paciente = new Paciente();
-                paciente.setIdPaciente(rs.getInt("IdPaciente "));
+                paciente.setIdPaciente(rs.getInt("IdPaciente"));
                 paciente.setNombre(rs.getString("Nombre"));
                 paciente.setEdad(rs.getInt("Edad"));
                 paciente.setAltura(rs.getDouble("Altura"));
@@ -273,7 +351,7 @@ public class PacienteData {
                 x++;
             }
             if (x == 0) {
-                JOptionPane.showMessageDialog(null, "No hay Pacientes");
+                JOptionPane.showMessageDialog(null, "Ningun paciente llego al peso buscado");
             }
 
             ps.close();
@@ -285,12 +363,123 @@ public class PacienteData {
     }
 
     /**
-     * Convierte una cadena con formato ("palabra1,palabra2,palabra3,palabra4")
-     * en un HashSet<String>, separando cada palabra individualmente.
+     * listarLosQueNoLLegaron(): Se obtiene una lista de pacientes que no han
+     * alcanzado el peso buscado. Realiza la consulta de cuando el peso actual
+     * es distinto al buscado crea un ArrayList<Paciente> y guarda los que
+     * devuelve la consulta
      *
-     * @param cond Cadena a dividir, en formato de palabras separadas por comas.
-     * @return HashSet<String> Devuelve un conjunto de palabras sin duplicados y
-     * sin espacios adicionales.
+     * @return ArrayList<Paciente> Lista de pacientes que no han alcanzado el
+     * peso buscado
+     */
+    public ArrayList<Paciente> listarLosQueNoLLegaron() {
+        String sql = "SELECT * FROM paciente WHERE PesoActual<>PesoBuscado";
+        int x = 0;
+        Paciente paciente = null;
+        ArrayList<Paciente> lista = new ArrayList<>();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                paciente = new Paciente();
+                paciente.setIdPaciente(rs.getInt("IdPaciente"));
+                paciente.setNombre(rs.getString("Nombre"));
+                paciente.setEdad(rs.getInt("Edad"));
+                paciente.setAltura(rs.getDouble("Altura"));
+                paciente.setPesoActual(rs.getDouble("PesoActual"));
+                paciente.setPesoBuscado(rs.getDouble("PesoBuscado"));
+                paciente.setPesoInicial(rs.getDouble("PesoInical"));
+                paciente.setCondicionSalud(convertirStringSet(rs.getString("CondicionSalud")));
+
+                paciente.setEstado(rs.getBoolean("Estado"));
+
+                lista.add(paciente);
+                x++;
+            }
+            if (x == 0) {
+                JOptionPane.showMessageDialog(null, "Todos los pacientes llegaron al peso buscado");
+            }
+
+            ps.close();
+            rs.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla pacientes");
+        }
+        return lista;
+    }
+
+    /**
+     * listarLosQueLLegaron2(): Revisa y compara los pesos de los pacientes que
+     * llegaron y hasta superaron su meta, considera si el paciente debe subir o
+     * bajar de peso, se toma en cuenta su peso buscado con el inicial asi
+     * determina si desea subir o bajar, y si su peso actual llega o supera su
+     * meta lo guarda en el ArrayList llamada "llegaron"
+     *
+     * @return ArrayList<Paciente> Devuelve un ArrayList de Paciente
+     */
+    public ArrayList<Paciente> listarLosQueLLegaron2() {
+        ArrayList<Paciente> lista = listarPacientes();
+        ArrayList<Paciente> llegaron = new ArrayList<>();
+        try {
+            for (Paciente pac : lista) {
+                if (pac != null) {
+                    // Perder peso
+                    if (pac.getPesoInicial() > pac.getPesoBuscado()) {
+                        if (pac.getPesoActual() < pac.getPesoInicial() && pac.getPesoActual() <= pac.getPesoBuscado()) {
+                            llegaron.add(pac);
+                        }
+                    } // Ganar peso
+                    else if (pac.getPesoInicial() < pac.getPesoBuscado()) {
+                        if (pac.getPesoActual() > pac.getPesoInicial() && pac.getPesoActual() >= pac.getPesoBuscado()) {
+                            llegaron.add(pac);
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al listar los que llegaron");
+
+        }
+
+        return llegaron;
+    }
+
+    public ArrayList<Paciente> listarLosNoQueLLegaron2() {
+        ArrayList<Paciente> lista = listarPacientes();
+        ArrayList<Paciente> nollegaron = new ArrayList<>();
+        try {
+            for (Paciente pac : lista) {
+                if (pac != null) {
+                    // Perder peso
+                    if (pac.getPesoInicial() > pac.getPesoBuscado()) {
+                        if (pac.getPesoActual() > pac.getPesoBuscado()) {
+                            nollegaron.add(pac);
+                        }
+                    } // Ganar peso
+                    else if (pac.getPesoInicial() < pac.getPesoBuscado()) {
+                        if (pac.getPesoActual() < pac.getPesoBuscado()) {
+                            nollegaron.add(pac);
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al listar los que llegaron");
+
+        }
+
+        return nollegaron;
+    }
+
+    /**
+     * convertirStringSet(String cond): Convierte una cadena en un conjunto de
+     * cadenas.
+     *
+     * Separa una cadena por comas y agrega cada elemento a un HashSet,
+     * eliminando espacios en blanco. Retorna un HashSet vacío si la cadena es
+     * nula o vacía.
+     *
+     * @param cond - Cadena a convertir en un conjunto.
+     * @return HashSet<String> - Conjunto de cadenas resultante.
      */
     public HashSet<String> convertirStringSet(String cond) {
         HashSet<String> listahash = new HashSet<>();
@@ -303,5 +492,22 @@ public class PacienteData {
             }
         }
         return listahash;
+    }
+
+    /**
+     * convertirSetString(HashSet<String> list): Convierte un conjunto de
+     * cadenas en una sola cadena.
+     *
+     * Une los elementos de un HashSet en una cadena, separados por comas.
+     * Retorna una cadena vacía si el conjunto es nulo o está vacío.
+     *
+     * @param list - Conjunto de cadenas a convertir.
+     * @return String - Cadena resultante de la conversión.
+     */
+    public String convertirSetString(HashSet<String> list) {
+        if (list == null || list.isEmpty()) {
+            return "";
+        }
+        return String.join(",", list);
     }
 }
