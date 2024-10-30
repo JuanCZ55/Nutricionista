@@ -37,17 +37,18 @@ public class Menu extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMIngreso = new javax.swing.JMenu();
         jMIPaciente = new javax.swing.JMenuItem();
-        jMiDieta = new javax.swing.JMenuItem();
-        jMIMenuDiario = new javax.swing.JMenuItem();
-        jMIComidas = new javax.swing.JMenuItem();
-        jMIIngredientes = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMIListaPacientes = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMCuantoFalta = new javax.swing.JMenuItem();
+        jMIListaPacientes = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMiDieta = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMIMenuDiario = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        jMIComidas = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
+        jMIIngredientes = new javax.swing.JMenuItem();
 
         jCheckBoxMenuItem1.setSelected(true);
         jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
@@ -62,7 +63,7 @@ public class Menu extends javax.swing.JFrame {
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 660, Short.MAX_VALUE)
+            .addGap(0, 673, Short.MAX_VALUE)
         );
 
         JDPMenu.setLayer(jDesktopPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -75,12 +76,10 @@ public class Menu extends javax.swing.JFrame {
         );
         JDPMenuLayout.setVerticalGroup(
             JDPMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(JDPMenuLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jDesktopPane1))
+            .addComponent(jDesktopPane1)
         );
 
-        jMIngreso.setText("Ingresos");
+        jMIngreso.setText("Paciente");
 
         jMIPaciente.setText("Pacientes");
         jMIPaciente.addActionListener(new java.awt.event.ActionListener() {
@@ -90,58 +89,13 @@ public class Menu extends javax.swing.JFrame {
         });
         jMIngreso.add(jMIPaciente);
 
-        jMiDieta.setText("Dieta");
-        jMiDieta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMiDietaActionPerformed(evt);
-            }
-        });
-        jMIngreso.add(jMiDieta);
-
-        jMIMenuDiario.setText("MenuDiario");
-        jMIngreso.add(jMIMenuDiario);
-
-        jMIComidas.setText("Comidas");
-        jMIngreso.add(jMIComidas);
-
-        jMIIngredientes.setText("Ingredientes");
-        jMIIngredientes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMIIngredientesActionPerformed(evt);
-            }
-        });
-        jMIngreso.add(jMIIngredientes);
-
-        jMenuBar1.add(jMIngreso);
-
-        jMenu2.setText("Listas");
-
-        jMIListaPacientes.setText("Lista de Pacientes");
-        jMIListaPacientes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMIListaPacientesActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMIListaPacientes);
-
-        jMenuBar1.add(jMenu2);
-
-        jMenu3.setText("Menu3");
-
-        jMenuItem5.setText("jMenuItem5");
-        jMenu3.add(jMenuItem5);
-
-        jMenuBar1.add(jMenu3);
-
-        jMenu1.setText("Adicionales.");
-
         jMenuItem1.setText("IMC");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jMIngreso.add(jMenuItem1);
 
         jMCuantoFalta.setText("Cuanto Falta");
         jMCuantoFalta.addActionListener(new java.awt.event.ActionListener() {
@@ -149,9 +103,58 @@ public class Menu extends javax.swing.JFrame {
                 jMCuantoFaltaActionPerformed(evt);
             }
         });
-        jMenu1.add(jMCuantoFalta);
+        jMIngreso.add(jMCuantoFalta);
+
+        jMIListaPacientes.setText("Lista de Pacientes");
+        jMIListaPacientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIListaPacientesActionPerformed(evt);
+            }
+        });
+        jMIngreso.add(jMIListaPacientes);
+
+        jMenuBar1.add(jMIngreso);
+
+        jMenu2.setText("Dieta");
+
+        jMiDieta.setText("Dieta");
+        jMiDieta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMiDietaActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMiDieta);
+
+        jMenuBar1.add(jMenu2);
+
+        jMenu3.setText("Menu");
+
+        jMenuItem5.setText("Lista de menus");
+        jMenu3.add(jMenuItem5);
+
+        jMIMenuDiario.setText("MenuDiario");
+        jMenu3.add(jMIMenuDiario);
+
+        jMenuBar1.add(jMenu3);
+
+        jMenu1.setText("Comidas");
+
+        jMIComidas.setText("Comidas");
+        jMenu1.add(jMIComidas);
 
         jMenuBar1.add(jMenu1);
+
+        jMenu4.setText("Ingredientes");
+
+        jMIIngredientes.setText("Ingredientes");
+        jMIIngredientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIIngredientesActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMIIngredientes);
+
+        jMenuBar1.add(jMenu4);
 
         setJMenuBar(jMenuBar1);
 
@@ -193,8 +196,10 @@ public class Menu extends javax.swing.JFrame {
         JDPMenu.removeAll();
         JDPMenu.repaint();
         Dieta listP = new Dieta();
+        /*
         JDPMenu.add(listP);
         listP.setVisible(true);
+        */
     }//GEN-LAST:event_jMiDietaActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -262,6 +267,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem5;

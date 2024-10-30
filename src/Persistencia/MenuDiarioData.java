@@ -37,7 +37,7 @@ public class MenuDiarioData {
                 ps.setInt(3, md.getIdDieta());
                 for (Comidas aux : comidas) {
                     ps.setInt(4, md.getIdMenu());
-                    ps.setInt(5, aux.getIdComidas());
+                    ps.setInt(5, aux.getIdComida());
                 }
             }   
         } catch (SQLException ex) {
@@ -53,7 +53,7 @@ public class MenuDiarioData {
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             for (Comidas aux : comidas) {
-                ps.setInt(1, aux.getIdComidas());
+                ps.setInt(1, aux.getIdComida());
                 ps.setInt(2, md.getIdDieta());
                 ps.setInt(3, md.getDia());
             }
@@ -158,6 +158,7 @@ public class MenuDiarioData {
         return lista;
     }
     
+    //
     public ArrayList<MenuDiario> listarMenuDiarioPorPaciente(int idPaciente){
         String sql = "SELECT IdMenuDiario, Dia, CaloriasDia, IdDieta, Estado\n" +
         "FROM menudiario m JOIN dieta d ON m.IdDieta = d.IdDieta\n" +
@@ -190,6 +191,8 @@ public class MenuDiarioData {
 
         return lista;
     }
+    //
+    
     public ArrayList<MenuDiario> listarMenuDiarioPorPacienteYDia(int idPaciente, int dia){
         String sql = "SELECT IdMenuDiario, Dia, CaloriasDia, IdDieta, Estado"+
         " FROM menudiario m JOIN dieta d ON m.IdDieta = d.IdDieta\n" +

@@ -3,12 +3,12 @@ package Vista;
 
 import javax.swing.table.DefaultTableModel;
 
-public class Dieta extends JInternalFrameImagen {
+public class Dieta  {
 
     private DefaultTableModel TbDieta;
     public Dieta() {
         initComponents();
-        this.setImagen("/imagen/FondoAzulRombo.png");//Buscar una imagen y ponerla
+        //this.setImagen("/imagen/FondoAzulRombo.png");//Buscar una imagen y ponerla
         this.TbDieta = new DefaultTableModel();
         TbDieta.addColumn("IDpaciente");
         TbDieta.addColumn("");
