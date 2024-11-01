@@ -7,6 +7,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -14,6 +15,8 @@ public class DietaVista extends javax.swing.JInternalFrame {
 
     private DefaultTableModel TbDieta;
     private Persistencia.DietaData dietaData;
+    public static List<Dieta> listaDieta = new ArrayList<>();
+     
     public DietaVista() {
         initComponents();
         this.dietaData = new DietaData();
@@ -28,8 +31,8 @@ public class DietaVista extends javax.swing.JInternalFrame {
         TbDieta.addColumn("Peso final");
         TbDieta.addColumn("Total calorias");
         TbDieta.addColumn("Estado");
-        jTablDieta.setModel(TbDieta);
-        jTablDieta.setDefaultEditor(Object.class, null);
+        jTablDietaVista.setModel(TbDieta);
+        jTablDietaVista.setDefaultEditor(Object.class, null);
         //llenarTabla(); Hacer el metodo para llenar la tabla
     }
     public void llenarTabla(List<Modelo.Dieta> listaDieta){
@@ -67,7 +70,7 @@ public class DietaVista extends javax.swing.JInternalFrame {
         jButton4 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTablDieta = new javax.swing.JTable();
+        jTablDietaVista = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -94,7 +97,7 @@ public class DietaVista extends javax.swing.JInternalFrame {
 
         jButton2.setText("Actualizar");
 
-        jTablDieta.setModel(new javax.swing.table.DefaultTableModel(
+        jTablDietaVista.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -105,7 +108,7 @@ public class DietaVista extends javax.swing.JInternalFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(jTablDieta);
+        jScrollPane1.setViewportView(jTablDietaVista);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel1.setText("Dietas segun paciente");
@@ -117,6 +120,11 @@ public class DietaVista extends javax.swing.JInternalFrame {
         jLabel4.setText("Ingrese Fecha Inicial y  final");
 
         jButton7.setText("Baja");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         jButton6.setText("Alta");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -242,7 +250,34 @@ public class DietaVista extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
-        // TODO add your handling code here:
+    
+    String textID = jTextFieldIDpaciente.getText().trim();
+    String textNombre = jTextFieldBuscarPorNombre.getText().trim();
+    Dieta dieta = null;
+    int filaSeleccionada = jTablDietaVista.getSelectedRow();
+    Dieta dietaSeleccionada = null;
+
+  
+        if (!textID.isEmpty()) {
+            int idPaciente = Integer.parseInt(textID);  
+            dieta = dietaData.obtenerDieta(idPaciente);
+            dietaData.guardarDieta(dieta);
+            
+        }
+        if (!textNombre.isEmpty()) {
+           dieta = dietaData.buscarDietaSegunNombre(textNombre);
+           dietaData.guardarDieta(dieta);
+            
+        }
+        if (filaSeleccionada >= 0) {
+            dietaSeleccionada = (Modelo.Dieta) jTablDietaVista.getValueAt(filaSeleccionada, 0); 
+            if (dietaSeleccionada != null) {
+                 dietaData.guardarDieta(dietaSeleccionada); // Guarda la dieta seleccionada 
+            }
+            
+        }
+    
+                
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -263,7 +298,6 @@ public class DietaVista extends javax.swing.JInternalFrame {
         fechaFinal = jCalendariFinal.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     }
     
-    List<Modelo.Dieta> listaDieta = new ArrayList<>();
     Modelo.Dieta dieta = null;
     
     
@@ -314,6 +348,37 @@ public class DietaVista extends javax.swing.JInternalFrame {
     }
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    
+    String textID = jTextFieldIDpaciente.getText().trim();
+    String textNombre = jTextFieldBuscarPorNombre.getText().trim();
+    Dieta dieta = null;
+    int filaSeleccionada = jTablDietaVista.getSelectedRow();
+    Dieta dietaSeleccionada = null;
+
+     
+        if (!textID.isEmpty()) {
+            int idPaciente = Integer.parseInt(textID);  
+            dieta = dietaData.obtenerDieta(idPaciente);
+            dietaData.bajaLogica(dieta.getIdDieta());
+            
+        }
+        if (!textNombre.isEmpty()) {
+           dieta = dietaData.buscarDietaSegunNombre(textNombre);
+           dietaData.bajaLogica(dieta.getIdDieta());
+            
+        }
+        if (filaSeleccionada >= 0) {
+            dietaSeleccionada = (Modelo.Dieta) jTablDietaVista.getValueAt(filaSeleccionada, 0); 
+            if (dietaSeleccionada != null) {
+                 dietaData.bajaLogica(dietaSeleccionada.getIdDieta()); // Guarda la dieta seleccionada 
+            }
+            
+        }
+    
+                       
+    }//GEN-LAST:event_jButton7ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -332,7 +397,7 @@ public class DietaVista extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTablDieta;
+    private javax.swing.JTable jTablDietaVista;
     private javax.swing.JTextField jTextFieldBuscarPorNombre;
     private javax.swing.JTextField jTextFieldIDpaciente;
     // End of variables declaration//GEN-END:variables
