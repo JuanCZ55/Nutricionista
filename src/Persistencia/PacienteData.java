@@ -279,7 +279,44 @@ public class PacienteData {
         return pac;
     }
 
+    public ArrayList<Paciente> buscarPacientesPorNombre(String nom) {
+        String sql = "SELECT * FROM paciente WHERE Nombre LIKE CONCAT('%', ?, '%') ";
+        int x = 0;
+        Paciente paciente = null;
+        ArrayList<Paciente> lista = new ArrayList<>();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, nom);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                paciente = new Paciente();
+                paciente.setIdPaciente(rs.getInt("IdPaciente"));
+                paciente.setNombre(rs.getString("Nombre"));
+                paciente.setEdad(rs.getInt("Edad"));
+                paciente.setAltura(rs.getDouble("Altura"));
+                paciente.setPesoActual(rs.getDouble("PesoActual"));
+                paciente.setPesoBuscado(rs.getDouble("PesoBuscado"));
+                paciente.setPesoInicial(rs.getDouble("PesoInical"));
+                paciente.setCondicionSalud(convertirStringSet(rs.getString("CondicionSalud")));
+
+                paciente.setEstado(rs.getBoolean("Estado"));
+
+                lista.add(paciente);
+                x++;
+            }
+            if (x == 0) {
+                JOptionPane.showMessageDialog(null, "No hay Pacientes que tengan ese nombre");
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla pacientes");
+        }
+
+        return lista;
+    }
 //Lista todos los pacientes
+
     /**
      * listarPacientes(): Obtiene la lista de todos los paciente registrados en
      * BD Realiza la consulta de la tabla paciente y guarda todos los resultados
@@ -324,8 +361,8 @@ public class PacienteData {
 
         return lista;
     }
-//Devuelve una lista de los pacientes que tienen el mismo peso buscado con el actual
 
+//Devuelve una lista de los pacientes que tienen el mismo peso buscado con el actual
     public ArrayList<Paciente> listarLosQueLLegaron() {
         String sql = "SELECT * FROM paciente WHERE PesoActual=PesoBuscado";
         int x = 0;

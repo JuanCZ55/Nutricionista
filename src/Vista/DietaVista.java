@@ -1,9 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
- */
-package Vista;
 
+package Vista;
 import Modelo.Dieta;
 import Persistencia.DietaData;
 import java.time.LocalDate;
@@ -13,14 +9,11 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Personal
- */
+
 public class DietaVista extends javax.swing.JInternalFrame {
 
     private DefaultTableModel TbDieta;
-    private DietaData dietaData;
+    private Persistencia.DietaData dietaData;
     public DietaVista() {
         initComponents();
         this.dietaData = new DietaData();
@@ -39,12 +32,12 @@ public class DietaVista extends javax.swing.JInternalFrame {
         jTablDieta.setDefaultEditor(Object.class, null);
         //llenarTabla(); Hacer el metodo para llenar la tabla
     }
-    public void llenarTabla(List<Dieta> listaDieta){
+    public void llenarTabla(List<Modelo.Dieta> listaDieta){
     TbDieta.setRowCount(0);
     if (listaDieta == null || listaDieta.isEmpty()) {
         return; 
     }
-        for (Dieta dieta : listaDieta) {
+        for (Modelo.Dieta dieta : listaDieta) {
             if (dieta != null) {
                 Object[] rowData = new Object[9];
                 rowData[0] = dieta.getIdDieta();
@@ -270,8 +263,8 @@ public class DietaVista extends javax.swing.JInternalFrame {
         fechaFinal = jCalendariFinal.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     }
     
-    List<Dieta> listaDieta = new ArrayList<>();
-    Dieta dieta = null;
+    List<Modelo.Dieta> listaDieta = new ArrayList<>();
+    Modelo.Dieta dieta = null;
     
     
      try { 
