@@ -24,7 +24,7 @@ public class DietaData {
 
     public void guardarDieta(Dieta dieta) {
 
-        String sql = "UPDATE dieta SET nombreD = ?, idMenu = ?, idPaciente = ?, fechaIni = ?, fechaFin = ?, pesoInicial = ?, pesoFinal = ?, totalCalorias = ?, estado = ? WHERE idDieta = ?";
+        String sql = "UPDATE dieta SET nombreDieta = ?, idMenu = ?, idPaciente = ?, fechaIni = ?, fechaFin = ?, pesoInicial = ?, pesoFinal = ?, totalCalorias = ?, estado = ? WHERE idDieta = ?";
         try {
 
             PreparedStatement ps = con.prepareStatement(sql);
@@ -102,9 +102,6 @@ public class DietaData {
                 PacienteData pacienteData = new PacienteData(); // Instanciar PacienteData
                 Paciente paciente = pacienteData.buscarPaciente(idPaciente); // Buscar el paciente por id
                 dieta.setPaciente(paciente);
-
-            } else {
-                JOptionPane.showMessageDialog(null, "Dieta no encontrada");
             }
             ps.close();
         } catch (SQLException ex) {
@@ -114,7 +111,7 @@ public class DietaData {
     }
 
     public Dieta buscarDietaSegunNombre(String nombreD) {
-        String sql = "SELECT * FROM dieta WHERE nombreD = ?";
+        String sql = "SELECT * FROM dieta WHERE nombreDieta = ?";
         Dieta dieta = null;
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -136,8 +133,6 @@ public class DietaData {
                 Paciente paciente = pacienteData.buscarPaciente(idPaciente); // Buscar el paciente por id
                 dieta.setPaciente(paciente);
 
-            } else {
-                JOptionPane.showMessageDialog(null, "Dieta no encontrada");
             }
             ps.close();
         } catch (SQLException ex) {
@@ -147,7 +142,7 @@ public class DietaData {
     }
 
     public List<Dieta> buscarDietasEnRangoDeFechas(LocalDate fechaInicio, LocalDate fechaFin) {
-        String sql = "SELECT * FROM dieta WHERE fechaIni BETWEEN ? AND ?";
+        String sql = "SELECT * FROM dieta WHERE fechaInicial BETWEEN ? AND ?";
         List<Dieta> dietas = new ArrayList<>();
 
         try {
@@ -175,10 +170,6 @@ public class DietaData {
 
                 // Agregar dieta a la lista
                 dietas.add(dieta);
-            }
-
-            if (dietas.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "No se encontraron dietas en el rango de fechas especificado");
             }
 
             ps.close();
@@ -258,12 +249,13 @@ public class DietaData {
                 dieta.setFechaIni(rsDieta.getDate("FechaIni").toLocalDate());
                 dieta.setFechaFin(rsDieta.getDate("FechaFin").toLocalDate());
                 dieta.setTotalCalorias(rsDieta.getInt("TotalCalorias"));
-
+                
                 int idDieta = rsDieta.getInt("IdDieta");
 
                 // Obtiene los menús diarios para esta dieta
-                List<MenuDiario> menusDiarios = obtenerMenusDiarios(idDieta);
-                dieta.setMenusDiarios(menusDiarios);
+                MenuDiarioData menuData = new MenuDiarioData();
+                List<MenuDiario> menusDiarios = menuData.listarMenuDiario();
+                dieta.setMenus((ArrayList<MenuDiario>) menusDiarios);
 
             } else {
                 System.out.println("No se encontró ninguna dieta para el paciente con ID: " + idPaciente);
@@ -274,196 +266,5 @@ public class DietaData {
         return dieta;
     }
 
-    private List<MenuDiario> obtenerMenusDiarios(int idDieta) {
-        List<MenuDiario> menusDiarios = new ArrayList<>();
-        String preguntaMenuDiario = "SELECT * FROM MenuDiario WHERE IdDieta = ?";
-
-        try {
-            PreparedStatement stmtMenuDiario = con.prepareStatement(preguntaMenuDiario);
-            stmtMenuDiario.setInt(1, idDieta);
-            ResultSet rsMenuDiario = stmtMenuDiario.executeQuery();
-
-            while (rsMenuDiario.next()) {
-                MenuDiario menu = new MenuDiario();
-                menu.setDia(rsMenuDiario.getString("Dia"));
-                menu.setCaloriasTotales(rsMenuDiario.getInt("CaloriasTotales"));
-
-                int idMenuDiario = rsMenuDiario.getInt("IdMenuDiario");
-
-                // Obtiene las comidas para este menú diario
-                List<Comida> comidas = obtenerComidas(idMenuDiario);
-                menu.setComidas(comidas);
-
-                menusDiarios.add(menu);
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al obtener menús diarios: " + e.getMessage());
-        }
-        return menusDiarios;
-    }
-
-    private List<Comida> obtenerComidas(int idMenuDiario) {
-        List<Comida> comidas = new ArrayList<>();
-        String preguntaComidas = "SELECT * FROM Comidas WHERE IdComidas IN (SELECT IdComidas FROM MenuComidas WHERE IdMenuDiario = ?)";
-
-        try {
-            PreparedStatement stmtComidas = con.prepareStatement(preguntaComidas);
-            stmtComidas.setInt(1, idMenuDiario);
-            ResultSet rsComidas = stmtComidas.executeQuery();
-
-            while (rsComidas.next()) {
-                Comida comida = new Comida();
-                comida.setNombre(rsComidas.getString("Nombre"));
-                comida.setTipoDeComida(rsComidas.getString("TipoDeComida"));
-                comida.setCaloriasTotal(rsComidas.getInt("CaloriasTotal"));
-
-                int idComidas = rsComidas.getInt("IdComidas");
-
-                // Obtiene los ingredientes para esta comida
-                List<Ingrediente> ingredientes = obtenerIngredientes(idComidas);
-                comida.setIngredientes(ingredientes);
-
-                comidas.add(comida);
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al obtener comidas: " + e.getMessage());
-        }
-        return comidas;
-    }
-
-    private List<Ingrediente> obtenerIngredientes(int idComidas) {
-        List<Ingrediente> ingredientes = new ArrayList<>();
-        String preguntaIngredientes = "SELECT * FROM Ingredientes WHERE IdIngredientes IN (SELECT IdIngredientes FROM IngredientesComidas WHERE IdComidas = ?)";
-
-        try {
-            PreparedStatement stmtIngredientes = con.prepareStatement(preguntaIngredientes);
-            stmtIngredientes.setInt(1, idComidas);
-            ResultSet rsIngredientes = stmtIngredientes.executeQuery();
-
-            while (rsIngredientes.next()) {
-                Ingrediente ingrediente = new Ingrediente();
-                ingrediente.setNombre(rsIngredientes.getString("Nombre"));
-                ingrediente.setCaloriasPor100gr(rsIngredientes.getInt("Caloriaspor100gr"));
-                ingredientes.add(ingrediente);
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al obtener ingredientes: " + e.getMessage());
-        }
-        return ingredientes;
-    }
-
-    public ArrayList<String[]> obtenerInformacionCompletaDieta(int idDieta) {
-        ArrayList<String[]> informacionCompleta = new ArrayList<>();
-
-        // Busca la dieta
-        Dieta dieta = buscarDieta(idDieta);
-        if (dieta == null) {
-            informacionCompleta.add(new String[]{"No se encontró la dieta con ID: " + idDieta});
-            return informacionCompleta;
-        }
-
-        // Obtiene el paciente asociado a la dieta
-        Paciente paciente = dieta.getPaciente();
-
-        // Obtiene los menús diarios de la dieta
-        List<MenuDiario> menusDiarios = dieta.getMenus();
-
-        // Itera sobre cada menú diario para obtener las comidas y sus ingredientes
-        for (MenuDiario menu : menusDiarios) {
-            List<Comida> comidas = obtenerComidas(menu.getIdMenuDiario());
-            for (Comida comida : comidas) {
-                List<Ingrediente> ingredientes = obtenerIngredientes(comida.getIdComidas());
-
-                // Si no hay ingredientes, al menos agregar la comida sin ingredientes
-                if (ingredientes.isEmpty()) {
-                    informacionCompleta.add(new String[]{
-                        dieta.getNombreD(),
-                        paciente.getNombre(),
-                        paciente.getApellido(),
-                        menu.getDia() + "",
-                        comida.getNombre(),
-                        comida.getTipoDeComida(),
-                        String.valueOf(comida.getCaloriasTotal()),
-                        "Sin ingredientes"
-                    });
-                } else {
-                    // Agregar cada ingrediente de la comida
-                    for (Ingrediente ingrediente : ingredientes) {
-                        informacionCompleta.add(new String[]{
-                            dieta.getNombreD(),
-                            paciente.getNombre(),
-                            paciente.getApellido(),
-                            menu.getDia() + "",
-                            comida.getNombre(),
-                            comida.getTipoDeComida(),
-                            String.valueOf(comida.getCaloriasTotal()),
-                            ingrediente.getNombre(),
-                            String.valueOf(ingrediente.getCaloriasPor100gr())
-                        });
-                    }
-                }
-            }
-        }
-
-        return informacionCompleta;
-    }
-
-    public ArrayList<String[]> obtenerInformacionDietaPorDia(int idDieta, int dia) {
-        ArrayList<String[]> informacionPorDia = new ArrayList<>();
-
-        // Busca la dieta
-        Dieta dieta = buscarDieta(idDieta);
-        if (dieta == null) {
-            informacionPorDia.add(new String[]{"No se encontró la dieta con ID: " + idDieta});
-            return informacionPorDia;
-        }
-
-        // Obtiene el paciente asociado a la dieta
-        Paciente paciente = dieta.getPaciente();
-
-        // Obtiene los menús diarios de la dieta
-        List<MenuDiario> menusDiarios = dieta.getMenus();
-
-        // Itera sobre cada menú diario para obtener las comidas y sus ingredientes
-        for (MenuDiario menu : menusDiarios) {
-            if (menu.getDia() == dia) {  // Filtra solo por el día especificado
-                List<Comida> comidas = obtenerComidas(menu.getIdMenuDiario());
-                for (Comida comida : comidas) {
-                    List<Ingrediente> ingredientes = obtenerIngredientes(comida.getIdComidas());
-
-                    // Si no hay ingredientes, al menos agregar la comida sin ingredientes
-                    if (ingredientes.isEmpty()) {
-                        informacionPorDia.add(new String[]{
-                            dieta.getNombreD(),
-                            paciente.getNombre(),
-                            paciente.getApellido(),
-                            String.valueOf(menu.getDia()),
-                            comida.getNombre(),
-                            comida.getTipoDeComida(),
-                            String.valueOf(comida.getCaloriasTotal()),
-                            "Sin ingredientes"
-                        });
-                    } else {
-                        // Agregar cada ingrediente de la comida
-                        for (Ingrediente ingrediente : ingredientes) {
-                            informacionPorDia.add(new String[]{
-                                dieta.getNombreD(),
-                                paciente.getNombre(),
-                                paciente.getApellido(),
-                                String.valueOf(menu.getDia()),
-                                comida.getNombre(),
-                                comida.getTipoDeComida(),
-                                String.valueOf(comida.getCaloriasTotal()),
-                                ingrediente.getNombre(),
-                                String.valueOf(ingrediente.getCaloriasPor100gr())
-                            });
-                        }
-                    }
-                }
-            }
-        }
-
-        return informacionPorDia;
-    }
-
+   
 }

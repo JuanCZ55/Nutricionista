@@ -195,11 +195,11 @@ public class Menu extends javax.swing.JFrame {
     private void jMiDietaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMiDietaActionPerformed
         JDPMenu.removeAll();
         JDPMenu.repaint();
-        Dieta listP = new Dieta();
-        /*
+        DietaVista listP = new DietaVista();
+        
         JDPMenu.add(listP);
         listP.setVisible(true);
-        */
+        
     }//GEN-LAST:event_jMiDietaActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
