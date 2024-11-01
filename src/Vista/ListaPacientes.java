@@ -6,8 +6,8 @@ package Vista;
 
 import Modelo.Paciente;
 import Persistencia.PacienteData;
-import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
 
 /**
  *
@@ -16,10 +16,13 @@ import javax.swing.table.DefaultTableModel;
 public class ListaPacientes extends javax.swing.JInternalFrame {
 
     private final PacienteData pd = new PacienteData();
+    private DefaultTableModel modelo;
 
     public ListaPacientes() {
         initComponents();
-
+        modelo = (DefaultTableModel) jTtablaPacientes.getModel();
+        jLNombre.setVisible(false);
+        jTFNombre.setVisible(false);
     }
 
     /**
@@ -32,11 +35,68 @@ public class ListaPacientes extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTtablaPacientes = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jCBSeleccion = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
+        jLNombre = new javax.swing.JLabel();
+        jTFNombre = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTtablaPacientes = new javax.swing.JTable();
+
+        jLabel1.setText("Listar Pacientes por:");
+
+        jCBSeleccion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Elegir", "Todos", "Los que llegaron al peso buscado", "Los que no llegaron al peso buscado", "Nombre" }));
+        jCBSeleccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCBSeleccionActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel2.setText("Lista de Pacientes");
+
+        jLNombre.setText("Ingrese el Nombre: ");
+
+        jTFNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTFNombreKeyReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(66, 66, 66)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(63, 63, 63)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jCBSeleccion, 0, 239, Short.MAX_VALUE)
+                    .addComponent(jTFNombre))
+                .addContainerGap(246, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jCBSeleccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLNombre)
+                    .addComponent(jTFNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(76, Short.MAX_VALUE))
+        );
 
         jTtablaPacientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -50,7 +110,7 @@ public class ListaPacientes extends javax.swing.JInternalFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, true, true
+                false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -59,64 +119,34 @@ public class ListaPacientes extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(jTtablaPacientes);
         if (jTtablaPacientes.getColumnModel().getColumnCount() > 0) {
-            jTtablaPacientes.getColumnModel().getColumn(0).setResizable(false);
-            jTtablaPacientes.getColumnModel().getColumn(0).setPreferredWidth(20);
-            jTtablaPacientes.getColumnModel().getColumn(1).setMinWidth(23);
+            jTtablaPacientes.getColumnModel().getColumn(0).setPreferredWidth(10);
+            jTtablaPacientes.getColumnModel().getColumn(1).setPreferredWidth(35);
+            jTtablaPacientes.getColumnModel().getColumn(2).setPreferredWidth(15);
+            jTtablaPacientes.getColumnModel().getColumn(3).setPreferredWidth(20);
+            jTtablaPacientes.getColumnModel().getColumn(5).setPreferredWidth(60);
+            jTtablaPacientes.getColumnModel().getColumn(6).setPreferredWidth(60);
+            jTtablaPacientes.getColumnModel().getColumn(7).setPreferredWidth(60);
         }
-
-        jLabel1.setText("Listar Pacientes por:");
-
-        jCBSeleccion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Elegir", "Todos", "Los que llegaron", "Los que no llegaron" }));
-        jCBSeleccion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCBSeleccionActionPerformed(evt);
-            }
-        });
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel2.setText("Lista de Pacientes");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(66, 66, 66)
-                .addComponent(jLabel1)
-                .addGap(63, 63, 63)
-                .addComponent(jCBSeleccion, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(199, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jCBSeleccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(65, 65, 65)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -125,41 +155,66 @@ public class ListaPacientes extends javax.swing.JInternalFrame {
     private void jCBSeleccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBSeleccionActionPerformed
         ArrayList<Paciente> lp;
         if (jCBSeleccion.getSelectedItem().equals("Todos")) {
+            jLNombre.setVisible(false);
+            jTFNombre.setVisible(false);
             lp = pd.listarPacientes();
             enlistarPacientes(lp);
-        } else if (jCBSeleccion.getSelectedItem().equals("Los que llegaron")) {
+        } else if (jCBSeleccion.getSelectedItem().equals("Los que llegaron al peso buscado")) {
+            jLNombre.setVisible(false);
+            jTFNombre.setVisible(false);
+            modelo.setRowCount(0);
             lp = pd.listarLosQueLLegaron();
             enlistarPacientes(lp);
-        } else if (jCBSeleccion.getSelectedItem().equals("Los que no llegaron")) {
+        } else if (jCBSeleccion.getSelectedItem().equals("Los que no llegaron al peso buscado")) {
+            jLNombre.setVisible(false);
+            jTFNombre.setVisible(false);
+            modelo.setRowCount(0);
             lp = pd.listarLosQueNoLLegaron();
             enlistarPacientes(lp);
+        } else if (jCBSeleccion.getSelectedItem().equals("Nombre")) {
+            modelo.setRowCount(0);
+            jLNombre.setVisible(true);
+            jTFNombre.setVisible(true);
+        } else if (jCBSeleccion.getSelectedItem().equals("Elegir")) {
+            modelo.setRowCount(0);
+            jLNombre.setVisible(false);
+            jTFNombre.setVisible(false);
         }
     }//GEN-LAST:event_jCBSeleccionActionPerformed
-    private void enlistarPacientes(ArrayList<Paciente> lista) {
-        DefaultTableModel modelo = (DefaultTableModel) jTtablaPacientes.getModel();
-        modelo.setRowCount(0);
-        for (Paciente aux : lista) {
-            modelo.addRow(new Object[]{
-                aux.getIdPaciente(),
-                aux.getNombre(),
-                aux.getEdad(),
-                aux.getAltura(),
-                pd.convertirSetString(aux.getCondicionSalud()),
-                aux.getPesoActual(),
-                aux.getPesoBuscado(),
-                aux.getPesoInicial(),
-                aux.isEstado()
-            });
-        }
 
+    private void jTFNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFNombreKeyReleased
+        String ingreso = jTFNombre.getText();
+        ArrayList<Paciente> lp = pd.buscarPacientesPorNombre(ingreso);
+        enlistarPacientes(lp);
+    }//GEN-LAST:event_jTFNombreKeyReleased
+
+    private void enlistarPacientes(ArrayList<Paciente> lista) {
+        modelo.setRowCount(0);
+        if (!lista.isEmpty()) {
+            for (Paciente aux : lista) {
+                modelo.addRow(new Object[]{
+                    aux.getIdPaciente(),
+                    aux.getNombre(),
+                    aux.getEdad(),
+                    aux.getAltura(),
+                    pd.convertirSetString(aux.getCondicionSalud()),
+                    aux.getPesoActual(),
+                    aux.getPesoBuscado(),
+                    aux.getPesoInicial(),
+                    aux.isEstado()
+                });
+            }
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> jCBSeleccion;
+    private javax.swing.JLabel jLNombre;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTFNombre;
     private javax.swing.JTable jTtablaPacientes;
     // End of variables declaration//GEN-END:variables
 }
