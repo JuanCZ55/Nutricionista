@@ -8,12 +8,12 @@ package Vista;
  *
  * @author Usuario
  */
-public class Alimento extends javax.swing.JInternalFrame {
+public class Comidas extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form Alimento
      */
-    public Alimento() {
+    public Comidas() {
         initComponents();
     }
 
