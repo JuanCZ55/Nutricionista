@@ -99,6 +99,34 @@ public class ComidaData {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla comida: " + ex.getMessage());
         }
     }
+    public Comidas buscarComida(int id) {
+        String sql = "SELECT * FROM  ingredientes WHERE IdIngrediente=?;";
+        Comidas comid = null;
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery(); //devuelve consulta
+            if (rs.next()) { 
+                comid = new Comidas(); //creacion del objeto
+               comid.setIdComida(rs.getInt("IdComida"));
+               comid.setNombre(rs.getString("Nombre"));
+               comid.setTipoDeComida(rs.getString("TipoDeComida"));
+               comid.setCaloriasComida(rs.getDouble("CaloriasComida"));
+               comid.setEstado(rs.getBoolean("Estado"));
+               comid.setNoApto(rs.getString("NoApto"));
+               
+
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe esa comida");
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar la comida" + ex.getMessage());
+        }
+      return comid; 
+    
+    }
 }
 
 
