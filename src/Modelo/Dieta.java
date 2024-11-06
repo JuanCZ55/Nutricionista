@@ -12,9 +12,7 @@ public class Dieta {
     private Paciente paciente;
     private LocalDate fechaIni;
     private LocalDate fechaFin;
-    private double pesoInicial;
-    private double pesoFinal;
-    private int totalCalorias;
+    private double totalCalorias;
     private boolean estado;
 
     public Dieta() {
@@ -24,14 +22,12 @@ public class Dieta {
         this.idDieta = idDieta;
     }
 
-    public Dieta(int idDieta, String nombreD, Paciente paciente, LocalDate fechaIni, LocalDate fechaFin, double pesoInicial, double pesoFinal, int totalCalorias, boolean estado) {
+    public Dieta(int idDieta, String nombreD, Paciente paciente, LocalDate fechaIni, LocalDate fechaFin, int totalCalorias, boolean estado) {
         this.idDieta = idDieta;
         this.nombreD = nombreD;
         this.paciente = paciente;
         this.fechaIni = fechaIni;
         this.fechaFin = fechaFin;
-        this.pesoInicial = pesoInicial;
-        this.pesoFinal = pesoFinal;
         this.totalCalorias = totalCalorias;
         this.estado = estado;
         this.Menus = new ArrayList<>();
@@ -39,37 +35,31 @@ public class Dieta {
     }
     
     
-    public Dieta(String nombreD, ArrayList<MenuDiario> Menus, LocalDate fechaIni, LocalDate fechaFin, double pesoInicial, double pesoFinal, int totalCalorias, Paciente paciente) {
+    public Dieta(String nombreD, ArrayList<MenuDiario> Menus, LocalDate fechaIni, LocalDate fechaFin, int totalCalorias, Paciente paciente) {
         this.nombreD = nombreD;
         this.Menus = Menus;
         this.fechaIni = fechaIni;
         this.fechaFin = fechaFin;
-        this.pesoInicial = pesoInicial;
-        this.pesoFinal = pesoFinal;
         this.totalCalorias = totalCalorias;
         this.paciente = paciente;
     }
 
-    public Dieta(String nombreD, ArrayList<MenuDiario> Menus, LocalDate fechaIni, LocalDate fechaFin, double pesoInicial, double pesoFinal, int totalCalorias, Paciente paciente, boolean estado) {
+    public Dieta(String nombreD, ArrayList<MenuDiario> Menus, LocalDate fechaIni, LocalDate fechaFin, int totalCalorias, Paciente paciente, boolean estado) {
         this.nombreD = nombreD;
         this.Menus = Menus;
         this.fechaIni = fechaIni;
         this.fechaFin = fechaFin;
-        this.pesoInicial = pesoInicial;
-        this.pesoFinal = pesoFinal;
         this.totalCalorias = totalCalorias;
         this.paciente = paciente;
         this.estado = estado;
     }
 
-    public Dieta(int idDieta, String nombreD, ArrayList<MenuDiario> Menus, LocalDate fechaIni, LocalDate fechaFin, double pesoInicial, double pesoFinal, int totalCalorias, Paciente paciente, boolean estado) {
+    public Dieta(int idDieta, String nombreD, ArrayList<MenuDiario> Menus, LocalDate fechaIni, LocalDate fechaFin, int totalCalorias, Paciente paciente, boolean estado) {
         this.idDieta = idDieta;
         this.nombreD = nombreD;
         this.Menus = Menus;
         this.fechaIni = fechaIni;
         this.fechaFin = fechaFin;
-        this.pesoInicial = pesoInicial;
-        this.pesoFinal = pesoFinal;
         this.totalCalorias = totalCalorias;
         this.paciente = paciente;
         this.estado = estado;
@@ -115,27 +105,11 @@ public class Dieta {
         this.fechaFin = fechaFin;
     }
 
-    public double getPesoInicial() {
-        return pesoInicial;
-    }
-
-    public void setPesoInicial(double pesoInicial) {
-        this.pesoInicial = pesoInicial;
-    }
-
-    public double getPesoFinal() {
-        return pesoFinal;
-    }
-
-    public void setPesoFinal(double pesoFinal) {
-        this.pesoFinal = pesoFinal;
-    }
-
-    public int getTotalCalorias() {
+    public double getTotalCalorias() {
         return totalCalorias;
     }
 
-    public void setTotalCalorias(int totalCalorias) {
+    public void setTotalCalorias(double totalCalorias) {
         this.totalCalorias = totalCalorias;
     }
 
@@ -157,7 +131,8 @@ public class Dieta {
 
     @Override
     public String toString() {
-        return "Dieta{" + "idDieta=" + idDieta + ", nombreD=" + nombreD + ", Menus=" + Menus + ", paciente=" + paciente + ", fechaIni=" + fechaIni + ", fechaFin=" + fechaFin + ", pesoInicial=" + pesoInicial + ", pesoFinal=" + pesoFinal + ", totalCalorias=" + totalCalorias + ", estado=" + estado + '}';
+        return "Dieta{" + "idDieta=" + idDieta + ", nombreD=" + nombreD + ", Menus=" + Menus + ", paciente=" + paciente + ", fechaIni=" + fechaIni + ", fechaFin=" + fechaFin + ", totalCalorias=" + totalCalorias + ", estado=" + estado + '}';
     }
-    
+
+   
 }

@@ -42,6 +42,8 @@ public class Menu extends javax.swing.JFrame {
         jMIListaPacientes = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMiDieta = new javax.swing.JMenuItem();
+        jCheckBoxMenuItem2 = new javax.swing.JCheckBoxMenuItem();
+        jCheckBoxMenuItem3 = new javax.swing.JCheckBoxMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMIMenuDiario = new javax.swing.JMenuItem();
@@ -117,13 +119,31 @@ public class Menu extends javax.swing.JFrame {
 
         jMenu2.setText("Dieta");
 
-        jMiDieta.setText("Dieta");
+        jMiDieta.setText("Buscar Dieta");
         jMiDieta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMiDietaActionPerformed(evt);
             }
         });
         jMenu2.add(jMiDieta);
+
+        jCheckBoxMenuItem2.setSelected(true);
+        jCheckBoxMenuItem2.setText("Mostrar todas las dietas");
+        jCheckBoxMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jCheckBoxMenuItem2);
+
+        jCheckBoxMenuItem3.setSelected(true);
+        jCheckBoxMenuItem3.setText("Generar Dieta Aleatoria");
+        jCheckBoxMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jCheckBoxMenuItem3);
 
         jMenuBar1.add(jMenu2);
 
@@ -218,6 +238,22 @@ public class Menu extends javax.swing.JFrame {
         cpf.setVisible(true);
     }//GEN-LAST:event_jMCuantoFaltaActionPerformed
 
+    private void jCheckBoxMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem2ActionPerformed
+        JDPMenu.removeAll();
+        JDPMenu.repaint();
+        MostrarDieta MostrarDieta = new MostrarDieta();
+        JDPMenu.add(MostrarDieta);
+        MostrarDieta.setVisible(true);
+    }//GEN-LAST:event_jCheckBoxMenuItem2ActionPerformed
+
+    private void jCheckBoxMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem3ActionPerformed
+         JDPMenu.removeAll();
+        JDPMenu.repaint();
+        CrearDieta crearDieta = new CrearDieta();
+        JDPMenu.add(crearDieta);
+        crearDieta.setVisible(true);
+    }//GEN-LAST:event_jCheckBoxMenuItem3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -256,6 +292,8 @@ public class Menu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane JDPMenu;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem3;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JMenuItem jMCuantoFalta;
     private javax.swing.JMenuItem jMIComidas;
