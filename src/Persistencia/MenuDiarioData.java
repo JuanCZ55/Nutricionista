@@ -2,6 +2,7 @@ package Persistencia;
 
 import Modelo.Comidas;
 import Modelo.Conexion;
+import Modelo.Dieta;
 import Modelo.MenuDiario;
 import Modelo.Paciente;
 import java.sql.*;
@@ -16,6 +17,201 @@ public class MenuDiarioData {
     public MenuDiarioData() {
         con = (Connection) Conexion.getConexion();
     }
+    
+    //Listar todas las dietas activas
+    public ArrayList<Dieta> listarTodasLasDietasActivas(){
+        String sql = "SELECT IdDieta, NombreDieta, FechaInicial, FechaFinal, TotalCalorias, IdPaciente, Estado FROM dieta WHERE Estado = 1;";
+        int x = 0;
+        Dieta dieta = null;
+        ArrayList<Dieta> lista = new ArrayList<>();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                dieta = new Dieta();
+                dieta.setIdDieta(rs.getInt("IdDieta"));
+                dieta.setNombreD(rs.getString("NombreDieta"));
+                dieta.setFechaIni(rs.getDate("FechaInicial").toLocalDate());
+                dieta.setFechaFin(rs.getDate("FechaFinal").toLocalDate());
+                dieta.setTotalCalorias(rs.getDouble("TotalCalorias"));
+                dieta.setEstado(rs.getBoolean("Estado")); 
+                x++;
+            }
+            if (x == 0) {
+                JOptionPane.showMessageDialog(null, "No hay Dietas Activas");
+            }
+
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Dietas");
+        }
+
+        return lista;
+    }
+    
+    //Listar Todos los Menus Junto con las comidas
+    
+    //Paso 1: Buscar todos los MenuDiarios asociados a la idDieta
+    public ArrayList<MenuDiario> listarMenuDiarioPorDieta(int idDieta){
+        String sql = "SELECT IdMenuDiario FROM menudiario WHERE IdDieta = ?;";
+        int x = 0;
+        MenuDiario menuDiario = null;
+        ArrayList<MenuDiario> lista = new ArrayList<>();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idDieta);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                menuDiario = new MenuDiario();
+                menuDiario.setIdMenu(rs.getInt("IdMenuDiario"));
+                lista.add(menuDiario);
+                x++;
+            }
+            if (x == 0) {
+                JOptionPane.showMessageDialog(null, "No hay Menus Diario");
+            }
+
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla MenuDiario");
+        }
+
+        return lista;
+    } 
+    //Paso 2: Buscar todas las comidas asociadas al idMenu de la tabla menucomidas y sacar las comidas
+    public ArrayList<Comidas> listarComidasPorMenuDiario(int idMenu){
+        String sql = "SELECT c.IdComidas, c.Nombre, c.TipoDeComida, c.CaloriasComida, c.NoApto, c.Estado"
+                + " FROM menucomidas mc JOIN comidas c ON mc.IdComidas = c.IdComidas"
+                + " WHERE mc.IdMenuDiario = ?";
+        int x = 0;
+        Comidas comida = null;
+        ArrayList<Comidas> lista = new ArrayList<>();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idMenu);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                comida = new Comidas();
+                comida.setIdComida(rs.getInt("c.IdComidas"));
+                comida.setNombre(rs.getString("c.Nombre"));
+                comida.setTipoDeComida(rs.getString("c.TipoDeComida"));
+                comida.setCaloriasComida(rs.getDouble("c.CaloriasComida"));
+                comida.setNoApto(rs.getString("c.NoApto"));
+                comida.setEstado(rs.getBoolean("c.Estado"));
+                
+                lista.add(comida);
+                x++;
+            }
+            if (x == 0) {
+                JOptionPane.showMessageDialog(null, "No hay existe esa Comida");
+            }
+
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Comidas");
+        }
+
+        return lista;
+    } 
+    
+    
+    
+    public ArrayList<MenuDiario> listarMenuDiarioPorDieta(int idDieta) {
+        String sql = "SELECT IdMenuDiario, Dia, CaloriasDia, IdDieta, Estado FROM menudiario WHERE IdDieta";
+        int x = 0;
+        MenuDiario menuDiario = null;
+        ArrayList<MenuDiario> lista = new ArrayList<>();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                menuDiario = new MenuDiario();
+                menuDiario.setIdMenu(rs.getInt("IdMenuDiario"));
+                menuDiario.setDia(rs.getInt("Dia"));
+                menuDiario.setCaloriasDelMenu(rs.getDouble("CaloriasDia"));
+                menuDiario.setIdDieta(rs.getInt("IdDieta"));
+                lista.add(menuDiario);
+                x++;
+            }
+            if (x == 0) {
+                JOptionPane.showMessageDialog(null, "No hay Menus Diario");
+            }
+
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla MenuDiario");
+        }
+
+        return lista;
+    }
+    //Listar Menus Activo
+    public ArrayList<MenuDiario> listarMenuDiarioActivosPorPaciente() {
+        String sql = "SELECT IdMenuDiario, Dia, CaloriasDia, IdDieta, Estado FROM menudiario";
+        int x = 0;
+        MenuDiario menuDiario = null;
+        ArrayList<MenuDiario> lista = new ArrayList<>();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                menuDiario = new MenuDiario();
+                menuDiario.setIdMenu(rs.getInt("IdMenuDiario"));
+                menuDiario.setDia(rs.getInt("Dia"));
+                menuDiario.setCaloriasDelMenu(rs.getDouble("CaloriasDia"));
+                menuDiario.setIdDieta(rs.getInt("IdDieta"));
+                lista.add(menuDiario);
+                x++;
+            }
+            if (x == 0) {
+                JOptionPane.showMessageDialog(null, "No hay Menus Diario");
+            }
+
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla MenuDiario");
+        }
+
+        return lista;
+    }
+    //Listar Menus Inactivo
+    public ArrayList<MenuDiario> listarMenuDiarioInactivosPorPaciente() {
+        String sql = "SELECT IdMenuDiario, Dia, CaloriasDia, IdDieta, Estado FROM menudiario";
+        int x = 0;
+        MenuDiario menuDiario = null;
+        ArrayList<MenuDiario> lista = new ArrayList<>();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                menuDiario = new MenuDiario();
+                menuDiario.setIdMenu(rs.getInt("IdMenuDiario"));
+                menuDiario.setDia(rs.getInt("Dia"));
+                menuDiario.setCaloriasDelMenu(rs.getDouble("CaloriasDia"));
+                menuDiario.setIdDieta(rs.getInt("IdDieta"));
+                lista.add(menuDiario);
+                x++;
+            }
+            if (x == 0) {
+                JOptionPane.showMessageDialog(null, "No hay Menus Diario");
+            }
+
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla MenuDiario");
+        }
+
+        return lista;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     //Insertar el menu diario/comidas
     public void insertMenuDiario(MenuDiario md) {
@@ -70,8 +266,8 @@ public class MenuDiarioData {
      * @param dia - Objeto int.
      */
     public MenuDiario buscarMenuDiario(Paciente pac, int dia) {
-        String sql = "SELECT `IdMenuDiario`, `Dia`, `CaloriasDia`, `IdDieta`, `Estado` "
-                + "FROM `menudiario` "
+        String sql = "SELECT IdMenuDiario, Dia, CaloriasDia, IdDieta, Estado "
+                + "FROM menudiario "
                 + "WHERE  IdDieta = (SELECT IdDieta "
                 + "FROM dieta d JOIN paciente p ON d.IdPaciente=p.IdPaciente "
                 + "WHERE p.IdPaciente = ?) AND Dia=? AND Estado = 1";
@@ -97,8 +293,8 @@ public class MenuDiarioData {
     }
     //Buscar menu asociado 
     public MenuDiario buscarMenuDiarioEliminado(Paciente pac, int dia) {
-        String sql = "SELECT `IdMenuDiario`, `Dia`, `CaloriasDia`, `IdDieta`, `Estado` "
-                + "FROM `menudiario` "
+        String sql = "SELECT IdMenuDiario, Dia, CaloriasDia, IdDieta, Estado "
+                + "FROM menudiario "
                 + "WHERE  IdDieta = (SELECT IdDieta "
                 + "FROM dieta d JOIN paciente p ON d.IdPaciente=p.IdPaciente "
                 + "WHERE p.IdPaciente = ?) AND Dia=? AND Estado = 0";
@@ -144,7 +340,6 @@ public class MenuDiarioData {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla MenuComidas");
         }
     }
-    
     public ArrayList<Comidas> buscarComidasPorMenuDiario(MenuDiario md) {
         String sql = "SELECT mc.IdComidas "
                 + "FROM comidas c JOIN menucomidas mc ON c.IdComidas = mc.IdComidas "
@@ -174,7 +369,6 @@ public class MenuDiarioData {
     }
     
     
-
     public void bajaLogica(int id) {
         String sql = "UPDATE menudiario SET Estado=0 WHERE IdMenuDiario=?";
         try {
@@ -192,7 +386,6 @@ public class MenuDiarioData {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla MenuDiario");
         }
     }
-
     public void altaLogica(int id) {
         String sql = "UPDATE menudiario SET Estado=1 WHERE IdMenuDiario=?";
         try {
@@ -211,6 +404,7 @@ public class MenuDiarioData {
         }
     }
 
+    
     public void buscarMenuDiario(int idMenu) {
         String sql = "SELECT IdMenuDiario, Dia, CaloriasDia, IdDieta, Estado FROM menudiario WHERE IdMenuDiario=?";
         MenuDiario menuDieta = null;
@@ -234,38 +428,83 @@ public class MenuDiarioData {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla MenuDiario");
         }
     }
-
-    public ArrayList<MenuDiario> listarMenuDiario() {
-        String sql = "SELECT IdMenuDiario, Dia, CaloriasDia, IdDieta, Estado FROM menudiario";
+    
+    
+    //Listar MenuDiario por Dia y Estado
+    //Estado Activo
+    public ArrayList<MenuDiario> listarMenuDiarioActivoPorPacienteDia(int idPaciente, int dia) {
+        String sql = "SELECT md.IdMenuDiario, md.Dia, md.CaloriasDia, md.IdDieta" +
+                    " FROM menudiario md JOIN dieta d ON md.IdDieta = d.IdDieta" +
+                    " JOIN paciente p ON d.IdPaciente = p.IdPaciente" +
+                    " WHERE p.IdPaciente=? AND md.Dia = ? AND md.Estado = 1";
         int x = 0;
         MenuDiario menuDiario = null;
         ArrayList<MenuDiario> lista = new ArrayList<>();
         try {
             PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idPaciente);
+            ps.setInt(2, dia);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 menuDiario = new MenuDiario();
-                menuDiario.setIdMenu(rs.getInt("IdMenuDiario"));
-                menuDiario.setDia(rs.getInt("Dia"));
-                menuDiario.setCaloriasDelMenu(rs.getDouble("CaloriasDia"));
-                menuDiario.setIdDieta(rs.getInt("IdDieta"));
+                menuDiario.setIdMenu(rs.getInt("md.IdMenuDiario"));
+                menuDiario.setDia(rs.getInt("md.Dia"));
+                menuDiario.setCaloriasDelMenu(rs.getDouble("md.CaloriasDia"));
+                menuDiario.setIdDieta(rs.getInt("md.IdDieta"));
                 lista.add(menuDiario);
                 x++;
             }
             if (x == 0) {
                 JOptionPane.showMessageDialog(null, "No hay Menus Diario");
             }
-
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla MenuDiario");
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla MenuDiario, Dieta y Paciente");
         }
 
         return lista;
     }
+    //Estado Inactivo
+    public ArrayList<MenuDiario> listarMenuDiarioInactivoPorPacienteDia(int idPaciente, int dia) {
+        String sql = "SELECT md.IdMenuDiario, md.Dia, md.CaloriasDia, md.IdDieta" +
+                    " FROM menudiario md JOIN dieta d ON md.IdDieta = d.IdDieta" +
+                    " JOIN paciente p ON d.IdPaciente = p.IdPaciente" +
+                    " WHERE p.IdPaciente=? AND md.Dia = ? AND md.Estado = 1";
+        int x = 0;
+        MenuDiario menuDiario = null;
+        ArrayList<MenuDiario> lista = new ArrayList<>();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idPaciente);
+            ps.setInt(2, dia);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                menuDiario = new MenuDiario();
+                menuDiario.setIdMenu(rs.getInt("md.IdMenuDiario"));
+                menuDiario.setDia(rs.getInt("md.Dia"));
+                menuDiario.setCaloriasDelMenu(rs.getDouble("md.CaloriasDia"));
+                menuDiario.setIdDieta(rs.getInt("md.IdDieta"));
+                lista.add(menuDiario);
+                x++;
+            }
+            if (x == 0) {
+                JOptionPane.showMessageDialog(null, "No hay Menus Diario");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla MenuDiario, Dieta y Paciente");
+        }
+
+        return lista;
+    }
+    
+    
+    
+    
+
 
     //
-    public ArrayList<MenuDiario> listarMenuDiarioPorPaciente(int idPaciente) {
+    public ArrayList<MenuDiario> listarMenuDiarioPorPacientse(int idPaciente) {
         String sql = "SELECT IdMenuDiario, Dia, CaloriasDia, IdDieta, Estado\n"
                 + "FROM menudiario m JOIN dieta d ON m.IdDieta = d.IdDieta\n"
                 + "JOIN paciente p ON d.IdPaciente = p.IdPaciente\n"
@@ -444,5 +683,4 @@ public class MenuDiarioData {
 
         return lista;
     }
-    
 }
