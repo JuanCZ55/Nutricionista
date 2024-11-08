@@ -51,6 +51,9 @@ public class ListarMenuDiario extends javax.swing.JInternalFrame {
         jTFPaciente = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
 
+        setClosable(true);
+        setFocusable(false);
+
         jLabel1.setText("Seleccione un Dieta:");
 
         jCBDieta.addActionListener(new java.awt.event.ActionListener() {
@@ -223,7 +226,7 @@ public class ListarMenuDiario extends javax.swing.JInternalFrame {
     private void jBHabilitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBHabilitarActionPerformed
         if (jCBDieta.getSelectedItem() != null && jCBEstado.getSelectedItem() != null && jCBDia.getSelectedItem() != null
                 && jCBMenu.getSelectedItem() != null) {
-            menuAcceso.altaLogica(((MenuDiario)jCBMenu.getSelectedItem()).getIdMenu());
+            menuAcceso.altaLogica(((MenuDiario) jCBMenu.getSelectedItem()).getIdMenu());
             deshabilitar();
         }
     }//GEN-LAST:event_jBHabilitarActionPerformed
@@ -233,130 +236,152 @@ public class ListarMenuDiario extends javax.swing.JInternalFrame {
             listarMenuComidas(menuAcceso.buscarMenuDiario(((MenuDiario) jCBMenu.getSelectedItem()).getIdMenu()));
             if (jCBMenu.getSelectedItem().equals("Menu Activo")) {
                 jBEliminar.setEnabled(true);
-            }else if (jCBMenu.getSelectedItem().equals("Menu Inactivo")){
+            } else if (jCBMenu.getSelectedItem().equals("Menu Inactivo")) {
                 jBHabilitar.setEnabled(true);
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "Seleccione un Menu para habilitarlo");
         }
     }//GEN-LAST:event_jCBMenuActionPerformed
 
     private void jBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEliminarActionPerformed
         if (jCBDieta.getSelectedItem() != null && jCBEstado.getSelectedItem() != null && jCBDia.getSelectedItem() != null
                 && jCBMenu.getSelectedItem() != null) {
-            menuAcceso.bajaLogica(((MenuDiario)jCBMenu.getSelectedItem()).getIdMenu());
+            menuAcceso.bajaLogica(((MenuDiario) jCBMenu.getSelectedItem()).getIdMenu());
             deshabilitar();
         }
     }//GEN-LAST:event_jBEliminarActionPerformed
 
     private void jCBDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBDiaActionPerformed
         // Carga los Menudiarios que son activos/inactivos y restringido por el dia
-        switch (jCBDia.getSelectedItem().toString()) {
-            case "Dia 1":
-                // Si son habilitados
-                if (jCBEstado.getSelectedItem() == "Menu Activo") {
-                    enlistarMenuComidas(menuAcceso.listarMenuDiarioActivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 1));
+        if (Objects.nonNull((String) jCBDia.getSelectedItem())) {
+            switch ((String) jCBDia.getSelectedItem()) {
+                case "Dia 1":
+                    // Si son habilitados
+                    if (jCBEstado.getSelectedItem() == "Menu Activo") {
+                        enlistarMenuComidas(menuAcceso.listarMenuDiarioActivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 1));
 
-                }
-                // Si son deshabilitados
-                if (jCBEstado.getSelectedItem() == "Menu Inactivo") {
-                    enlistarMenuComidas(menuAcceso.listarMenuDiarioInactivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 1));
-                }
-                break;
-            case "Dia 2":
-                // Si son habilitados
-                if (jCBEstado.getSelectedItem() == "Menu Activo") {
-                    enlistarMenuComidas(menuAcceso.listarMenuDiarioActivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 2));
+                    }
+                    // Si son deshabilitados
+                    if (jCBEstado.getSelectedItem() == "Menu Inactivo") {
+                        enlistarMenuComidas(menuAcceso.listarMenuDiarioInactivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 1));
+                    }
+                    break;
+                case "Dia 2":
+                    // Si son habilitados
+                    if (jCBEstado.getSelectedItem() == "Menu Activo") {
+                        enlistarMenuComidas(menuAcceso.listarMenuDiarioActivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 2));
 
-                }
-                // Si son deshabilitados
-                if (jCBEstado.getSelectedItem() == "Menu Inactivo") {
-                    enlistarMenuComidas(menuAcceso.listarMenuDiarioInactivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 2));
-                }
-                break;
-            case "Dia 3":
-                // Si son habilitados
-                if (jCBEstado.getSelectedItem() == "Menu Activo") {
-                    enlistarMenuComidas(menuAcceso.listarMenuDiarioActivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 3));
+                    }
+                    // Si son deshabilitados
+                    if (jCBEstado.getSelectedItem() == "Menu Inactivo") {
+                        enlistarMenuComidas(menuAcceso.listarMenuDiarioInactivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 2));
+                    }
+                    break;
+                case "Dia 3":
+                    // Si son habilitados
+                    if (jCBEstado.getSelectedItem() == "Menu Activo") {
+                        enlistarMenuComidas(menuAcceso.listarMenuDiarioActivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 3));
 
-                }
-                // Si son deshabilitados
-                if (jCBEstado.getSelectedItem() == "Menu Inactivo") {
-                    enlistarMenuComidas(menuAcceso.listarMenuDiarioInactivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 3));
-                }
-                break;
-            case "Dia 4":
-                // Si son habilitados
-                if (jCBEstado.getSelectedItem() == "Menu Activo") {
-                    enlistarMenuComidas(menuAcceso.listarMenuDiarioActivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 4));
+                    }
+                    // Si son deshabilitados
+                    if (jCBEstado.getSelectedItem() == "Menu Inactivo") {
+                        enlistarMenuComidas(menuAcceso.listarMenuDiarioInactivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 3));
+                    }
+                    break;
+                case "Dia 4":
+                    // Si son habilitados
+                    if (jCBEstado.getSelectedItem() == "Menu Activo") {
+                        enlistarMenuComidas(menuAcceso.listarMenuDiarioActivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 4));
 
-                }
-                // Si son deshabilitados
-                if (jCBEstado.getSelectedItem() == "Menu Inactivo") {
-                    enlistarMenuComidas(menuAcceso.listarMenuDiarioInactivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 4));
-                }
-                break;
-            case "Dia 5":
-                // Si son habilitados
-                if (jCBEstado.getSelectedItem() == "Menu Activo") {
-                    enlistarMenuComidas(menuAcceso.listarMenuDiarioActivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 5));
+                    }
+                    // Si son deshabilitados
+                    if (jCBEstado.getSelectedItem() == "Menu Inactivo") {
+                        enlistarMenuComidas(menuAcceso.listarMenuDiarioInactivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 4));
+                    }
+                    break;
+                case "Dia 5":
+                    // Si son habilitados
+                    if (jCBEstado.getSelectedItem() == "Menu Activo") {
+                        enlistarMenuComidas(menuAcceso.listarMenuDiarioActivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 5));
 
-                }
-                // Si son deshabilitados
-                if (jCBEstado.getSelectedItem() == "Menu Inactivo") {
-                    enlistarMenuComidas(menuAcceso.listarMenuDiarioInactivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 5));
-                }
-                break;
-            case "Dia 6":
-                // Si son habilitados
-                if (jCBEstado.getSelectedItem() == "Menu Activo") {
-                    enlistarMenuComidas(menuAcceso.listarMenuDiarioActivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 6));
+                    }
+                    // Si son deshabilitados
+                    if (jCBEstado.getSelectedItem() == "Menu Inactivo") {
+                        enlistarMenuComidas(menuAcceso.listarMenuDiarioInactivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 5));
+                    }
+                    break;
+                case "Dia 6":
+                    // Si son habilitados
+                    if (jCBEstado.getSelectedItem() == "Menu Activo") {
+                        enlistarMenuComidas(menuAcceso.listarMenuDiarioActivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 6));
 
-                }
-                // Si son deshabilitados
-                if (jCBEstado.getSelectedItem() == "Menu Inactivo") {
-                    enlistarMenuComidas(menuAcceso.listarMenuDiarioInactivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 6));
-                }
-                break;
-            case "Dia 7":
-                // Si son habilitados
-                if (jCBEstado.getSelectedItem() == "Menu Activo") {
-                    enlistarMenuComidas(menuAcceso.listarMenuDiarioActivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 7));
+                    }
+                    // Si son deshabilitados
+                    if (jCBEstado.getSelectedItem() == "Menu Inactivo") {
+                        enlistarMenuComidas(menuAcceso.listarMenuDiarioInactivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 6));
+                    }
+                    break;
+                case "Dia 7":
+                    // Si son habilitados
+                    if (jCBEstado.getSelectedItem() == "Menu Activo") {
+                        enlistarMenuComidas(menuAcceso.listarMenuDiarioActivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 7));
 
-                }
-                // Si son deshabilitados
-                if (jCBEstado.getSelectedItem() == "Menu Inactivo") {
-                    enlistarMenuComidas(menuAcceso.listarMenuDiarioInactivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 7));
-                }
-                break;
+                    }
+                    // Si son deshabilitados
+                    if (jCBEstado.getSelectedItem() == "Menu Inactivo") {
+                        enlistarMenuComidas(menuAcceso.listarMenuDiarioInactivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 7));
+                    }
+                    break;
+            }
+            jCBMenu.setEnabled(true);
         }
-        jCBMenu.setEnabled(true);
+
+
     }//GEN-LAST:event_jCBDiaActionPerformed
 
     private void jCBEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBEstadoActionPerformed
-        //Listar todos los menus por el estado seleccionado
+
+//Listar todos los menus por el estado seleccionado
         if (Objects.nonNull(jCBDieta.getSelectedItem())) {
             if (jCBEstado.getSelectedItem().equals("Menu Activo")) {
-                enlistarMenuComidas(menuAcceso.listarMenuDiarioActivoPorDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()));
+                if (!(menuAcceso.listarMenuDiarioActivoPorDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta())).isEmpty()) {
+                    enlistarMenuComidas(menuAcceso.listarMenuDiarioActivoPorDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()));
+                    jCBDia.setEnabled(true);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Esta Dieta no tienen Menus Diarios Activos");
+                }
             } else if (jCBEstado.getSelectedItem().equals("Menu Inactivo")) {
-                enlistarMenuComidas(menuAcceso.listarMenuDiarioInactivoPorDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()));
+                if (!(menuAcceso.listarMenuDiarioInactivoPorDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta())).isEmpty()) {
+                    enlistarMenuComidas(menuAcceso.listarMenuDiarioInactivoPorDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()));
+                    jCBDia.setEnabled(true);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Esta Dieta no tienen Menus Diarios Inctivos");
+                }
             } else if (jCBEstado.getSelectedItem().equals("Todos los Menu")) {
-                enlistarMenuComidas(menuAcceso.listarMenuDiarioPorDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()));
+                if (!(menuAcceso.listarMenuDiarioPorDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta())).isEmpty()) {
+                    enlistarMenuComidas(menuAcceso.listarMenuDiarioPorDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()));
+                    jCBDia.setEnabled(true);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Esta Dieta no tiene Menu Diarios");
+                }
+
             }
-            jCBDia.setEnabled(true);
-        } else {
-            JOptionPane.showMessageDialog(this, "No hay Dietas en la base de datos a la que se le pueda aplicar esto");
+
         }
 
     }//GEN-LAST:event_jCBEstadoActionPerformed
 
     private void jCBDietaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBDietaActionPerformed
-        if (Objects.nonNull(jCBDieta.getSelectedItem())) {
+        if (jCBDieta.getSelectedIndex() != -1 && Objects.nonNull(jCBDieta.getSelectedItem())) {
             jCBEstado.setEnabled(true);
+            DietaData dietaData = new DietaData();
             PacienteData pacData = new PacienteData();
             Paciente pac = new Paciente();
-            pac = pacData.buscarPaciente(((Dieta) jCBDieta.getSelectedItem()).getIdDieta());
-            jTFPaciente.setText(pac.getIdPaciente() + " " + pac.getNombre());
+            pac = pacData.buscarPaciente(dietaData.buscarDietaSegunID(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()).getPaciente().getIdPaciente());
+            if (pac != null) { // Verificación de null
+                jTFPaciente.setText(pac.getIdPaciente() + " " + pac.getNombre());
+            } else {
+                jTFPaciente.setText("");
+            }
         }
     }//GEN-LAST:event_jCBDietaActionPerformed
 
@@ -376,17 +401,18 @@ public class ListarMenuDiario extends javax.swing.JInternalFrame {
         jBEliminar.setEnabled(false);
         jBHabilitar.setEnabled(false);
 
-        jCBDieta.setSelectedItem(null);
-        jCBDia.setSelectedItem(null);
-        jCBEstado.setSelectedItem(null);
-        jCBMenu.setSelectedItem(null);
+        jCBDieta.setSelectedIndex(-1);
+        jCBDia.setSelectedIndex(-1);
+        jCBEstado.setSelectedIndex(-1);
+        jCBMenu.setSelectedIndex(-1);
+        jTFPaciente.setText(null);
 
         jCBDia.setEnabled(false);
         jCBMenu.setEnabled(false);
         jCBEstado.setEnabled(false);
 
     }
-    
+
     private void enlistarMenuComidas(ArrayList<MenuDiario> menuLista) {
         modelo.setRowCount(0);
         if (!menuLista.isEmpty()) {

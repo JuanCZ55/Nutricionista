@@ -28,10 +28,11 @@ public class MenuDiarioVista extends javax.swing.JInternalFrame {
      */
     public MenuDiarioVista() {
         initComponents();
-        cargarPaciente();
+        cargarDietas();
+        
         deshabilitar();
+
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -47,14 +48,9 @@ public class MenuDiarioVista extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jCBDia = new javax.swing.JComboBox<>();
-        jCBPaciente = new javax.swing.JComboBox<>();
-        jLabel4 = new javax.swing.JLabel();
+        jCBDieta = new javax.swing.JComboBox<>();
         jBInsert = new javax.swing.JButton();
         jBActualizar = new javax.swing.JButton();
-        jBEliminar = new javax.swing.JButton();
-        jBHabilitar = new javax.swing.JButton();
-        jLabel10 = new javax.swing.JLabel();
-        jLCalorias = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jCBCena = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
@@ -66,13 +62,19 @@ public class MenuDiarioVista extends javax.swing.JInternalFrame {
         jCBMerienda = new javax.swing.JComboBox<>();
         jCBColacion = new javax.swing.JComboBox<>();
         jCBAlmuerzo = new javax.swing.JComboBox<>();
+        jLabel10 = new javax.swing.JLabel();
+        jLCalorias = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jTFPaciente = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Menu Diario");
 
         jLabel2.setText("Seleccione un dia:");
 
-        jLabel3.setText("Seleccione un paciente:");
+        jLabel3.setText("Seleccione una Dieta:");
 
         jCBDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7" }));
         jCBDia.addActionListener(new java.awt.event.ActionListener() {
@@ -81,13 +83,11 @@ public class MenuDiarioVista extends javax.swing.JInternalFrame {
             }
         });
 
-        jCBPaciente.addActionListener(new java.awt.event.ActionListener() {
+        jCBDieta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCBPacienteActionPerformed(evt);
+                jCBDietaActionPerformed(evt);
             }
         });
-
-        jLabel4.setText("Seleccione las comidas del dia");
 
         jBInsert.setText("Insertar");
         jBInsert.addActionListener(new java.awt.event.ActionListener() {
@@ -102,24 +102,6 @@ public class MenuDiarioVista extends javax.swing.JInternalFrame {
                 jBActualizarActionPerformed(evt);
             }
         });
-
-        jBEliminar.setText("Eliminar");
-        jBEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBEliminarActionPerformed(evt);
-            }
-        });
-
-        jBHabilitar.setText("Habilitar");
-        jBHabilitar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBHabilitarActionPerformed(evt);
-            }
-        });
-
-        jLabel10.setText("Calorias Del Dia");
-
-        jLCalorias.setText("\"Calorias\"");
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -163,6 +145,12 @@ public class MenuDiarioVista extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel10.setText("Calorias Del Dia");
+
+        jLCalorias.setText("\"Calorias\"");
+
+        jLabel4.setText("Seleccione las comidas del dia");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -170,45 +158,76 @@ public class MenuDiarioVista extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel9))
-                .addGap(52, 52, 52)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCBMerienda, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCBCena, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCBAlmuerzo, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCBColacion, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCBDesayuno, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(24, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel9)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel6)
+                                .addComponent(jLabel7)
+                                .addComponent(jLabel8))
+                            .addGap(51, 51, 51)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jCBMerienda, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jCBCena, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jCBColacion, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jCBAlmuerzo, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                            .addGap(16, 16, 16)
+                                            .addComponent(jLCalorias))
+                                        .addComponent(jLabel10))))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(50, 50, 50)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel4)
+                            .addComponent(jCBDesayuno, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(98, 98, 98)))
+                .addGap(28, 28, 28))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jLabel4)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCBDesayuno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCBMerienda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCBColacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
-                .addGap(16, 16, 16)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCBAlmuerzo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addComponent(jCBMerienda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jCBColacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jCBAlmuerzo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(jLabel10)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLCalorias)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCBCena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
+
+        jLabel11.setText("Paciente:");
+
+        jTFPaciente.setEditable(false);
+
+        jButton1.setText("Salir");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -216,85 +235,74 @@ public class MenuDiarioVista extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jBInsert)
-                                        .addGap(26, 26, 26)
-                                        .addComponent(jBActualizar)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jBEliminar)))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(26, 26, 26)
-                                        .addComponent(jBHabilitar))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addGap(16, 16, 16)
-                                                .addComponent(jLCalorias))
-                                            .addComponent(jLabel10)))))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(11, 11, 11)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel3)))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(183, 183, 183)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jCBDia, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jCBPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel1)))))
-                .addContainerGap(30, Short.MAX_VALUE))
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel3))
+                        .addGap(35, 35, 35)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jCBDieta, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTFPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jCBDia, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addComponent(jBInsert)
+                .addGap(47, 47, 47)
+                .addComponent(jBActualizar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(58, 58, 58))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(19, 19, 19)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(jLabel3))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jCBDieta, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jCBPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(17, 17, 17)
+                    .addComponent(jLabel11)
+                    .addComponent(jTFPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCBDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLCalorias)
-                        .addGap(90, 90, 90)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBInsert)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jBActualizar)
-                        .addComponent(jBEliminar)
-                        .addComponent(jBHabilitar)))
-                .addGap(0, 43, Short.MAX_VALUE))
+                    .addComponent(jBActualizar)
+                    .addComponent(jButton1))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -302,193 +310,173 @@ public class MenuDiarioVista extends javax.swing.JInternalFrame {
 
     private void jCBDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBDiaActionPerformed
         jCBDesayuno.setEnabled(true);
-        jBEliminar.setEnabled(true);
-        jBHabilitar.setEnabled(true);
     }//GEN-LAST:event_jCBDiaActionPerformed
 
-    private void jCBPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBPacienteActionPerformed
-        jCBDia.setEnabled(true);
-    }//GEN-LAST:event_jCBPacienteActionPerformed
+    private void jCBDietaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBDietaActionPerformed
+        if (jCBDieta.getSelectedIndex() != -1 && Objects.nonNull(jCBDieta.getSelectedItem())) {
+            jCBDia.setEnabled(true);
+
+            DietaData dietaData = new DietaData();
+            PacienteData pacData = new PacienteData();
+            Paciente pac = new Paciente();
+            pac = pacData.buscarPaciente(dietaData.buscarDietaSegunID(((Dieta)jCBDieta.getSelectedItem()).getIdDieta()).getPaciente().getIdPaciente());
+            if (pac != null) { // Verificación de null
+                jTFPaciente.setText(pac.getIdPaciente() + " " + pac.getNombre());
+            } else {
+                jTFPaciente.setText("");
+            }
+        }
+    }//GEN-LAST:event_jCBDietaActionPerformed
 
     private void jBInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBInsertActionPerformed
-        try {
-            if (jCBPaciente.getSelectedItem() != null && jCBDia.getSelectedItem() != null
-                    && jCBDesayuno.getSelectedItem() != null && jCBMerienda.getSelectedItem() != null
-                    && jCBColacion.getSelectedItem() != null && jCBAlmuerzo.getSelectedItem() != null
-                    && jCBCena.getSelectedItem() != null) {
-                int dia = Integer.parseInt((String) jCBDia.getSelectedItem());
-                MenuDiario condicion = menuAcceso.buscarMenuDiario((Paciente) jCBPaciente.getSelectedItem(), dia);
+        if (jCBDieta.getSelectedItem() != null && jCBDia.getSelectedItem() != null
+                && jCBDesayuno.getSelectedItem() != null && jCBMerienda.getSelectedItem() != null
+                && jCBColacion.getSelectedItem() != null && jCBAlmuerzo.getSelectedItem() != null
+                && jCBCena.getSelectedItem() != null) {
+            MenuDiario menuDiario;
+            menuDiario = menuAcceso.buscarMenuDiarioPorDietaYDia(
+                    ((Dieta) jCBDieta.getSelectedItem()).getIdDieta(),
+                    Integer.parseInt((String) jCBDia.getSelectedItem()));
 
-                if (Objects.nonNull(condicion)) {
-                    MenuDiario menuDiario = new MenuDiario();
-                    menuDiario.setDia(dia);
+            if (!Objects.nonNull(menuDiario)) {
+                if (Integer.parseInt((String) jCBDia.getSelectedItem()) == 1) {
+                    MenuDiario menu = new MenuDiario();
+                    menu.setDia(Integer.parseInt((String) jCBDia.getSelectedItem()));
+                    menu.setIdDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta());
+                    menu.setCaloriasDelMenu(
+                            ((Comidas) jCBAlmuerzo.getSelectedItem()).getCaloriasComida()
+                            + ((Comidas) jCBCena.getSelectedItem()).getCaloriasComida()
+                            + ((Comidas) jCBColacion.getSelectedItem()).getCaloriasComida()
+                            + ((Comidas) jCBDesayuno.getSelectedItem()).getCaloriasComida()
+                            + ((Comidas) jCBMerienda.getSelectedItem()).getCaloriasComida()
+                    );
+                    menu.getComidas().add((Comidas) jCBAlmuerzo.getSelectedItem());
+                    menu.getComidas().add((Comidas) jCBCena.getSelectedItem());
+                    menu.getComidas().add((Comidas) jCBColacion.getSelectedItem());
+                    menu.getComidas().add((Comidas) jCBDesayuno.getSelectedItem());
+                    menu.getComidas().add((Comidas) jCBMerienda.getSelectedItem());
 
-                    double calorias = ((Comidas) jCBAlmuerzo.getSelectedItem()).getCaloriasComida();
-                    calorias += ((Comidas) jCBCena.getSelectedItem()).getCaloriasComida();
-                    calorias += ((Comidas) jCBColacion.getSelectedItem()).getCaloriasComida();
-                    calorias += ((Comidas) jCBDesayuno.getSelectedItem()).getCaloriasComida();
-                    calorias += ((Comidas) jCBMerienda.getSelectedItem()).getCaloriasComida();
-                    jLCalorias.setText(Double.toString(calorias));
-
-                    //Sacar la linea de abajo
-                    menuDiario.setCaloriasDelMenu(158);
-
-                    DietaData dieta = new DietaData();
-                    Dieta di = new Dieta();
-                    di = dieta.obtenerDieta(((Paciente) jCBPaciente.getSelectedItem()).getIdPaciente());
-                    menuDiario.setIdDieta(di.getIdDieta());
-
-                    /*
-            menuDiario.getComidas().add((Comidas)jCBAlmuerzo.getSelectedItem());
-            menuDiario.getComidas().add((Comidas)jCBCena.getSelectedItem());
-            menuDiario.getComidas().add((Comidas)jCBColacion.getSelectedItem());
-            menuDiario.getComidas().add((Comidas)jCBDesayuno.getSelectedItem());
-            menuDiario.getComidas().add((Comidas)jCBMerienda.getSelectedItem());
-                     */
-                    menuAcceso.insertMenuDiario(menuDiario);
-                    menuDiario.setIdMenu((menuAcceso.buscarMenuDiario((Paciente) jCBPaciente.getSelectedItem(), dia)).getIdMenu());
-
-                    //Sacar la linea de abajo
-                    menuAcceso.insertMenuComidas(menuDiario.getIdMenu(), 1);
-
-                    /*
-            for (Comidas aux : menuDiario.getComidas()) {
-                menuAcceso.insertMenuComidas(menuDiario.getIdMenu(), aux.getIdComida());
-            }
-                     */
+                    menuAcceso.insertMenuDiario(menu);
                 } else {
-                    JOptionPane.showMessageDialog(this, "Ya existe un Menu Diario asociado");
+                    if (Objects.nonNull(menuAcceso.buscarMenuDiarioPorDietaYDia(
+                            ((Dieta) jCBDieta.getSelectedItem()).getIdDieta(),
+                            (Integer.parseInt((String) jCBDia.getSelectedItem())) - 1))) {
+                        MenuDiario menu = new MenuDiario();
+                        menu.setDia(Integer.parseInt((String) jCBDia.getSelectedItem()));
+                        menu.setIdDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta());
+
+                        menu.setCaloriasDelMenu(
+                                ((Comidas) jCBAlmuerzo.getSelectedItem()).getCaloriasComida()
+                                + ((Comidas) jCBCena.getSelectedItem()).getCaloriasComida()
+                                + ((Comidas) jCBColacion.getSelectedItem()).getCaloriasComida()
+                                + ((Comidas) jCBDesayuno.getSelectedItem()).getCaloriasComida()
+                                + ((Comidas) jCBMerienda.getSelectedItem()).getCaloriasComida()
+                        );
+
+                        menu.getComidas().add((Comidas) jCBAlmuerzo.getSelectedItem());
+                        menu.getComidas().add((Comidas) jCBCena.getSelectedItem());
+                        menu.getComidas().add((Comidas) jCBColacion.getSelectedItem());
+                        menu.getComidas().add((Comidas) jCBDesayuno.getSelectedItem());
+                        menu.getComidas().add((Comidas) jCBMerienda.getSelectedItem());
+
+                        menuAcceso.insertMenuDiario(menu);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "No existe un MenuDiario anterior al de la fecha por lo cual no se podra insertar el actual");
+                    }
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "Seleccione cada una de las opciones que se solicitan");
+                JOptionPane.showMessageDialog(this, "Ya existe un Menu Diario asociado");
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error: no se tu dime");
+            deshabilitar();
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione cada una de las opciones que se solicitan");
         }
     }//GEN-LAST:event_jBInsertActionPerformed
 
     private void jBActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBActualizarActionPerformed
-        try {
-            if (jCBPaciente.getSelectedItem() != null && jCBDia.getSelectedItem() != null
-                    && jCBDesayuno.getSelectedItem() != null && jCBMerienda.getSelectedItem() != null
-                    && jCBColacion.getSelectedItem() != null && jCBAlmuerzo.getSelectedItem() != null
-                    && jCBCena.getSelectedItem() != null) {
+        if (jCBDieta.getSelectedItem() != null && jCBDia.getSelectedItem() != null
+                && jCBDesayuno.getSelectedItem() != null && jCBMerienda.getSelectedItem() != null
+                && jCBColacion.getSelectedItem() != null && jCBAlmuerzo.getSelectedItem() != null
+                && jCBCena.getSelectedItem() != null) {
 
-                int dia = Integer.parseInt((String) jCBDia.getSelectedItem());
-                MenuDiario menuDiario = menuAcceso.buscarMenuDiario((Paciente) jCBPaciente.getSelectedItem(), dia);
-                if (Objects.nonNull(menuDiario)) {
-                    System.out.println(menuDiario.toString());
+            MenuDiario menuDiario;
+            menuDiario = menuAcceso.buscarMenuDiarioPorDietaYDia(
+                    ((Dieta) jCBDieta.getSelectedItem()).getIdDieta(),
+                    Integer.parseInt((String) jCBDia.getSelectedItem()));
+            if (Objects.nonNull(menuDiario)) {
 
-                    ArrayList<Comidas> listaComidaNEw = new ArrayList<>();
+                ArrayList<Comidas> listaComidaNEw = new ArrayList<>();
+                listaComidaNEw.add((Comidas) jCBAlmuerzo.getSelectedItem());
+                listaComidaNEw.add((Comidas) jCBCena.getSelectedItem());
+                listaComidaNEw.add((Comidas) jCBColacion.getSelectedItem());
+                listaComidaNEw.add((Comidas) jCBDesayuno.getSelectedItem());
+                listaComidaNEw.add((Comidas) jCBMerienda.getSelectedItem());
 
-                    listaComidaNEw.add((Comidas) jCBAlmuerzo.getSelectedItem());
-                    listaComidaNEw.add((Comidas) jCBCena.getSelectedItem());
-                    listaComidaNEw.add((Comidas) jCBColacion.getSelectedItem());
-                    listaComidaNEw.add((Comidas) jCBDesayuno.getSelectedItem());
-                    listaComidaNEw.add((Comidas) jCBMerienda.getSelectedItem());
+                menuDiario.setComidas(menuAcceso.buscarComidasPorMenuDiario(menuDiario));
 
-                    //Borrar las siguientes 3 lineas de codigo
-                    listaComidaNEw.add(new Comidas(11));
-                    listaComidaNEw.add(new Comidas(9));
-                    listaComidaNEw.add(new Comidas(10));
-
-                    for (Comidas comidas : listaComidaNEw) {
-                        System.out.println(comidas.toString());
-                    }
-
-                    System.out.println("--------------------------------------------");
-                    int indice = 0;
-
-                    ArrayList<Comidas> listaComidaOld;
-                    listaComidaOld = menuAcceso.buscarComidasPorMenuDiario(menuDiario);
-
-                    for (Comidas comidas : listaComidaOld) {
-                        System.out.println(comidas.toString());
-                    }
-
-                    //Accede a las comidas antes de actualizarlas con menuAcceso.buscarComidasPorMenuDiario(menuDiario) 
-                    for (Comidas aux : listaComidaOld) {
-                        menuAcceso.actualizarMenuComidas(menuDiario, listaComidaNEw.get(indice).getIdComida(), aux.getIdComida());
-                        indice++;
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(this, "No existe un Menu Diario asociado");
+                int index = 0;
+                for (Comidas comidas : listaComidaNEw) {
+                    menuAcceso.actualizarMenuComidas(menuDiario.getIdMenu(), comidas.getIdComida(),
+                            menuDiario.getComidas().get(index).getIdComida());
+                    index++;
                 }
+
             } else {
-                JOptionPane.showMessageDialog(this, "Seleccione cada una de las opciones que se solicitan");
+                JOptionPane.showMessageDialog(this, "No existe un Menu Diario asociado");
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error: no se tu dime");
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione cada una de las opciones que se solicitan");
         }
-
-
     }//GEN-LAST:event_jBActualizarActionPerformed
 
-    private void jBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEliminarActionPerformed
-        try {
-            if (jCBPaciente.getSelectedItem() != null && jCBDia.getSelectedItem() != null) {
-                int dia = Integer.parseInt((String) jCBDia.getSelectedItem());
-                MenuDiario menuDiario = menuAcceso.buscarMenuDiario((Paciente) jCBPaciente.getSelectedItem(), dia);
-                if (Objects.nonNull(menuDiario)) {
-                    menuAcceso.bajaLogica(menuDiario.getIdMenu());
-                } else {
-                    JOptionPane.showMessageDialog(this, "No existe un Menu Diario asociado");
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, "Seleccione un Paciente y el dia a eliminar");
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error: no se tu dime");
-        }
-
-    }//GEN-LAST:event_jBEliminarActionPerformed
-
-    private void jBHabilitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBHabilitarActionPerformed
-        try {
-            if (jCBPaciente.getSelectedItem() != null && jCBDia.getSelectedItem() != null) {
-                int dia = Integer.parseInt((String) jCBDia.getSelectedItem());
-                MenuDiario menuDiario = menuAcceso.buscarMenuDiarioEliminado((Paciente) jCBPaciente.getSelectedItem(), dia);
-                if (Objects.nonNull(menuDiario)) {
-                    menuAcceso.altaLogica(menuDiario.getIdMenu());
-                } else {
-                    JOptionPane.showMessageDialog(this, "No existe un Menu Diario asociado");
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, "Seleccione un Paciente y el dia a habilitar");
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error: no se tu dime");
-        }
-    }//GEN-LAST:event_jBHabilitarActionPerformed
-
     private void jCBDesayunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBDesayunoActionPerformed
-        jCBMerienda.setEnabled(true);
+        if (Objects.nonNull(jCBDesayuno.getSelectedItem())) {
+            jCBMerienda.setEnabled(true);
+        }
     }//GEN-LAST:event_jCBDesayunoActionPerformed
 
     private void jCBMeriendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBMeriendaActionPerformed
-        jCBColacion.setEnabled(true);
+        if (Objects.nonNull(jCBColacion.getSelectedItem())) {
+            jCBColacion.setEnabled(true);
+        }
     }//GEN-LAST:event_jCBMeriendaActionPerformed
 
     private void jCBColacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBColacionActionPerformed
-         jCBAlmuerzo.setEnabled(true);
+        if (Objects.nonNull(jCBAlmuerzo.getSelectedItem())) {
+            jCBAlmuerzo.setEnabled(true);
+        }
+
     }//GEN-LAST:event_jCBColacionActionPerformed
 
     private void jCBAlmuerzoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBAlmuerzoActionPerformed
-        jCBCena.setEnabled(true);
+        if (Objects.nonNull(jCBCena.getSelectedItem())) {
+            jCBCena.setEnabled(true);
+        }
     }//GEN-LAST:event_jCBAlmuerzoActionPerformed
 
     private void jCBCenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBCenaActionPerformed
-        //actualizarJLabelCalorias();
+        if (Objects.nonNull(jCBCena.getSelectedItem())) {
+            jBInsert.setEnabled(true);
+            jBActualizar.setEnabled(true);
+        }
     }//GEN-LAST:event_jCBCenaActionPerformed
 
     // Metodos  auxiliares
-    private void cargarPaciente() {
-        PacienteData pacData = new PacienteData();
-        for (Paciente aux : pacData.listarPacientes()) {
-            jCBPaciente.addItem(aux);
+    private void cargarDietas() {
+        MenuDiarioData munuData = new MenuDiarioData();
+        for (Dieta aux : munuData.listarTodasLasDietasActivas()) {
+            jCBDieta.addItem(aux);
         }
     }
-/*
+    private void cargarComdias(int idPaciente){
+        PacienteData pacData = new PacienteData();
+        Paciente paciente = pacData.buscarPaciente(idPaciente);
+        
+        paciente.getCondicionSalud();
+        
+    }
+
+    /*
     private void actualizarJLabelCalorias() {
         double calorias = ((Comidas) jCBAlmuerzo.getSelectedItem()).getCaloriasComida();
         calorias += ((Comidas) jCBCena.getSelectedItem()).getCaloriasComida();
@@ -497,46 +485,43 @@ public class MenuDiarioVista extends javax.swing.JInternalFrame {
         calorias += ((Comidas) jCBMerienda.getSelectedItem()).getCaloriasComida();
         jLCalorias.setText(Double.toString(calorias));
     }
-*/    
-    private void deshabilitar(){
-        jBActualizar.setEnabled(false);
-        jBEliminar.setEnabled(false);
-        jBHabilitar.setEnabled(false);
-        jBInsert.setEnabled(false);
-        
-        jCBPaciente.setSelectedItem(null);
-        jCBDia.setSelectedItem(null);
-        jCBAlmuerzo.setSelectedItem(null);
-        jCBCena.setSelectedItem(null);
-        jCBColacion.setSelectedItem(null);
-        jCBDesayuno.setSelectedItem(null);
-        jCBMerienda.setSelectedItem(null);
-        
+     */
+    private void deshabilitar() {
+        jCBDieta.setSelectedIndex(-1);
+        jCBDia.setSelectedIndex(-1);
+        jCBAlmuerzo.setSelectedIndex(-1);
+        jCBCena.setSelectedIndex(-1);
+        jCBColacion.setSelectedIndex(-1);
+        jCBDesayuno.setSelectedIndex(-1);
+        jCBMerienda.setSelectedIndex(-1);
+
         jCBDia.setEnabled(false);
         jCBAlmuerzo.setEnabled(false);
         jCBCena.setEnabled(false);
         jCBColacion.setEnabled(false);
         jCBDesayuno.setEnabled(false);
         jCBMerienda.setEnabled(false);
-        
-        
+        jTFPaciente.setText(null);
+
+        jBActualizar.setEnabled(false);
+        jBInsert.setEnabled(false);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBActualizar;
-    private javax.swing.JButton jBEliminar;
-    private javax.swing.JButton jBHabilitar;
     private javax.swing.JButton jBInsert;
+    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<Comidas> jCBAlmuerzo;
     private javax.swing.JComboBox<Comidas> jCBCena;
     private javax.swing.JComboBox<Comidas> jCBColacion;
     private javax.swing.JComboBox<Comidas> jCBDesayuno;
     private javax.swing.JComboBox<String> jCBDia;
+    private javax.swing.JComboBox<Dieta> jCBDieta;
     private javax.swing.JComboBox<Comidas> jCBMerienda;
-    private javax.swing.JComboBox<Paciente> jCBPaciente;
     private javax.swing.JLabel jLCalorias;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -547,5 +532,6 @@ public class MenuDiarioVista extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JTextField jTFPaciente;
     // End of variables declaration//GEN-END:variables
 }

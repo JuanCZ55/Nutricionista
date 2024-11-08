@@ -45,8 +45,8 @@ public class Menu extends javax.swing.JFrame {
         jCheckBoxMenuItem2 = new javax.swing.JCheckBoxMenuItem();
         jCheckBoxMenuItem3 = new javax.swing.JCheckBoxMenuItem();
         jMenu3 = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
         jMIMenuDiario = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMIComidas = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
@@ -149,11 +149,21 @@ public class Menu extends javax.swing.JFrame {
 
         jMenu3.setText("Menu");
 
-        jMenuItem5.setText("Lista de menus");
-        jMenu3.add(jMenuItem5);
-
         jMIMenuDiario.setText("MenuDiario");
+        jMIMenuDiario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIMenuDiarioActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMIMenuDiario);
+
+        jMenuItem5.setText("Lista de menus");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem5);
 
         jMenuBar1.add(jMenu3);
 
@@ -253,6 +263,22 @@ public class Menu extends javax.swing.JFrame {
         JDPMenu.add(crearDieta);
         crearDieta.setVisible(true);
     }//GEN-LAST:event_jCheckBoxMenuItem3ActionPerformed
+
+    private void jMIMenuDiarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIMenuDiarioActionPerformed
+        JDPMenu.removeAll();
+        JDPMenu.repaint();
+        MenuDiarioVista menuDiarioVista = new MenuDiarioVista();
+        JDPMenu.add(menuDiarioVista);
+        menuDiarioVista.setVisible(true);
+    }//GEN-LAST:event_jMIMenuDiarioActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        JDPMenu.removeAll();
+        JDPMenu.repaint();
+        ListarMenuDiario listarMenuDiario = new ListarMenuDiario();
+        JDPMenu.add(listarMenuDiario);
+        listarMenuDiario.setVisible(true);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     /**
      * @param args the command line arguments
