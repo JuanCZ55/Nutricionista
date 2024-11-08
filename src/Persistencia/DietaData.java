@@ -1,10 +1,10 @@
 package Persistencia;
 
+import Modelo.Comidas;
 import Modelo.Conexion;
 import Modelo.Dieta;
 import Modelo.MenuDiario;
 import Modelo.Paciente;
-import Vista.Comida;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -212,7 +212,7 @@ public class DietaData {
 
                 // Obtiene los menús diarios para esta dieta  
                 MenuDiarioData menuData = new MenuDiarioData();  
-                List<MenuDiario> menusDiarios = menuData.listarMenuDiario();  
+                List<MenuDiario> menusDiarios = menuData.listarMenuDiarioPorPacientse(idPaciente);  
                 dieta.setMenus((ArrayList<MenuDiario>) menusDiarios);  
 
             } else {  
@@ -248,51 +248,13 @@ public class DietaData {
 
         return menuDiarioList;  
     }  
-
-    public Dieta generarDietaAleatoria(Paciente paciente, int dias, int idDieta) {  
-        if (dias < 3 || dias > 7) {  
-            JOptionPane.showMessageDialog(null, "La cantidad de días debe ser de 3 a 7");  
-            return null; // Salir si no es válido  
-        }  
-
-        Random random = new Random();  
-        Dieta dieta = new Dieta();  
-        dieta.setPaciente(paciente);  
-        dieta.setNombreD("Dieta Aleatoria " + LocalDate.now());  
-        dieta.setFechaIni(LocalDate.now());  
-        dieta.setFechaFin(LocalDate.now().plusDays(dias - 1));  
-        dieta.setEstado(true);  
-        double totalCalorias = 0;  
-
-        // Obtener el menú diario desde la base de datos  
-        List<MenuDiario> menuDiarioList = obtenerMenuDiario(idDieta);  
-
-        for (int i = 0; i < dias; i++) {  
-            if (!menuDiarioList.isEmpty()) {  
-                // Selecciona un menú aleatorio  
-                MenuDiario menuDelDia = menuDiarioList.get(random.nextInt(menuDiarioList.size()));  
-                
-//                // Supongamos que hay un método que obtiene las comidas a partir del id de menu del día  
-//                List<Comida> comidasDelDia = obtenerComidasDelDia(menuDelDia.getIdMenu());  
-//                
-//                // Agregar las comidas del día a la dieta  
-//                for (Comida comida : comidasDelDia) {  
-//                    dieta.agregarComida(comida);  
-//                    totalCalorias += comida.getCalorias();  
-//                }  
-            }  
-        }  
-
-        dieta.setTotalCalorias(totalCalorias);  
-        return dieta;  
-    }  
+  
     public List<Dieta> obtenerTodasLasDietas() {
     List<Dieta> listaDietas = new ArrayList<>();
     String preguntaDieta = "SELECT * FROM dieta";  
 
-    try {  
-        PreparedStatement obtDieta = con.prepareStatement(preguntaDieta);  
-        ResultSet rsDieta = obtDieta.executeQuery();  
+    try (PreparedStatement obtDieta = con.prepareStatement(preguntaDieta);
+         ResultSet rsDieta = obtDieta.executeQuery()) {
 
         while (rsDieta.next()) {  
             Dieta dieta = new Dieta();  
@@ -302,11 +264,19 @@ public class DietaData {
             dieta.setFechaFin(rsDieta.getDate("FechaFinal").toLocalDate());  
             dieta.setTotalCalorias(rsDieta.getDouble("TotalCalorias"));  
 
-            // Obtiene los menús diarios para esta dieta  
+            // Obtener los menús diarios para esta dieta  
             MenuDiarioData menuData = new MenuDiarioData();  
-            List<MenuDiario> menusDiarios = menuData.listarMenuDiario();  
-            dieta.setMenus((ArrayList<MenuDiario>) menusDiarios);
+            List<MenuDiario> menusDiarios = menuData.listarMenuDiarioPorDietaObtenerComidas(dieta.getIdDieta());
+            
 
+            // Para cada menú, obtener las comidas asociadas
+            for (MenuDiario menu : menusDiarios) {
+                ComidaData comidaData = new ComidaData();
+                List<Comidas> comidas = comidaData.listarComidasPorMenuDiario(menu.getIdMenu());
+                menu.setComidas((ArrayList<Comidas>) comidas);
+            }
+
+            dieta.setMenus((ArrayList<MenuDiario>) menusDiarios); // Asignemos los menús con las comidas a la dieta
             listaDietas.add(dieta);  
         }
     } catch (SQLException e) {
@@ -315,5 +285,4 @@ public class DietaData {
     return listaDietas;
 }
 
-   
 }

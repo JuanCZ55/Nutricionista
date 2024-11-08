@@ -8,6 +8,8 @@ import org.mariadb.jdbc.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ComidaData {
     private Connection con = null;
@@ -127,6 +129,32 @@ public class ComidaData {
       return comid; 
     
     }
+    public List<Comidas> listarComidasPorMenuDiario(int idMenu) {
+    String sql = "SELECT c.IdComidas, c.Nombre, c.TipoDeComida, c.CaloriasComida, c.NoApto, c.Estado"
+               + " FROM menucomidas mc JOIN comidas c ON mc.IdComidas = c.IdComidas"
+               + " WHERE mc.IdMenuDiario = ?";
+    List<Comidas> lista = new ArrayList<>();
+
+    try (PreparedStatement ps = con.prepareStatement(sql)) {
+        ps.setInt(1, idMenu);
+        try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Comidas comida = new Comidas();
+                comida.setIdComida(rs.getInt("IdComidas"));
+                comida.setNombre(rs.getString("Nombre"));
+                comida.setTipoDeComida(rs.getString("TipoDeComida"));
+                comida.setCaloriasComida(rs.getDouble("CaloriasComida"));
+                comida.setNoApto(rs.getString("NoApto"));
+                comida.setEstado(rs.getBoolean("Estado"));
+                lista.add(comida);
+            }
+        }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Comidas: " + ex.getMessage());
+    }
+
+    return lista;
+}
 }
 
 

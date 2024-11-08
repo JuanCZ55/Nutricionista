@@ -7,6 +7,7 @@ import Modelo.MenuDiario;
 import Modelo.Paciente;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 import org.mariadb.jdbc.Connection;
 import javax.swing.JOptionPane;
 
@@ -177,29 +178,56 @@ public class MenuDiarioData {
 
     //Listar Todos los Menus Junto con las comidas
     //Paso 1: Buscar todos los MenuDiarios asociados a la idDieta
-    public ArrayList<MenuDiario> listarMenuDiarioPorDieta(int idDieta) {
-        String sql = "SELECT IdMenuDiario FROM menudiario WHERE IdDieta = ?;";
-        int x = 0;
-        MenuDiario menuDiario = null;
-        ArrayList<MenuDiario> lista = new ArrayList<>();
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, idDieta);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                menuDiario = new MenuDiario();
-                menuDiario.setIdMenu(rs.getInt("IdMenuDiario"));
-                lista.add(menuDiario);
-                x++;
-            }
+    public List<MenuDiario> listarMenuDiarioPorDietaObtenerComidas(int idDieta) {
+    String sql = "SELECT * FROM menudiario WHERE IdDieta = ?;";
+    List<MenuDiario> lista = new ArrayList<>();
 
-            ps.close();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla MenuDiario");
+    try (PreparedStatement ps = con.prepareStatement(sql)) {
+        ps.setInt(1, idDieta);
+        try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                MenuDiario menuDiario = new MenuDiario();
+                menuDiario.setIdMenu(rs.getInt("IdMenuDiario"));
+                // Obtener las comidas asociadas al menú
+                ComidaData comidaData = new ComidaData();
+                List<Comidas> comidas = comidaData.listarComidasPorMenuDiario(menuDiario.getIdMenu());
+                menuDiario.setComidas((ArrayList<Comidas>) comidas); 
+                lista.add(menuDiario);
+            }
+        }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error al acceder a la tabla MenuDiario: " + ex.getMessage());
+    }
+
+    return lista;
+}
+   
+
+    public ArrayList<MenuDiario> listarMenuDiarioPorDieta(int idDieta) {
+    String sql = "SELECT IdMenuDiario FROM menudiario WHERE IdDieta = ?;";
+    int x = 0;
+    MenuDiario menuDiario = null;
+    ArrayList<MenuDiario> lista = new ArrayList<>();
+    
+    try {
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, idDieta);
+        ResultSet rs = ps.executeQuery();
+        
+        while (rs.next()) {
+            menuDiario = new MenuDiario();
+            menuDiario.setIdMenu(rs.getInt("IdMenuDiario"));
+            lista.add(menuDiario);
+            x++;
         }
 
-        return lista;
+        ps.close();
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error al acceder a la tabla MenuDiario: " + ex.getMessage());
     }
+
+    return lista;
+}   
 
     //Listar Menus Activo
     //Paso 1: Buscar todos los MenuDiarios asociados a la idDieta activos

@@ -358,7 +358,7 @@ public class ListarMenuDiario extends javax.swing.JInternalFrame {
                 }
             } else if (jCBEstado.getSelectedItem().equals("Todos los Menu")) {
                 if (!(menuAcceso.listarMenuDiarioPorDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta())).isEmpty()) {
-                    enlistarMenuComidas(menuAcceso.listarMenuDiarioPorDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()));
+                    enlistarMenuComidas((ArrayList<MenuDiario>) menuAcceso.listarMenuDiarioPorDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()));
                     jCBDia.setEnabled(true);
                 } else {
                     JOptionPane.showMessageDialog(this, "Esta Dieta no tiene Menu Diarios");
