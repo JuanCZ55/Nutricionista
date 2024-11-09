@@ -28,6 +28,35 @@ public class DietaData {
         this.comidaData = new ComidaData();
         con = (Connection) Conexion.getConexion();
     }
+    public int insertarDietaGeneraID(Dieta dieta) {  
+    String sql = "INSERT INTO dieta (NombreDieta, FechaInicial, FechaFinal, TotalCalorias, IdPaciente, Estado) VALUES (?, ?, ?, ?, ?, ?)";  
+    int idGenerado = -1;  
+
+    try (PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {  
+        ps.setString(1, dieta.getNombreD());  
+        ps.setDate(2, java.sql.Date.valueOf(dieta.getFechaIni()));  
+        ps.setDate(3, java.sql.Date.valueOf(dieta.getFechaFin()));   
+        ps.setDouble(4, dieta.getTotalCalorias());  
+        ps.setInt(5, dieta.getPaciente().getIdPaciente());  
+        ps.setBoolean(6, dieta.isEstado());  
+
+        int updatedRows = ps.executeUpdate();  
+        if (updatedRows == 1) {  
+            // Obtener el ID generado  
+            ResultSet rs = ps.getGeneratedKeys();  
+            if (rs.next()) {  
+                idGenerado = rs.getInt(1); 
+                dieta.setIdDieta(idGenerado); 
+            }  
+            JOptionPane.showMessageDialog(null, "Dieta insertada correctamente.");  
+        } else {  
+            JOptionPane.showMessageDialog(null, "Dieta no insertada.");  
+        }  
+    } catch (SQLException ex) {  
+        JOptionPane.showMessageDialog(null, "Error al insertar dieta: " + ex.getMessage());  
+    }  
+    return idGenerado; // Retorna el ID de la dieta  
+}
     public void insertarDieta(Dieta dieta) {
     String sql = "INSERT INTO dieta (NombreDieta, FechaInicial, FechaFinal, TotalCalorias, IdPaciente, Estado) VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -294,7 +323,18 @@ public class DietaData {
             dieta.setFechaIni(rsDieta.getDate("FechaInicial").toLocalDate());  
             dieta.setFechaFin(rsDieta.getDate("FechaFinal").toLocalDate());  
             dieta.setTotalCalorias(rsDieta.getDouble("TotalCalorias"));  
-
+            
+             // Obtener el idPaciente de la dieta actual
+            int idPaciente = rsDieta.getInt("idPaciente");
+            
+            // Obtener el paciente asociado usando su ID
+            PacienteData pacienteData = new PacienteData(); 
+            Paciente paciente = pacienteData.buscarPaciente(idPaciente);
+              if (paciente != null) {
+                dieta.setPaciente(paciente);  // Asocio el paciente a la dieta
+            } else {
+                JOptionPane.showMessageDialog(null, "Paciente no encontrado para el idPaciente: " + idPaciente);
+            }
             // Obtener los menús diarios para esta dieta  
             MenuDiarioData menuData = new MenuDiarioData();  
             List<MenuDiario> menusDiarios = menuData.listarMenuDiarioPorDietaObtenerComidas(dieta.getIdDieta());
@@ -312,6 +352,7 @@ public class DietaData {
         }
     } catch (SQLException e) {
         JOptionPane.showMessageDialog(null, "Error al obtener dietas: " + e.getMessage());
+    
     }
     return listaDietas;
 }

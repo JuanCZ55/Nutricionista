@@ -35,35 +35,11 @@ public class MostrarDieta extends javax.swing.JInternalFrame {
         cargarDietasEnTabla();
     }
     
+    
     public void cargarDietasEnTabla() {
         List<Dieta> listaDietas = dietaData.obtenerTodasLasDietas();
         modeloTabla.setRowCount(0);
-        
-        if (dieta.getPaciente() != null) {
-        int idPaciente = dieta.getPaciente().getIdPaciente();
-        // Carga los datos de las dietas en la tabla si no esta vacio paciente
-        for (Dieta dieta : listaDietas) {
-            modeloTabla.addRow(new Object[] {
-                dieta.getIdDieta(),
-                dieta.getNombreD(),
-                dieta.getPaciente().getIdPaciente(),
-                dieta.getFechaIni(),
-                dieta.getFechaFin(),
-                dieta.getTotalCalorias(),
-                dieta.isEstado()
-            });
-        }
-        } else {
-          
-            JOptionPane.showMessageDialog(null, "No se cargo ningun Paciente para la dieta con ID: " + dieta.getIdDieta());
-}
-        
-    }
-
-    public void cargarDietasComidasEnTabla() {
-        List<Dieta> listaDietas = dietaData.obtenerTodasLasDietas();
-        modeloTabla.setRowCount(0);  // Limpiar la tabla
-
+      
         for (Dieta dieta : listaDietas) {
             modeloTabla.addRow(new Object[] {
                 dieta.getIdDieta(),
@@ -76,17 +52,34 @@ public class MostrarDieta extends javax.swing.JInternalFrame {
             });
         }
         
-        // Configurar el evento de selección para cargar las comidas
-        jTablaDietaLista.getSelectionModel().addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting()) {
-                int filaSeleccionada = jTablaDietaLista.getSelectedRow();
-                if (filaSeleccionada != -1) {
-                    int idDietaSeleccionada = (int) modeloTabla.getValueAt(filaSeleccionada, 0);
-                    cargarMenuYComidasPorDieta(idDietaSeleccionada);
-                }
-            }
-        });
     }
+
+//    public void cargarDietasComidasEnTabla() {
+//        List<Dieta> listaDietas = dietaData.obtenerTodasLasDietas();
+//        modeloTabla.setRowCount(0);  // Limpiar la tabla
+//        for (Dieta dieta : listaDietas) {
+//            modeloTabla.addRow(new Object[] {
+//                dieta.getIdDieta(),
+//                dieta.getNombreD(),
+//                dieta.getPaciente().getIdPaciente(),
+//                dieta.getFechaIni(),
+//                dieta.getFechaFin(),
+//                dieta.getTotalCalorias(),
+//                dieta.isEstado()
+//            });
+//        }
+//        
+//        // Configurar el evento de selección para cargar las comidas
+//        jTablaDietaLista.getSelectionModel().addListSelectionListener(e -> {
+//            if (!e.getValueIsAdjusting()) {
+//                int filaSeleccionada = jTablaDietaLista.getSelectedRow();
+//                if (filaSeleccionada != -1) {
+//                    int idDietaSeleccionada = (int) modeloTabla.getValueAt(filaSeleccionada, 0);
+//                    cargarMenuYComidasPorDieta(idDietaSeleccionada);
+//                }
+//            }
+//        });
+//    }
     
     public void cargarMenuYComidasPorDieta(int idDieta) {
         Dieta dietaSeleccionada = dietaData.buscarDietaSegunID(idDieta);
@@ -111,9 +104,16 @@ public class MostrarDieta extends javax.swing.JInternalFrame {
             }
         }
     }
-     public void volverADietas() {
-        cargarDietasEnTabla();
-    }
+    public void recargarInternalFrame() {
+    modeloTabla.setRowCount(0);
+   
+
+    // Redibujar y actualizar la vista del JInternalFrame
+    MostrarDieta mostrar = new MostrarDieta();
+    mostrar.revalidate();
+    mostrar.repaint();
+    cargarDietasEnTabla();
+}
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -192,7 +192,7 @@ public class MostrarDieta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTablaDietaListaMouseClicked
 
     private void jButtonVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVolverActionPerformed
-        volverADietas();
+       recargarInternalFrame();
     }//GEN-LAST:event_jButtonVolverActionPerformed
     
 

@@ -82,7 +82,11 @@ public class Dieta {
     }
 
     public ArrayList<MenuDiario> getMenus() {
-        return Menus;
+        if (Menus == null) {
+            return new ArrayList<>(); // Retorna una lista vacía en lugar de null
+        }else {
+            return Menus;
+        }
     }
 
     public void setMenus(ArrayList<MenuDiario> Menus) {

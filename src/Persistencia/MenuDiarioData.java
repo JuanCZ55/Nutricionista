@@ -714,7 +714,7 @@ public class MenuDiarioData {
         return lista;
     }
     public double calcularCaloriasTotalesPorDieta(int idDieta) {
-    String sql = "SELECT Calorias FROM menudiario WHERE IdDieta = ? ORDER BY Fecha";
+    String sql = "SELECT CaloriasDia FROM menudiario WHERE IdDieta = ?";
     double totalCalorias = 0;
 
     try {
@@ -724,7 +724,7 @@ public class MenuDiarioData {
 
         // Acumula las calorías día por día
         while (rs.next()) {
-            double caloriasDia = rs.getDouble("Calorias");
+            double caloriasDia = rs.getDouble("CaloriasDia");
             totalCalorias += caloriasDia;  // Suma al acumulador
         }
 

@@ -34,34 +34,37 @@ public class CargarDieta extends javax.swing.JInternalFrame {
         jComboBoxPaciente.addItem(paciente.getNombre());
     }
     }
-    public void asignarDietaAlPaciente() {
-    // Obtener el paciente seleccionado del ComboBox
-    String pacienteSeleccionado = (String) jComboBoxPaciente.getSelectedItem();
-    String nombreDieta = jTextFieldNombreDieta.getText();
-    LocalDate fechaInicio = jDateFechaInicio.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-    LocalDate fechaFinal = jDateFechaFin.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-    boolean estado = true;
+   public void asignarDietaAlPaciente() {  
+    // Obtener el paciente seleccionado del ComboBox  
+    String pacienteSeleccionado = (String) jComboBoxPaciente.getSelectedItem();  
+    String nombreDieta = jTextFieldNombreDieta.getText();  
+    LocalDate fechaInicio = jDateFechaInicio.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();  
+    LocalDate fechaFinal = jDateFechaFin.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();  
+    boolean estado = true;  
 
-    double totalCalorias;
-  
-    if (pacienteSeleccionado != null && !nombreDieta.isEmpty()) {
-        // Crear el objeto Dieta
-        Dieta dieta = new Dieta();
-        dieta.setNombreD(nombreDieta);
-        dieta.setFechaIni(fechaInicio);
-        dieta.setFechaFin(fechaFinal);
-        double caloriasTotales = menuDiario.calcularCaloriasTotalesPorDieta(dieta.getIdDieta());
-        dieta.setTotalCalorias(caloriasTotales);
-        dieta.setPaciente(paciente.buscarPacientePorNombre(pacienteSeleccionado));
-        dieta.setEstado(estado);
+    if (pacienteSeleccionado != null && !nombreDieta.isEmpty()) {  
+        // Crear el objeto Dieta  
+        Dieta dieta = new Dieta();  
+        dieta.setNombreD(nombreDieta);  
+        dieta.setFechaIni(fechaInicio);  
+        dieta.setFechaFin(fechaFinal);  
+        dieta.setPaciente(paciente.buscarPacientePorNombre(pacienteSeleccionado));  
+        dieta.setEstado(estado);  
 
-        // Llamar al método para insertar la dieta
-        dietaData.insertarDieta(dieta);
-        dietaData.generarMenusDeDieta(dieta);
-        JOptionPane.showMessageDialog(null, "Dieta asignada correctamente al paciente.");
-    } else {
-        JOptionPane.showMessageDialog(null, "Seleccione un paciente y complete todos los campos de la dieta.");
-    }
+        // Llamar al método para insertar la dieta y obtener el IdDieta  
+        int idDietaGenerado = dietaData.insertarDietaGeneraID(dieta);  
+        if (idDietaGenerado != -1) {  
+            dieta.setIdDieta(idDietaGenerado); // Ahora que tenemos el ID asignado  
+
+            // Generar los menús con el IdDieta ya asignado  
+            dietaData.generarMenusDeDieta(dieta);  
+            JOptionPane.showMessageDialog(null, "Dieta asignada correctamente al paciente.");  
+        } else {  
+            JOptionPane.showMessageDialog(null, "Error al asignar dieta, no se generó un ID válido.");  
+        }  
+    } else {  
+        JOptionPane.showMessageDialog(null, "Seleccione un paciente y complete todos los campos de la dieta.");  
+    }  
 }
 
     
