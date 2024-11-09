@@ -377,7 +377,7 @@ public class DietaVista extends javax.swing.JInternalFrame {
             dietaActualizada.setEstado(estadoTabla);
 
             // Llamar al método para actualizar la dieta en la base de datos
-            dietaData.actualizarDieta(dietaActualizada);
+            dietaData.insertarDieta(dietaActualizada);
         } else {
             JOptionPane.showMessageDialog(this, "No se han detectado cambios en la fila seleccionada", "Sin cambios", JOptionPane.INFORMATION_MESSAGE);
         }

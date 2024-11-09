@@ -20,6 +20,32 @@ public class MenuDiarioData {
     }
 
     //Insertar el menu diario/comidas
+    public int insertMenuDiarioObtenerID(MenuDiario menu) {
+    String sql = "INSERT INTO menudiario (Dia, CaloriasDia, IdDieta) VALUES (?, ?, ?)";
+    try (PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        // Asignar parámetros de la consulta
+        ps.setInt(1, menu.getDia());
+        ps.setDouble(2, menu.getCaloriasDelMenu());
+        ps.setInt(3, menu.getIdDieta());
+
+        // Ejecutar la inserción
+        int rowsAffected = ps.executeUpdate();
+
+        // Si la inserción es exitosa, obtener el ID generado
+        if (rowsAffected > 0) {
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    int idMenu = rs.getInt(1); // Obtener el ID generado
+                    menu.setIdMenu(idMenu);    // Asignar el ID al objeto MenuDiario
+                    return idMenu;             // Retornar el ID generado
+                }
+            }
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error al insertar MenuDiario: " + e.getMessage());
+    }
+    return -1;  // Retorna -1 si ocurre un error
+}
     public void insertMenuDiario(MenuDiario md) {
         String sql = "INSERT INTO menudiario( Dia, CaloriasDia, IdDieta) VALUES (?,?,?); ";
         try {
@@ -687,4 +713,27 @@ public class MenuDiarioData {
 
         return lista;
     }
+    public double calcularCaloriasTotalesPorDieta(int idDieta) {
+    String sql = "SELECT Calorias FROM menudiario WHERE IdDieta = ? ORDER BY Fecha";
+    double totalCalorias = 0;
+
+    try {
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, idDieta);
+        ResultSet rs = ps.executeQuery();
+
+        // Acumula las calorías día por día
+        while (rs.next()) {
+            double caloriasDia = rs.getDouble("Calorias");
+            totalCalorias += caloriasDia;  // Suma al acumulador
+        }
+
+        ps.close();
+        rs.close();
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error al acceder a la tabla MenuDiario: " + ex.getMessage());
+    }
+
+    return totalCalorias;
+}
 }

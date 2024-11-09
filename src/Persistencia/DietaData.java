@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -19,34 +20,64 @@ import org.mariadb.jdbc.Connection;
 public class DietaData {
 
     private Connection con = null;
+    private MenuDiarioData menudiario;
+    private ComidaData comidaData;
 
     public DietaData() {
+        this.menudiario = new MenuDiarioData();
+        this.comidaData = new ComidaData();
         con = (Connection) Conexion.getConexion();
     }
+    public void insertarDieta(Dieta dieta) {
+    String sql = "INSERT INTO dieta (NombreDieta, FechaInicial, FechaFinal, TotalCalorias, IdPaciente, Estado) VALUES (?, ?, ?, ?, ?, ?)";
 
-    public void actualizarDieta(Dieta dieta) {
-         String sql = "UPDATE dieta SET NombreDieta = ?, IdPaciente = ?, FechaInicial = ?, FechaFinal = ?, TotalCalorias = ?, Estado = ? WHERE IdDieta = ?";  
-        try {  
-            PreparedStatement ps = con.prepareStatement(sql);  
-            ps.setString(1, dieta.getNombreD());  
-            ps.setInt(2, dieta.getPaciente().getIdPaciente());  
-            ps.setDate(3, java.sql.Date.valueOf(dieta.getFechaIni()));  
-            ps.setDate(4, java.sql.Date.valueOf(dieta.getFechaFin()));  
-            ps.setDouble(5, dieta.getTotalCalorias());  
-            ps.setBoolean(6, dieta.isEstado());  
-            ps.setInt(7, dieta.getIdDieta());  
-
-            int updatedRows = ps.executeUpdate();  
+    try (PreparedStatement ps = con.prepareStatement(sql)) {
+        ps.setString(1, dieta.getNombreD());
+        ps.setDate(2, java.sql.Date.valueOf(dieta.getFechaIni()));  
+        ps.setDate(3, java.sql.Date.valueOf(dieta.getFechaFin())); 
+        ps.setDouble(4, dieta.getTotalCalorias());
+        ps.setInt(5, dieta.getPaciente().getIdPaciente()); // Aquí asocias el paciente
+        ps.setBoolean(6, dieta.isEstado());
+        int updatedRows = ps.executeUpdate();  
             if (updatedRows == 1) {  
                 JOptionPane.showMessageDialog(null, "Dieta Modificada Exitosamente");  
             } else {  
                 JOptionPane.showMessageDialog(null, "Dieta no encontrada");  
             }  
             ps.close();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Dieta: " + ex.getMessage());
-        }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error al insertar dieta: " + ex.getMessage());
     }
+}   
+    public List<Dieta> listarDietasPorPaciente(int idPaciente) {
+    List<Dieta> dietas = new ArrayList<>();
+    String sql = "SELECT * FROM dieta WHERE IdPaciente = ?";
+
+    try (PreparedStatement ps = con.prepareStatement(sql)) {
+        ps.setInt(1, idPaciente);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            Dieta dieta = new Dieta();
+            dieta.setIdDieta(rs.getInt("IdDieta"));
+            dieta.setNombreD(rs.getString("NombreDieta"));
+            dieta.setFechaIni(rs.getDate("FechaInicial").toLocalDate());
+            dieta.setFechaFin(rs.getDate("FechaFinal").toLocalDate());
+            dieta.setTotalCalorias(rs.getDouble("TotalCalorias"));
+            dieta.setEstado(rs.getBoolean("Estado"));
+
+            // Asocia el paciente a la dieta
+            Paciente paciente = new Paciente();
+            paciente.setIdPaciente(idPaciente); // Este es el paciente asociado
+            dieta.setPaciente(paciente);
+
+            dietas.add(dieta);
+        }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error al listar dietas: " + ex.getMessage());
+    }
+
+    return dietas;
+}
 
     public Dieta buscarDietaSegunID(int idDieta) {
         String sql = "SELECT * FROM dieta WHERE IdDieta = ?";  
@@ -283,6 +314,46 @@ public class DietaData {
         JOptionPane.showMessageDialog(null, "Error al obtener dietas: " + e.getMessage());
     }
     return listaDietas;
+}
+   public void generarMenusDeDieta(Dieta dieta) {
+    // Calcular la cantidad de días de la dieta
+    long diasDeDieta = ChronoUnit.DAYS.between(dieta.getFechaIni(), dieta.getFechaFin()) + 1; // 1 es para que Incluya el día de inicio
+
+    // Obtener las calorías totales de la dieta 
+    double caloriasTotales = menudiario.calcularCaloriasTotalesPorDieta(dieta.getIdDieta());
+    // Inicializar la lista de menús de la dieta
+    ArrayList<MenuDiario> menus = new ArrayList<>();
+
+    LocalDate fechaActual = dieta.getFechaIni(); 
+    // Recorremos todos los días de la dieta
+    for (long i = 0; i < diasDeDieta; i++) {
+        // Crear un MenuDiario para cada día
+        MenuDiario menu = new MenuDiario();
+        menu.setDia(fechaActual.getDayOfMonth());
+        menu.setIdDieta(dieta.getIdDieta());
+        menu.setCaloriasDelMenu(caloriasTotales); // Usamos las calorías totales para todo el período
+        menu.setEstado(dieta.isEstado()); // El estado de la dieta se propaga al menú diario
+
+        // Insertar el MenuDiario en la base de datos y obtener su id
+        int idMenuGenerado = menudiario.insertMenuDiarioObtenerID(menu);
+
+        // Asignar el id generado al objeto MenuDiario
+        menu.setIdMenu(idMenuGenerado);
+
+        // Obtener las comidas para este día
+        ArrayList<Comidas> comidasDelDia = (ArrayList<Comidas>) comidaData.listarComidasPorMenuDiario(menu.getIdMenu()); // Usamos el idMenu generado
+        menu.setComidas(comidasDelDia);
+        // Insertar las comidas en la base de datos
+        for (Comidas comida : comidasDelDia) {
+            menudiario.insertMenuComidas(menu.getIdMenu(), comida.getIdComida());
+        }
+        menus.add(menu);
+        //obtener el menu para el siguiente dia
+        fechaActual = fechaActual.plusDays(1);
+    }
+        dieta.setMenus(menus);  
+
+    
 }
 
 }

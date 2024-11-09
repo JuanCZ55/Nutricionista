@@ -278,6 +278,41 @@ public class PacienteData {
         }
         return pac;
     }
+    public Paciente buscarPacientePorNombre(String nombre) {
+    String sql = "SELECT * FROM paciente WHERE Nombre=?;";
+    Paciente pac = null;
+    try {
+        // Preparar la consulta SQL con el nombre
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, nombre);  // Usamos setString porque 'nombre' es un String
+        ResultSet rs = ps.executeQuery();
+        
+        // Verificar si hay resultados
+        if (rs.next()) {
+            pac = new Paciente();
+            pac.setIdPaciente(rs.getInt("IdPaciente"));
+            pac.setNombre(rs.getString("Nombre"));
+            pac.setEdad(rs.getInt("Edad"));
+            pac.setAltura(rs.getDouble("Altura"));
+            pac.setPesoActual(rs.getDouble("PesoActual"));
+            pac.setPesoBuscado(rs.getDouble("PesoBuscado"));
+            pac.setPesoInicial(rs.getDouble("PesoInical"));
+            pac.setCondicionSalud(convertirStringSet(rs.getString("CondicionSalud")));
+            pac.setEstado(rs.getBoolean("Estado"));
+        } else {
+            JOptionPane.showMessageDialog(null, "No existe un paciente con ese nombre");
+        }
+        
+        // Cerrar los recursos
+        rs.close();
+        ps.close();
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error al buscar paciente: " + ex.getMessage());
+    }
+    
+    return pac;
+}
+
 
     public ArrayList<Paciente> buscarPacientesPorNombre(String nom) {
         String sql = "SELECT * FROM paciente WHERE Nombre LIKE CONCAT('%', ?, '%') ";
