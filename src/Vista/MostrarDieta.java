@@ -16,12 +16,14 @@ public class MostrarDieta extends javax.swing.JInternalFrame {
     private DefaultTableModel modeloTabla;
     private DietaData dietaData;
     private Dieta dieta;
+    private List<Dieta> listaDietas ;
     
     public MostrarDieta() {
         initComponents();
         this.dietaData = new DietaData();
         this.dieta = new Dieta();
         modeloTabla = new DefaultTableModel();
+        this.listaDietas =  dietaData.obtenerTodasLasDietas();
         
         // Inicializar columnas de dieta
         String[] columnasDieta = {"ID Dieta", "Nombre", "ID Paciente", "Fecha Inicio", "Fecha Final", "Total Calorías", "Estado"};
@@ -37,7 +39,6 @@ public class MostrarDieta extends javax.swing.JInternalFrame {
     
     
     public void cargarDietasEnTabla() {
-        List<Dieta> listaDietas = dietaData.obtenerTodasLasDietas();
         modeloTabla.setRowCount(0);
       
         for (Dieta dieta : listaDietas) {
@@ -192,7 +193,7 @@ public class MostrarDieta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTablaDietaListaMouseClicked
 
     private void jButtonVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVolverActionPerformed
-       recargarInternalFrame();
+      cargarDietasEnTabla();
     }//GEN-LAST:event_jButtonVolverActionPerformed
     
 
