@@ -78,6 +78,23 @@ public class DietaData {
         JOptionPane.showMessageDialog(null, "Error al insertar dieta: " + ex.getMessage());
     }
 }   
+    public void actualizarDieta(Dieta dieta) {
+    String sql = "UPDATE dieta SET NombreDieta = ?, FechaInicial = ?, FechaFinal = ?, TotalCalorias = ?, Estado = ? WHERE IdDieta = ?";
+    try {
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, dieta.getNombreD());
+        ps.setDate(2, java.sql.Date.valueOf(dieta.getFechaIni()));
+        ps.setDate(3, java.sql.Date.valueOf(dieta.getFechaFin()));
+        ps.setDouble(4, dieta.getTotalCalorias());
+        ps.setBoolean(5, dieta.isEstado());
+        ps.setInt(6, dieta.getIdDieta());
+
+        ps.executeUpdate();
+        ps.close();
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error al actualizar la dieta: " + ex.getMessage());
+    }
+}
     public List<Dieta> listarDietasPorPaciente(int idPaciente) {
     List<Dieta> dietas = new ArrayList<>();
     String sql = "SELECT * FROM dieta WHERE IdPaciente = ?";
@@ -165,7 +182,7 @@ public class DietaData {
     }
 
     public List<Dieta> buscarDietasEnRangoDeFechas(LocalDate fechaInicio, LocalDate fechaFin) {
-         String sql = "SELECT * FROM dieta WHERE FechaInicial BETWEEN ? AND ?";  
+        String sql = "SELECT * FROM dieta WHERE FechaInicial >= ? AND FechaFinal <= ?"; 
         List<Dieta> dietas = new ArrayList<>();  
 
         try {  
@@ -199,59 +216,105 @@ public class DietaData {
         return dietas;
     }
 
-    public void bajaLogica(int idDieta) {
-        String sql = "UPDATE dieta SET estado = 0 WHERE idDieta = ?;";
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, idDieta);
-
-            int exito = ps.executeUpdate();
-            if (exito == 1) {
-                JOptionPane.showMessageDialog(null, "Dieta desactivada");
-            } else {
-                JOptionPane.showMessageDialog(null, "Dieta no encontrada");
-            }
-            ps.close();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Dieta: " + ex.getMessage());
-        }
+   public void altaLogica(int idDieta) {
+    String sqlReactivarMenuDiario = "UPDATE menudiario SET estado = 0 WHERE IdDieta = ?";
+    try (PreparedStatement psMenu = con.prepareStatement(sqlReactivarMenuDiario)) {
+        psMenu.setInt(1, idDieta);
+        psMenu.executeUpdate();
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error al reactivar menús diarios: " + e.getMessage());
     }
 
-    public void altaLogica(int idDieta) {
-        String sql = "UPDATE dieta SET estado = 1 WHERE idDieta = ?;";
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, idDieta);
-
-            int exito = ps.executeUpdate();
-            if (exito == 1) {
-                JOptionPane.showMessageDialog(null, "Dieta reactivada");
-            } else {
-                JOptionPane.showMessageDialog(null, "Dieta no encontrada");
-            }
-            ps.close();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Dieta: " + ex.getMessage());
+    String sqlReactivarDieta = "UPDATE dieta SET estado = 0 WHERE IdDieta = ?";
+    try (PreparedStatement psDieta = con.prepareStatement(sqlReactivarDieta)) {
+        psDieta.setInt(1, idDieta);
+        int exito = psDieta.executeUpdate();
+        if (exito == 1) {
+            JOptionPane.showMessageDialog(null, "Dieta reactivada correctamente.");
+        } else {
+            JOptionPane.showMessageDialog(null, "Dieta no encontrada.");
         }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error al reactivar dieta: " + ex.getMessage());
     }
+}
+
+
+
+    public void bajaLogicaDieta(int idDieta) {
+    String sqlEliminarMenuDiario = "UPDATE menudiario SET estado = 1 WHERE IdDieta = ?";
+    try (PreparedStatement psMenu = con.prepareStatement(sqlEliminarMenuDiario)) {
+        psMenu.setInt(1, idDieta);
+        psMenu.executeUpdate();
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error al desactivar menús diarios: " + e.getMessage());
+    }
+
+    String sqlEliminarDieta = "UPDATE dieta SET estado = 1 WHERE IdDieta = ?";
+    try (PreparedStatement psDieta = con.prepareStatement(sqlEliminarDieta)) {
+        psDieta.setInt(1, idDieta);
+        int exito = psDieta.executeUpdate();
+        if (exito == 1) {
+            JOptionPane.showMessageDialog(null, "Dieta desactivada correctamente.");
+        } else {
+            JOptionPane.showMessageDialog(null, "Dieta no encontrada.");
+        }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error al desactivar dieta: " + ex.getMessage());
+    }
+}
+
 
     public void borrarDieta(int idDieta) {
-        String sql = "DELETE FROM dieta WHERE idDieta = ?;";
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, idDieta);
+//    String sqlEliminarComida = "DELETE FROM comida WHERE IdMenuDiario IN (SELECT IdMenuDiario FROM menudiario WHERE IdDieta = ?);";
+    String sqlEliminarMenuDiario = "DELETE FROM menudiario WHERE IdDieta = ?;";
+    String sqlEliminarDieta = "DELETE FROM dieta WHERE IdDieta = ?;";
 
-            int exito = ps.executeUpdate();
-            if (exito == 1) {
-                JOptionPane.showMessageDialog(null, "Dieta eliminada");
-            } else {
-                JOptionPane.showMessageDialog(null, "Dieta no encontrada");
-            }
-            ps.close();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al eliminar la dieta: " + ex.getMessage());
+    try {
+        // Desactivar autocommit para hacer todo en una sola transacción
+        con.setAutoCommit(false);
+
+//        // Eliminar en comida
+//        PreparedStatement psEliminarComida = con.prepareStatement(sqlEliminarComida);
+//        psEliminarComida.setInt(1, idDieta);
+//        psEliminarComida.executeUpdate();
+//        psEliminarComida.close();
+
+        // Eliminar en menudiario
+        PreparedStatement psEliminarMenuDiario = con.prepareStatement(sqlEliminarMenuDiario);
+        psEliminarMenuDiario.setInt(1, idDieta);
+        psEliminarMenuDiario.executeUpdate();
+        psEliminarMenuDiario.close();
+
+        // Eliminar en dieta
+        PreparedStatement psEliminarDieta = con.prepareStatement(sqlEliminarDieta);
+        psEliminarDieta.setInt(1, idDieta);
+        int exito = psEliminarDieta.executeUpdate();
+
+        // Confirmar y cerrar la transacción
+        if (exito == 1) {
+            con.commit();
+        } else {
+            JOptionPane.showMessageDialog(null, "Dieta no encontrada");
+        }
+        psEliminarDieta.close();
+
+    } catch (SQLException ex) {
+        // Si ocurre algún error, deshacer cambios
+        try {
+            con.rollback();
+        } catch (SQLException rollbackEx) {
+            rollbackEx.printStackTrace();
+        }
+        JOptionPane.showMessageDialog(null, "Error al eliminar la dieta: " + ex.getMessage());
+    } finally {
+        try {
+            con.setAutoCommit(true); // Reactivar autocommit
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
+}
 
     public Dieta obtenerDieta(int idPaciente) {
          Dieta dieta = null;  
@@ -283,7 +346,38 @@ public class DietaData {
         }
         return dieta;
     }
-    
+    public Dieta obtenerDietaConID(int idDieta) {
+    Dieta dieta = null;  
+    String preguntaDieta = "SELECT dieta.IdDieta, dieta.NombreDieta, dieta.FechaInicial, dieta.FechaFinal, dieta.TotalCalorias " +
+                       "FROM dieta " +
+                       "JOIN menudiario ON dieta.IdDieta = menudiario.IdDieta " +
+                       "WHERE dieta.IdDieta = ?";
+
+    try {  
+        PreparedStatement obtDieta = con.prepareStatement(preguntaDieta);  
+        obtDieta.setInt(1, idDieta);  // Asegúrate de que estés pasando el idDieta
+        ResultSet rsDieta = obtDieta.executeQuery();  
+
+        if (rsDieta.next()) {  
+            dieta = new Dieta();  
+            dieta.setIdDieta(rsDieta.getInt("IdDieta"));  
+            dieta.setNombreD(rsDieta.getString("NombreDieta"));  
+            dieta.setFechaIni(rsDieta.getDate("FechaInicial").toLocalDate());  
+            dieta.setFechaFin(rsDieta.getDate("FechaFinal").toLocalDate());  
+            dieta.setTotalCalorias(rsDieta.getDouble("TotalCalorias"));  
+
+            // Obtiene los menús diarios para esta dieta  
+            MenuDiarioData menuData = new MenuDiarioData();  
+            List<MenuDiario> menusDiarios = menuData.listarMenuDiarioPorPacientse(idDieta);  // Asegúrate de que el parámetro sea idDieta
+            dieta.setMenus((ArrayList<MenuDiario>) menusDiarios);  
+        } else {  
+            JOptionPane.showMessageDialog(null, "No se encontró ninguna dieta con ID: " + idDieta);
+        }  
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error al obtener dieta: " + e.getMessage());
+    }
+    return dieta;
+}
     public List<MenuDiario> obtenerMenuDiario(int idDieta) {  
         List<MenuDiario> menuDiarioList = new ArrayList<>();  
         String sql = "SELECT * FROM menudario WHERE IdDieta = ?";  

@@ -3,13 +3,16 @@ package Vista;
 import Modelo.Dieta;
 import Modelo.Paciente;
 import Persistencia.DietaData;
+import Persistencia.PacienteData;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.swing.DefaultCellEditor;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -17,13 +20,15 @@ public class DietaVista extends javax.swing.JInternalFrame {
 
     private DefaultTableModel TbDieta;
     private Persistencia.DietaData dietaData;
-    public static List<Dieta> listaDieta = new ArrayList<>();
-     
+    private List<Dieta> listaDieta ;
+   
     public DietaVista() {
         initComponents();
         this.dietaData = new DietaData();
+        this.listaDieta = new ArrayList<>();
         //this.setImagen("/imagen/FondoAzulRombo.png");//Buscar una imagen y ponerla
         this.TbDieta = new DefaultTableModel();
+        jTablaDietaVista.setDefaultEditor(Object.class, new DefaultCellEditor(new JTextField()));
         TbDieta.addColumn("Id Dieta");
         TbDieta.addColumn("Nombre");
         TbDieta.addColumn("IDPaciente");
@@ -32,30 +37,66 @@ public class DietaVista extends javax.swing.JInternalFrame {
         TbDieta.addColumn("Total calorias");
         TbDieta.addColumn("Estado");
         jTablaDietaVista.setModel(TbDieta);
-        //llenarTabla(); Hacer el metodo para llenar la tabla
+       
     }
-    public void llenarTabla(List<Modelo.Dieta> listaDieta){
+    public void llenarTabla(){
     TbDieta.setRowCount(0);
     if (listaDieta == null || listaDieta.isEmpty()) {
         return; 
     }
-        for (Modelo.Dieta dieta : listaDieta) {
+        for (Dieta dieta : listaDieta) {
             if (dieta != null) {
-                Object[] rowData = new Object[9];
+                Object[] rowData = new Object[7];
                 rowData[0] = dieta.getIdDieta();
                 rowData[1] = dieta.getNombreD();
-                rowData[2] = dieta.getPaciente().getNombre(); // Obtén el nombre del paciente
+                rowData[2] = dieta.getPaciente().getNombre(); 
                 rowData[3] = dieta.getFechaIni();
                 rowData[4] = dieta.getFechaFin();
-                rowData[7] = dieta.getTotalCalorias();
-                rowData[8] = dieta.isEstado();
+                rowData[5] = dieta.getTotalCalorias();
+                rowData[6] = dieta.isEstado();
 
-                TbDieta.addRow(rowData); // Agrega la fila a la tabla
+                TbDieta.addRow(rowData);
             }
     
             }
                 
         }
+    
+    public void actualizarDietaEnLista(int idDietaSeleccionada, String nombreDieta, String nombrePaciente, LocalDate fechaInicial, LocalDate fechaFinal, double totalCalorias, boolean estado) {
+    // Buscar la dieta en la lista y actualizar los valores
+    for (Dieta dieta : listaDieta) {
+       
+            dieta.setNombreD(nombreDieta);
+            dieta.getPaciente().setNombre(nombrePaciente);
+            dieta.setFechaIni(fechaInicial);
+            dieta.setFechaFin(fechaFinal);
+            dieta.setTotalCalorias(totalCalorias);
+            dieta.setEstado(estado);
+      
+        
+    }
+} 
+
+    public void actualizarDietaEstado(int idDietaSeleccionada, boolean estado) {
+    // Buscar la dieta en la lista por el ID y actualizar solo esa dieta
+    for (Dieta dieta : listaDieta) {
+        if (dieta.getIdDieta() == idDietaSeleccionada) {
+            dieta.setEstado(estado); 
+            break;
+        }
+    }
+}   public void actualizarFilaTabla(int idDietaSeleccionada, boolean nuevoEstado) {
+    DefaultTableModel model = (DefaultTableModel) jTablaDietaVista.getModel();
+
+    // Buscar la fila correspondiente al ID de dieta seleccionada
+    for (int i = 0; i < model.getRowCount(); i++) {
+        int idDieta = (int) model.getValueAt(i, 0);
+        if (idDieta == idDietaSeleccionada) {
+            model.setValueAt(nuevoEstado, i, 6); 
+            break; 
+        }
+    }
+}
         
     
     
@@ -79,7 +120,6 @@ public class DietaVista extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
 
         jButton2.setText("Actualizar");
@@ -177,17 +217,10 @@ public class DietaVista extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton7.setText("Baja");
+        jButton7.setText("Baja / Alta");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton7ActionPerformed(evt);
-            }
-        });
-
-        jButton6.setText("Alta");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
             }
         });
 
@@ -205,12 +238,10 @@ public class DietaVista extends javax.swing.JInternalFrame {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(67, 67, 67)
+                                    .addGap(49, 49, 49)
                                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(53, 53, 53)
-                                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(38, 38, 38)
-                                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(71, 71, 71)
+                                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -236,49 +267,20 @@ public class DietaVista extends javax.swing.JInternalFrame {
                     .addComponent(jButton1)
                     .addComponent(jButton2)
                     .addComponent(jButton5)
-                    .addComponent(jButton7)
-                    .addComponent(jButton6))
+                    .addComponent(jButton7))
                 .addGap(39, 39, 39))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-    String textID = jTextFieldIDpaciente.getText().trim();
-    String textNombre = jTextFieldBuscarPorNombre.getText().trim();
-    Dieta dieta = null;
-    int filaSeleccionada = jTablaDietaVista.getSelectedRow();
-    Dieta dietaSeleccionada = null;
-
-     
-        if (!textID.isEmpty()) {
-            int idPaciente = Integer.parseInt(textID);  
-            dieta = dietaData.obtenerDieta(idPaciente);
-            dietaData.altaLogica(dieta.getIdDieta());
-            
-        }
-        if (!textNombre.isEmpty()) {
-           dieta = dietaData.buscarDietaSegunNombre(textNombre);
-           dietaData.altaLogica(dieta.getIdDieta());
-            
-        }
-        if (filaSeleccionada >= 0) {
-            dietaSeleccionada = (Modelo.Dieta) jTablaDietaVista.getValueAt(filaSeleccionada, 0); 
-            if (dietaSeleccionada != null) {
-                 dietaData.altaLogica(dietaSeleccionada.getIdDieta()); // Guarda la dieta seleccionada 
-            }
-            
-        }
-    
-    }//GEN-LAST:event_jButton6ActionPerformed
-
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+
     String textID = jTextFieldIDpaciente.getText().trim();
     String textNombre = jTextFieldBuscarPorNombre.getText().trim();
     LocalDate fechaInicial = null;
     LocalDate fechaFinal = null;
-    
+
     // Verificamos si se seleccionó una fecha en jCalendariInicial para no tener error
     if (jCalendariInicial.getDate() != null) {
         fechaInicial = jCalendariInicial.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -286,144 +288,189 @@ public class DietaVista extends javax.swing.JInternalFrame {
     if (jCalendariFinal.getDate() != null) {
         fechaFinal = jCalendariFinal.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     }
-    
-    Modelo.Dieta dieta = null;
-    
-    
-     try { 
-         if (!textID.isEmpty() && !textNombre.isEmpty()) {
+
+    listaDieta.clear();  
+
+    try {
+        
+        if (!textID.isEmpty() && !textNombre.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Ingrese solo ID o solo Nombre, no ambos.");
+            jCalendariInicial.setDate(null);
+            jCalendariFinal.setDate(null);
+            jTextFieldIDpaciente.setText(""); 
+            jTextFieldBuscarPorNombre.setText(""); 
             return;
         } else if (!textID.isEmpty() && (fechaInicial != null || fechaFinal != null)) {
             JOptionPane.showMessageDialog(this, "Ingrese solo el ID, sin fechas.");
+            jCalendariInicial.setDate(null);
+            jCalendariFinal.setDate(null);
+            jTextFieldIDpaciente.setText(""); 
+            jTextFieldBuscarPorNombre.setText(""); 
             return;
         } else if (!textNombre.isEmpty() && (fechaInicial != null || fechaFinal != null)) {
             JOptionPane.showMessageDialog(this, "Ingrese solo el Nombre, sin fechas.");
+            jCalendariInicial.setDate(null);
+            jCalendariFinal.setDate(null);
+            jTextFieldIDpaciente.setText(""); 
+            jTextFieldBuscarPorNombre.setText(""); 
             return;
-        } else if (fechaInicial != null && fechaFinal == null || fechaInicial == null && fechaFinal != null) {
+        } else if ((fechaInicial != null && fechaFinal == null) || (fechaInicial == null && fechaFinal != null)) {
             JOptionPane.showMessageDialog(this, "Seleccione ambas fechas para buscar por rango.");
             return;
         }
-         
+
+       
         if (!textID.isEmpty()) {
-            int idPaciente = Integer.parseInt(textID);  
-            dieta = dietaData.obtenerDieta(idPaciente);
-            if (dieta != null) { // Añadir sólo si dieta no es nulo evita el error
+            int idPaciente = Integer.parseInt(textID);
+            Dieta dieta = dietaData.obtenerDieta(idPaciente);
+            if (dieta != null) {
                 listaDieta.add(dieta);
-            } else if(textNombre.isEmpty() && (fechaInicial == null) && (fechaFinal == null)) {
+            } else {
                 JOptionPane.showMessageDialog(this, "No se encontró ninguna dieta para el paciente con ID: " + idPaciente);
             }
         }
+
+        // Búsqueda por Nombre
         if (!textNombre.isEmpty()) {
-           dieta = dietaData.buscarDietaSegunNombre(textNombre);
+            Dieta dieta = dietaData.buscarDietaSegunNombre(textNombre);
             if (dieta != null) {
                 listaDieta.add(dieta);
-            } else if(textID.isEmpty() && (fechaInicial == null) && (fechaFinal == null)){
+            } else {
                 JOptionPane.showMessageDialog(this, "No se encontró ninguna dieta con el nombre: " + textNombre);
             }
         }
-          if (fechaInicial != null && fechaFinal != null) {
+
+        // Búsqueda por Rango de Fechas
+        if (fechaInicial != null && fechaFinal != null) {
             List<Dieta> dietasPorFecha = dietaData.buscarDietasEnRangoDeFechas(fechaInicial, fechaFinal);
             if (dietasPorFecha != null && !dietasPorFecha.isEmpty()) {
                 listaDieta.addAll(dietasPorFecha);
-            } else if(textID.isEmpty() && textNombre.isEmpty() ) {
+            } else {
                 JOptionPane.showMessageDialog(this, "No se encontraron dietas en el rango de fechas especificado.");
             }
         }
+            jCalendariInicial.setDate(null);
+            jCalendariFinal.setDate(null);
+            jTextFieldIDpaciente.setText(""); 
+            jTextFieldBuscarPorNombre.setText(""); 
+        llenarTabla();  
 
-        llenarTabla(listaDieta);
-        } catch (NumberFormatException e) {
+    } catch (NumberFormatException e) {
         JOptionPane.showMessageDialog(null, "Ingrese un ID de paciente válido.", "Error de entrada", JOptionPane.ERROR_MESSAGE);
-    }
-    }//GEN-LAST:event_jButton5ActionPerformed
-    
-    public void actualizarTabla() {
         
+    }
+
+    }//GEN-LAST:event_jButton5ActionPerformed
+    public void cambiarEstado(){
     int filaSeleccionada = jTablaDietaVista.getSelectedRow();
     if (filaSeleccionada != -1) { // Verificar si se ha seleccionado una fila
         // Obtener el ID de la dieta directamente desde la tabla que se encuentra en la columna 0
         int idDietaSeleccionada = (int) jTablaDietaVista.getValueAt(filaSeleccionada, 0);
 
-        // Buscar la dieta seleccionada en la base de datos
+        // Buscar la dieta original en la base de datos
         Dieta dietaOriginal = dietaData.buscarDietaSegunID(idDietaSeleccionada);
-        String nombreDieta = dietaOriginal.getNombreD();
-        LocalDate fechaInicial = dietaOriginal.getFechaIni();
-        LocalDate fechaFinal = dietaOriginal.getFechaFin();
-        double totalCalorias = dietaOriginal.getTotalCalorias();
-        boolean estado = dietaOriginal.isEstado();
 
-        // Obtener y setear los valores actuales de la fila seleccionada en la tabla
-        String nombreDietaTabla = (String) jTablaDietaVista.getValueAt(filaSeleccionada, 1);
-        LocalDate fechaInicialTabla = (LocalDate) jTablaDietaVista.getValueAt(filaSeleccionada, 3);
-        LocalDate fechaFinalTabla = (LocalDate) jTablaDietaVista.getValueAt(filaSeleccionada, 4);
-        double totalCaloriasTabla = (double) jTablaDietaVista.getValueAt(filaSeleccionada, 5);
-        boolean estadoTabla = (boolean) jTablaDietaVista.getValueAt(filaSeleccionada, 6);
+        // Verificar el estado actual de la dieta
+        boolean nuevoEstado = !dietaOriginal.isEstado(); // Cambiar el estado (si es true pasa a false y viceversa)
 
-        // Verificar si hay cambios, sin incluir idPaciente
-        boolean hayCambios = !nombreDieta.equals(nombreDietaTabla)
-                || !fechaInicial.equals(fechaInicialTabla)
-                || !fechaFinal.equals(fechaFinalTabla)
-                || totalCalorias != totalCaloriasTabla
-                || estado != estadoTabla;
+        // Verifica si el estado ha cambiado
+        if (dietaOriginal.isEstado() != nuevoEstado) {
+            dietaOriginal.setEstado(nuevoEstado);  // Actualiza el estado de la dieta
 
-        if (hayCambios) {
-            // Crear el objeto Dieta con los valores actualizados de la tabla, excluyendo idPaciente
-            Dieta dietaActualizada = new Dieta();
-            dietaActualizada.setIdDieta(idDietaSeleccionada);
-            dietaActualizada.setNombreD(nombreDietaTabla);
-            dietaActualizada.setFechaIni(fechaInicialTabla);
-            dietaActualizada.setFechaFin(fechaFinalTabla);
-            dietaActualizada.setTotalCalorias(totalCaloriasTabla);
-            dietaActualizada.setEstado(estadoTabla);
+            // Actualizar la dieta en la base de datos
+            dietaData.actualizarDieta(dietaOriginal);
+           
+            // Actualizar solo el estado de la dieta seleccionada en la lista
+            actualizarDietaEstado(idDietaSeleccionada, nuevoEstado);
 
-            // Llamar al método para actualizar la dieta en la base de datos
-            dietaData.insertarDieta(dietaActualizada);
+            // Actualizar la fila de la tabla
+            actualizarFilaTabla(idDietaSeleccionada, nuevoEstado);
+
+            // Mostrar mensaje de confirmación
+            JOptionPane.showMessageDialog(null, "Estado de la dieta actualizado correctamente.");
+        } else {
+            // Si el estado no ha cambiado, mostrar mensaje
+            JOptionPane.showMessageDialog(null, "No se detectaron cambios en el estado de la dieta.");
+        }
+    } else {
+        // Si no se ha seleccionado ninguna fila, mostrar mensaje
+        JOptionPane.showMessageDialog(this, "No se ha seleccionado ninguna fila.", "Sin cambios", JOptionPane.INFORMATION_MESSAGE);
+    }
+    }
+    public void actualizarTabla() {
+    int filaSeleccionada = jTablaDietaVista.getSelectedRow();
+    if (filaSeleccionada != -1) { // Verificar si se ha seleccionado una fila
+        // Obtener el ID de la dieta directamente desde la tabla que se encuentra en la columna 0
+        int idDietaSeleccionada = (int) jTablaDietaVista.getValueAt(filaSeleccionada, 0);
+       
+        // Buscar la dieta original en la base de datos
+    Dieta dietaOriginal = dietaData.buscarDietaSegunID(idDietaSeleccionada);
+    String nombreDieta = dietaOriginal.getNombreD();
+    String nombrePaciente = dietaOriginal.getPaciente().getNombre();
+    LocalDate fechaInicial = dietaOriginal.getFechaIni();
+    LocalDate fechaFinal = dietaOriginal.getFechaFin();
+    double totalCalorias = dietaOriginal.getTotalCalorias();
+    boolean estado = dietaOriginal.isEstado();
+
+    // Obtener los valores actuales en la tabla y manejar valores null
+    String nombreDietaTabla = (jTablaDietaVista.getValueAt(filaSeleccionada, 1) != null)
+        ? jTablaDietaVista.getValueAt(filaSeleccionada, 1).toString(): nombreDieta;
+
+    String nombrePacienteTabla = (jTablaDietaVista.getValueAt(filaSeleccionada, 2) != null)
+        ? jTablaDietaVista.getValueAt(filaSeleccionada, 2).toString(): nombrePaciente;
+
+    LocalDate fechaInicialTabla = (jTablaDietaVista.getValueAt(filaSeleccionada, 3) != null)
+        ? LocalDate.parse(jTablaDietaVista.getValueAt(filaSeleccionada, 3).toString()): fechaInicial;
+
+    LocalDate fechaFinalTabla = (jTablaDietaVista.getValueAt(filaSeleccionada, 4) != null)
+        ? LocalDate.parse(jTablaDietaVista.getValueAt(filaSeleccionada, 4).toString()) : fechaFinal;
+
+    double totalCaloriasTabla = (jTablaDietaVista.getValueAt(filaSeleccionada, 5) != null)
+        ? Double.parseDouble(jTablaDietaVista.getValueAt(filaSeleccionada, 5).toString()): totalCalorias;
+
+    boolean estadoTabla = (jTablaDietaVista.getValueAt(filaSeleccionada, 6) != null)
+        ? Boolean.parseBoolean(jTablaDietaVista.getValueAt(filaSeleccionada, 6).toString()): estado;
+
+    // Imprimir valores para depuración
+    System.out.println("Valores originales: " + nombreDieta + ", " + nombrePaciente + ", " + fechaInicial + ", " + fechaFinal + ", " + totalCalorias + ", " + estado);
+    System.out.println("Valores de la tabla: " + nombreDietaTabla + ", " + nombrePacienteTabla + ", " + fechaInicialTabla + ", " + fechaFinalTabla + ", " + totalCaloriasTabla + ", " + estadoTabla);
+
+    // Verifica si hay cambios entre los valores originales y los de la tabla
+    if (!nombreDieta.equals(nombreDietaTabla) || !nombrePaciente.equals(nombrePacienteTabla) || 
+    !fechaInicial.equals(fechaInicialTabla) || !fechaFinal.equals(fechaFinalTabla) ||
+    totalCalorias != totalCaloriasTabla || estado != estadoTabla) {
+
+    // Si hay cambios, actualiza la dieta en la base de datos
+    dietaOriginal.setNombreD(nombreDietaTabla);
+    dietaOriginal.getPaciente().setNombre(nombrePacienteTabla);  // Asegúrate de que el paciente esté correctamente referenciado
+    dietaOriginal.setFechaIni(fechaInicialTabla);
+    dietaOriginal.setFechaFin(fechaFinalTabla);
+    dietaOriginal.setTotalCalorias(totalCaloriasTabla);
+    dietaOriginal.setEstado(estadoTabla);
+
+    dietaData.actualizarDieta(dietaOriginal); // Asegúrate de tener un método de actualización en la base de datos
+    actualizarDietaEnLista(idDietaSeleccionada,nombreDieta,nombrePaciente,fechaInicial,fechaFinal,totalCalorias,estado);
+    JOptionPane.showMessageDialog(null, "Dieta actualizada correctamente.");
+    
+        } else {
+            JOptionPane.showMessageDialog(null, "No se detectaron cambios en la dieta.");
+        }
         } else {
             JOptionPane.showMessageDialog(this, "No se han detectado cambios en la fila seleccionada", "Sin cambios", JOptionPane.INFORMATION_MESSAGE);
         }
-    } else {
-        JOptionPane.showMessageDialog(this, "Seleccione una fila para actualizar", "Error", JOptionPane.WARNING_MESSAGE);
     }
-}
 
-    
 
+
+
+ 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-    
-    String textID = jTextFieldIDpaciente.getText().trim();
-    String textNombre = jTextFieldBuscarPorNombre.getText().trim();
-    Dieta dieta = null;
-    int filaSeleccionada = jTablaDietaVista.getSelectedRow();
-    Dieta dietaSeleccionada = null;
-
+     cambiarEstado();
      
-        if (!textID.isEmpty()) {
-            int idPaciente = Integer.parseInt(textID);  
-            dieta = dietaData.obtenerDieta(idPaciente);
-            dietaData.altaLogica(dieta.getIdDieta());
-            
-        }
-        if (!textNombre.isEmpty()) {
-           dieta = dietaData.buscarDietaSegunNombre(textNombre);
-           dietaData.altaLogica(dieta.getIdDieta());
-            
-        }
-        if (filaSeleccionada >= 0) {
-            dietaSeleccionada = (Modelo.Dieta) jTablaDietaVista.getValueAt(filaSeleccionada, 0); 
-            if (dietaSeleccionada != null) {
-                 dietaData.altaLogica(dietaSeleccionada.getIdDieta()); // Guarda la dieta seleccionada 
-            }
-            
-        }
-        
-    
-                       
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int filaSeleccionada = jTablaDietaVista.getSelectedRow();
-        int idDietaSeleccionada = (int) jTablaDietaVista.getValueAt(filaSeleccionada, 0);
-        dietaData.borrarDieta(idDietaSeleccionada);
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -436,7 +483,6 @@ public class DietaVista extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private com.toedter.calendar.JDateChooser jCalendariFinal;
     private com.toedter.calendar.JDateChooser jCalendariInicial;

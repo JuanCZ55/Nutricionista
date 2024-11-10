@@ -191,7 +191,22 @@ public class PacienteData {
             JOptionPane.showMessageDialog(null, "Error al actualizar el peso buscado");
         }
     }
-
+    public void actualizarNombrePaciente(int idPaciente, String nuevoNombre) {
+        String sql = "UPDATE paciente SET Nombre = ? WHERE IdPaciente = ?";
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, nuevoNombre);
+            ps.setInt(2, idPaciente);
+        
+            int filasAfectadas = ps.executeUpdate();
+            if (filasAfectadas == 1) {
+                JOptionPane.showMessageDialog(null, "Nombre del paciente actualizado correctamente");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró el paciente con ese ID");
+            }
+            } catch (SQLException ex) {
+                 JOptionPane.showMessageDialog(null, "Error al actualizar el nombre: " + ex.getMessage());
+            }
+}   
 //verifica si acerca al peso sin importar si sube o baja
     /**
      * seAcercaAlPaso(int id): Verifica si un paciente está cerca de alcanzar su
