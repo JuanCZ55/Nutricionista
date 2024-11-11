@@ -161,11 +161,6 @@ public class MenuDiarioData {
             ps.setInt(2, idComida);
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
-            if (rs.next()) {
-                JOptionPane.showMessageDialog(null, "MenuComidas Guardado exitosamente");
-            } else {
-                JOptionPane.showMessageDialog(null, "El MenuComidas existe");
-            }
             ps.close();
 
         } catch (SQLException ex) {
@@ -191,8 +186,6 @@ public class MenuDiarioData {
                 menuDieta.setCaloriasDelMenu(rs.getInt("CaloriasDia"));
                 menuDieta.setIdDieta(rs.getInt("IdDieta"));
                 menuDieta.setEstado(rs.getBoolean("estado"));
-            } else {
-                JOptionPane.showMessageDialog(null, "No existe ese Menu del dia");
             }
             ps.close();
         } catch (SQLException ex) {
@@ -213,7 +206,7 @@ public class MenuDiarioData {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 comida = new Comidas();
-                comida.setIdComida(rs.getInt("mc.IdComidas"));
+                comida.setIdComida(rs.getInt("IdComidas"));
                 lista.add(comida);
                 x++;
             }
@@ -238,12 +231,6 @@ public class MenuDiarioData {
             ps.setInt(2, idMenu);
             ps.setInt(3, idComidaOld);
 
-            int exito = ps.executeUpdate();
-            if (exito == 1) {
-                JOptionPane.showMessageDialog(null, "MenuComida Modificado");
-            } else {
-                JOptionPane.showMessageDialog(null, "MenuComida no encontrado");
-            }
             ps.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla MenuComidas");
