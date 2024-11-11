@@ -20,7 +20,7 @@ public class IngredientesData {
     public IngredientesData() {
         con = (Connection) Conexion.getConexion();
     }
-     public void guardar(Ingredientes ingr) {
+    public void guardar(Ingredientes ingr) {
         String sql = "INSERT INTO ingredientes( "
                 + "Nombre, CaloriasPor100, Peso, NoApto"
                 + ") VALUES (?,?,?,?);";
@@ -48,7 +48,7 @@ public class IngredientesData {
         }
         
     }
-     public void ActulizarIngrediente(Ingredientes ingr){
+    public void ActulizarIngrediente(Ingredientes ingr){
         String sql = "UPDATE ingredientes SET Nombre= ?,CaloriasPor100=?,Peso=?,NoApto=?, WHERE IdIngredientes=?";
            try{
                PreparedStatement ps = con.prepareStatement(sql);
@@ -73,7 +73,7 @@ public class IngredientesData {
         }
 
 }
-public void bajaLogica(int id) {
+    public void bajaLogica(int id) {
         String sql = "UPDATE ingredientes SET Estado = 0 WHERE IdIngredientes =?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -90,7 +90,7 @@ public void bajaLogica(int id) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Ingredientes");
         }
     }
-public void altaLogica(int id) {
+    public void altaLogica(int id) {
         String sql = "UPDATE ingredientes SET Estado = 1 WHERE IdIngredientes =?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -107,7 +107,7 @@ public void altaLogica(int id) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Ingredientes");
         }
     }
-  public Ingredientes buscarIngredientes(int id) {
+    public Ingredientes buscarIngredientes(int id) {
         String sql = "SELECT * FROM  ingredientes WHERE IdIngrediente=?;";
         Ingredientes ingr = null;
         try {
@@ -167,4 +167,46 @@ public void altaLogica(int id) {
 
         return lista;
     }
+    public void eliminar(int id) {
+        String sql = "DELETE FROM ingredientes WHERE idIngredientes = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            int rowsDeleted = ps.executeUpdate();
+            if (rowsDeleted > 0) {
+                JOptionPane.showMessageDialog(null, "Ingrediente Eliminado Exitosamente");
+            } else {
+                JOptionPane.showMessageDialog(null, "Ingrediente no encontrado");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al eliminar el ingrediente");
+        }
+    }
+    public Ingredientes buscar(int id) {
+        Ingredientes ingr = null;
+        String sql = "SELECT * FROM ingredientes WHERE idIngredientes = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                ingr = new Ingredientes();
+                ingr.setIdIngredientes(rs.getInt("idIngredientes"));
+                ingr.setNombre(rs.getString("Nombre"));
+                ingr.setCaloriasPor100(rs.getDouble("CaloriasPor100"));
+                ingr.setPeso(rs.getDouble("Peso"));
+                ingr.setNoApto(rs.getString("NoApto"));
+                ingr.setEstado(rs.getBoolean("Estado"));
+            } else {
+                JOptionPane.showMessageDialog(null, "Ingrediente no encontrado");
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar el ingrediente");
+        }
+        return ingr;
+    }
+
 }

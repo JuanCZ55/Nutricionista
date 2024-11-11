@@ -51,6 +51,7 @@ public class Menu extends javax.swing.JFrame {
         jMIComidas = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMIIngredientes = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
 
         jCheckBoxMenuItem1.setSelected(true);
         jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
@@ -182,6 +183,14 @@ public class Menu extends javax.swing.JFrame {
         });
         jMenu4.add(jMIIngredientes);
 
+        jMenuItem3.setText("Generar Ingredientes");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem3);
+
         jMenuBar1.add(jMenu4);
 
         setJMenuBar(jMenuBar1);
@@ -209,7 +218,11 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMIPacienteActionPerformed
 
     private void jMIIngredientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIIngredientesActionPerformed
-        // TODO add your handling code here:
+        JDPMenu.removeAll();
+        JDPMenu.repaint();
+        internaPrueba ingredientes = new internaPrueba();
+        JDPMenu.add(ingredientes);
+       ingredientes.setVisible(true);
     }//GEN-LAST:event_jMIIngredientesActionPerformed
 
     private void jMIListaPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIListaPacientesActionPerformed
@@ -278,6 +291,14 @@ public class Menu extends javax.swing.JFrame {
         cargarDieta.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+       JDPMenu.removeAll();
+        JDPMenu.repaint();
+        GenerarIngredientes cargarIngredientes = new GenerarIngredientes();
+        JDPMenu.add(cargarIngredientes);
+        cargarIngredientes.setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -332,6 +353,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMiDieta;
     // End of variables declaration//GEN-END:variables
