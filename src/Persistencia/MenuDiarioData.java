@@ -19,33 +19,115 @@ public class MenuDiarioData {
         con = (Connection) Conexion.getConexion();
     }
 
-    //Insertar el menu diario/comidas
-    public int insertMenuDiarioObtenerID(MenuDiario menu) {
-    String sql = "INSERT INTO menudiario (Dia, CaloriasDia, IdDieta) VALUES (?, ?, ?)";
-    try (PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-        // Asignar parámetros de la consulta
-        ps.setInt(1, menu.getDia());
-        ps.setDouble(2, menu.getCaloriasDelMenu());
-        ps.setInt(3, menu.getIdDieta());
+    //Cargar comidas por condicion del paciente
+    //Si la condicion del peciente esta incluida dentro del la comida no retona esa comida
+    public ArrayList<Comidas> listarComidasActivas() {
+        String sql = """
+                     SELECT IdComidas, Nombre, TipoDeComida, CaloriasComida, NoApto, Estado 
+                     FROM comidas 
+                     WHERE Estado=1;
+                     """;
+        int x = 0;
+        Comidas comida = null;
+        ArrayList<Comidas> lista = new ArrayList<>();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                comida = new Comidas();
+                comida.setIdComida(rs.getInt("IdComidas"));
+                comida.setNombre(rs.getString("Nombre"));
+                comida.setTipoDeComida(rs.getString("TipoDeComida"));
+                comida.setCaloriasComida(rs.getDouble("CaloriasComida"));
+                comida.setNoApto(rs.getString("NoApto"));
+                comida.setEstado(rs.getBoolean("Estado"));
+                lista.add(comida);
+                x++;
+            }
+            if (x == 0) {
+                JOptionPane.showMessageDialog(null, "No hay Comidas");
+            }
 
-        // Ejecutar la inserción
-        int rowsAffected = ps.executeUpdate();
+            ps.close();
+        } catch (Exception e) {
+        }
+        return lista;
+    }
 
-        // Si la inserción es exitosa, obtener el ID generado
-        if (rowsAffected > 0) {
-            try (ResultSet rs = ps.getGeneratedKeys()) {
-                if (rs.next()) {
-                    int idMenu = rs.getInt(1); // Obtener el ID generado
-                    menu.setIdMenu(idMenu);    // Asignar el ID al objeto MenuDiario
-                    return idMenu;             // Retornar el ID generado
+    // Método para obtener comidas aptas según las restricciones
+    public ArrayList<Comidas> obtenerComidasAptas(ArrayList<Comidas> comidas, String restricciones) {
+        String[] restriccionesArray = restricciones.split(",\\s*"); // Separar por coma y eliminar espacios
+        List<String> listaRestricciones = List.of(restriccionesArray);
+
+        ArrayList<Comidas> comidasAptas = new ArrayList<>();
+
+        for (Comidas comida : comidas) {
+            boolean esApta = true;
+            for (String restriccion : listaRestricciones) {
+                if (comida.getNoApto().contains(restriccion)) {
+                    esApta = false;
+                    break;
                 }
             }
+            if (esApta) {
+                comidasAptas.add(comida);
+            }
         }
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(null, "Error al insertar MenuDiario: " + e.getMessage());
+
+        return comidasAptas;
     }
-    return -1;  // Retorna -1 si ocurre un error
-}
+    
+    public Paciente obtenerPacientePorDieta(int idDieta){
+        String sql = """
+                    SELECT p.IdPaciente, p.Nombre, p.Edad, p.Altura, p.CondicionSalud, p.PesoActual, p.PesoBuscado, p.PesoInical, p.Estado 
+                    FROM paciente p JOIN dieta d ON p.IdPaciente = d.IdPaciente 
+                    WHERE d.IdDieta = ?;
+                     """;
+        Paciente pac= null;
+        PacienteData pacData = new PacienteData();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+             ps.setInt(1, idDieta);
+             ResultSet rs = ps.executeQuery();
+             if(rs.next()){
+                pac = new Paciente();
+                pac.setIdPaciente(rs.getInt("p.IdPaciente"));
+                pac.setNombre(rs.getString("p.Nombre"));
+                pac.setEdad(rs.getInt("p.Edad"));
+                pac.setAltura(rs.getDouble("p.Altura"));
+                pac.setPesoActual(rs.getDouble("p.PesoActual"));
+                pac.setPesoBuscado(rs.getDouble("p.PesoBuscado"));
+                pac.setPesoInicial(rs.getDouble("p.PesoInical"));
+                pac.setCondicionSalud(pacData.convertirStringSet(rs.getString("p.CondicionSalud")));
+
+                pac.setEstado(rs.getBoolean("p.Estado"));
+             }else {
+                 JOptionPane.showMessageDialog(null, "No existe un paciente asociado con la dieta");
+             }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a las trablas paciente y dieta");
+        }
+        return pac;
+    }
+    
+    //Inesesario
+    public String obtenerCondicionPaciente(int idPaciente){
+        String sql= "SELECT CondicionSalud FROM paciente WHERE IdPaciente = ? ;";
+        String condicion = "";
+        try {
+             PreparedStatement ps = con.prepareStatement(sql);
+             ps.setInt(1, idPaciente);
+             ResultSet rs = ps.executeQuery();
+             if(rs.next()){
+                 condicion = rs.getString("CondicionSalud");
+             }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla paciente");
+        }
+        return condicion;
+    }
+
+    //Insertar el menu diario/comidas
     public void insertMenuDiario(MenuDiario md) {
         String sql = "INSERT INTO menudiario( Dia, CaloriasDia, IdDieta) VALUES (?,?,?); ";
         try {
@@ -70,6 +152,7 @@ public class MenuDiarioData {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla MenuDiario");
         }
     }
+
     public void insertMenuComidas(int idMenu, int idComida) {
         String sql = "INSERT INTO menucomidas(IdMenuDiario, IdComidas) VALUES (?,?);";
         try {
@@ -166,8 +249,7 @@ public class MenuDiarioData {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla MenuComidas");
         }
     }
-    
-    
+
     //Listar todas las dietas activas
     public ArrayList<Dieta> listarTodasLasDietasActivas() {
         String sql = "SELECT IdDieta, NombreDieta, FechaInicial, FechaFinal, TotalCalorias, IdPaciente, Estado"
@@ -202,58 +284,51 @@ public class MenuDiarioData {
         return lista;
     }
 
+    //Contador de menu diarios activos asociados a una dieta
+    public int contadorMenuDiariosDeUnaDieta(int idDieta) {
+        String sql = "SELECT COUNT(*) AS cantidadMenu FROM menudiario WHERE IdDieta = ?;";
+        int contador = 0;
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idDieta);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                contador = rs.getInt("cantidadMenu");
+            }
+            ps.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla MenuDiarios");
+        }
+        return contador;
+    }
+
     //Listar Todos los Menus Junto con las comidas
     //Paso 1: Buscar todos los MenuDiarios asociados a la idDieta
-    public List<MenuDiario> listarMenuDiarioPorDietaObtenerComidas(int idDieta) {
-    String sql = "SELECT * FROM menudiario WHERE IdDieta = ?;";
-    List<MenuDiario> lista = new ArrayList<>();
-
-    try (PreparedStatement ps = con.prepareStatement(sql)) {
-        ps.setInt(1, idDieta);
-        try (ResultSet rs = ps.executeQuery()) {
-            while (rs.next()) {
-                MenuDiario menuDiario = new MenuDiario();
-                menuDiario.setIdMenu(rs.getInt("IdMenuDiario"));
-                // Obtener las comidas asociadas al menú
-                ComidaData comidaData = new ComidaData();
-                List<Comidas> comidas = comidaData.listarComidasPorMenuDiario(menuDiario.getIdMenu());
-                menuDiario.setComidas((ArrayList<Comidas>) comidas); 
-                lista.add(menuDiario);
-            }
-        }
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(null, "Error al acceder a la tabla MenuDiario: " + ex.getMessage());
-    }
-
-    return lista;
-}
-   
-
     public ArrayList<MenuDiario> listarMenuDiarioPorDieta(int idDieta) {
-    String sql = "SELECT IdMenuDiario FROM menudiario WHERE IdDieta = ?;";
-    int x = 0;
-    MenuDiario menuDiario = null;
-    ArrayList<MenuDiario> lista = new ArrayList<>();
-    
-    try {
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1, idDieta);
-        ResultSet rs = ps.executeQuery();
-        
-        while (rs.next()) {
-            menuDiario = new MenuDiario();
-            menuDiario.setIdMenu(rs.getInt("IdMenuDiario"));
-            lista.add(menuDiario);
-            x++;
+        String sql = "SELECT IdMenuDiario FROM menudiario WHERE IdDieta = ?;";
+        int x = 0;
+        MenuDiario menuDiario = null;
+        ArrayList<MenuDiario> lista = new ArrayList<>();
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idDieta);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                menuDiario = new MenuDiario();
+                menuDiario.setIdMenu(rs.getInt("IdMenuDiario"));
+                lista.add(menuDiario);
+                x++;
+            }
+
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla MenuDiario: " + ex.getMessage());
         }
 
-        ps.close();
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(null, "Error al acceder a la tabla MenuDiario: " + ex.getMessage());
+        return lista;
     }
-
-    return lista;
-}   
 
     //Listar Menus Activo
     //Paso 1: Buscar todos los MenuDiarios asociados a la idDieta activos
@@ -403,7 +478,7 @@ public class MenuDiarioData {
         return lista;
     }
     //Paso 2: usar el metodo public ArrayList<Comidas> listarComidasPorMenuDiario(int idMenu)
-    
+
     //Buscar un MenuDiario por idMenu
     public MenuDiario buscarMenuDiario(int idMenu) {
         String sql = "SELECT IdMenuDiario, Dia, CaloriasDia, IdDieta, Estado FROM menudiario WHERE IdMenuDiario=?";
@@ -465,6 +540,81 @@ public class MenuDiarioData {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla MenuDiario");
         }
+    }
+
+    public int insertMenuDiarioObtenerID(MenuDiario menu) {
+        String sql = "INSERT INTO menudiario (Dia, CaloriasDia, IdDieta) VALUES (?, ?, ?)";
+        try (PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            // Asignar parámetros de la consulta
+            ps.setInt(1, menu.getDia());
+            ps.setDouble(2, menu.getCaloriasDelMenu());
+            ps.setInt(3, menu.getIdDieta());
+
+            // Ejecutar la inserción
+            int rowsAffected = ps.executeUpdate();
+
+            // Si la inserción es exitosa, obtener el ID generado
+            if (rowsAffected > 0) {
+                try (ResultSet rs = ps.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        int idMenu = rs.getInt(1); // Obtener el ID generado
+                        menu.setIdMenu(idMenu);    // Asignar el ID al objeto MenuDiario
+                        return idMenu;             // Retornar el ID generado
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al insertar MenuDiario: " + e.getMessage());
+        }
+        return -1;  // Retorna -1 si ocurre un error
+    }
+
+    public List<MenuDiario> listarMenuDiarioPorDietaObtenerComidas(int idDieta) {
+        String sql = "SELECT * FROM menudiario WHERE IdDieta = ?;";
+        List<MenuDiario> lista = new ArrayList<>();
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, idDieta);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    MenuDiario menuDiario = new MenuDiario();
+                    menuDiario.setIdMenu(rs.getInt("IdMenuDiario"));
+                    // Obtener las comidas asociadas al menú
+                    ComidaData comidaData = new ComidaData();
+                    List<Comidas> comidas = comidaData.listarComidasPorMenuDiario(menuDiario.getIdMenu());
+                    menuDiario.setComidas((ArrayList<Comidas>) comidas);
+                    lista.add(menuDiario);
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla MenuDiario: " + ex.getMessage());
+        }
+
+        return lista;
+    }
+
+    public double calcularCaloriasTotalesPorDieta(int idDieta) {
+        String sql = "SELECT CaloriasDia FROM menudiario WHERE IdDieta = ?";
+        double totalCalorias = 0;
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idDieta);
+            ResultSet rs = ps.executeQuery();
+
+            // Acumula las calorías día por día
+            while (rs.next()) {
+                double caloriasDia = rs.getDouble("CaloriasDia");
+                totalCalorias += caloriasDia;  // Suma al acumulador
+            }
+
+            ps.close();
+            rs.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla MenuDiario: " + ex.getMessage());
+        }
+
+        return totalCalorias;
     }
 
     //----------------------------------------------------------------------------------------------------
@@ -713,27 +863,4 @@ public class MenuDiarioData {
 
         return lista;
     }
-    public double calcularCaloriasTotalesPorDieta(int idDieta) {
-    String sql = "SELECT CaloriasDia FROM menudiario WHERE IdDieta = ?";
-    double totalCalorias = 0;
-
-    try {
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1, idDieta);
-        ResultSet rs = ps.executeQuery();
-
-        // Acumula las calorías día por día
-        while (rs.next()) {
-            double caloriasDia = rs.getDouble("CaloriasDia");
-            totalCalorias += caloriasDia;  // Suma al acumulador
-        }
-
-        ps.close();
-        rs.close();
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(null, "Error al acceder a la tabla MenuDiario: " + ex.getMessage());
-    }
-
-    return totalCalorias;
-}
 }

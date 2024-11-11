@@ -11,6 +11,7 @@ private int idDieta;
 private boolean estado;
 
     public MenuDiario() {
+        comidas = new ArrayList<>();
     }
 
     public MenuDiario(int dia, ArrayList<Comidas> comidas, double caloriasDelMenu, int idDieta) {
