@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
-public class MostrarDieta extends javax.swing.JInternalFrame {
+public class MostrarDieta extends JInternalFrameImagen {
     private DefaultTableModel modeloTabla;
     private DietaData dietaData;
     private Dieta dieta;
@@ -20,11 +20,12 @@ public class MostrarDieta extends javax.swing.JInternalFrame {
     
     public MostrarDieta() {
         initComponents();
+        this.setImagen("/resouces/verduras.png");//Buscar una imagen y ponerla
         this.dietaData = new DietaData();
         this.dieta = new Dieta();
         modeloTabla = new DefaultTableModel();
         this.listaDietas =  dietaData.obtenerTodasLasDietas();
-        
+        this.setSize(885, 650);
         // Inicializar columnas de dieta
         String[] columnasDieta = {"ID Dieta", "Nombre", "ID Paciente", "Fecha Inicio", "Fecha Final", "Total Calorías", "Estado"};
         modeloTabla.setColumnIdentifiers(columnasDieta);
@@ -40,7 +41,9 @@ public class MostrarDieta extends javax.swing.JInternalFrame {
     
     public void cargarDietasEnTabla() {
         modeloTabla.setRowCount(0);
-      
+         // Inicializar columnas de dieta
+        String[] columnasDieta = {"ID Dieta", "Nombre", "ID Paciente", "Fecha Inicio", "Fecha Final", "Total Calorías", "Estado"};
+        modeloTabla.setColumnIdentifiers(columnasDieta);
         for (Dieta dieta : listaDietas) {
             modeloTabla.addRow(new Object[] {
                 dieta.getIdDieta(),
@@ -55,32 +58,6 @@ public class MostrarDieta extends javax.swing.JInternalFrame {
         
     }
 
-//    public void cargarDietasComidasEnTabla() {
-//        List<Dieta> listaDietas = dietaData.obtenerTodasLasDietas();
-//        modeloTabla.setRowCount(0);  // Limpiar la tabla
-//        for (Dieta dieta : listaDietas) {
-//            modeloTabla.addRow(new Object[] {
-//                dieta.getIdDieta(),
-//                dieta.getNombreD(),
-//                dieta.getPaciente().getIdPaciente(),
-//                dieta.getFechaIni(),
-//                dieta.getFechaFin(),
-//                dieta.getTotalCalorias(),
-//                dieta.isEstado()
-//            });
-//        }
-//        
-//        // Configurar el evento de selección para cargar las comidas
-//        jTablaDietaLista.getSelectionModel().addListSelectionListener(e -> {
-//            if (!e.getValueIsAdjusting()) {
-//                int filaSeleccionada = jTablaDietaLista.getSelectedRow();
-//                if (filaSeleccionada != -1) {
-//                    int idDietaSeleccionada = (int) modeloTabla.getValueAt(filaSeleccionada, 0);
-//                    cargarMenuYComidasPorDieta(idDietaSeleccionada);
-//                }
-//            }
-//        });
-//    }
     
     public void cargarMenuYComidasPorDieta(int idDieta) {
         Dieta dietaSeleccionada = dietaData.buscarDietaSegunID(idDieta);
@@ -123,6 +100,7 @@ public class MostrarDieta extends javax.swing.JInternalFrame {
         jTablaDietaLista = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jButtonVolver = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         jTablaDietaLista.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -142,41 +120,51 @@ public class MostrarDieta extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(jTablaDietaLista);
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jLabel1.setText("Lista De Dietas");
+        jLabel1.setBackground(new java.awt.Color(0, 102, 0));
+        jLabel1.setFont(new java.awt.Font("Algerian", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 153, 51));
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Nutricionista\\src\\resouces\\Lista.png")); // NOI18N
 
-        jButtonVolver.setText("Volver");
+        jButtonVolver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resouces/above_thearrow_1550.png"))); // NOI18N
         jButtonVolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonVolverActionPerformed(evt);
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Copperplate Gothic Bold", 0, 14)); // NOI18N
+        jLabel2.setText("Seleccione una dieta para ver los menus");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(372, 372, 372))
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 827, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonVolver))
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 827, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButtonVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(258, 258, 258)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 391, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonVolver)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jButtonVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19))
         );
 
         pack();
@@ -200,6 +188,7 @@ public class MostrarDieta extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonVolver;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTablaDietaLista;
     // End of variables declaration//GEN-END:variables

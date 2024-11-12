@@ -18,6 +18,7 @@ public class Menu extends javax.swing.JFrame {
     public Menu() {
         initComponents();
         this.setSize(900, 700);
+        this.setResizable(false);
         this.setLocationRelativeTo(null);
         jDesktopPane1.setBorder(new ImagenFondo());
 
@@ -64,7 +65,7 @@ public class Menu extends javax.swing.JFrame {
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 652, Short.MAX_VALUE)
+            .addGap(0, 707, Short.MAX_VALUE)
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

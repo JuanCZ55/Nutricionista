@@ -16,7 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 
-public class DietaVista extends javax.swing.JInternalFrame {
+public class DietaVista extends JInternalFrameImagen {
 
     private DefaultTableModel TbDieta;
     private Persistencia.DietaData dietaData;
@@ -26,8 +26,9 @@ public class DietaVista extends javax.swing.JInternalFrame {
         initComponents();
         this.dietaData = new DietaData();
         this.listaDieta = new ArrayList<>();
-        //this.setImagen("/imagen/FondoAzulRombo.png");//Buscar una imagen y ponerla
+        this.setImagen("/resouces/verduras.png");//Buscar una imagen y ponerla
         this.TbDieta = new DefaultTableModel();
+        this.setSize(885, 650);
         jTablaDietaVista.setDefaultEditor(Object.class, new DefaultCellEditor(new JTextField()));
         TbDieta.addColumn("Id Dieta");
         TbDieta.addColumn("Nombre");
@@ -62,16 +63,14 @@ public class DietaVista extends javax.swing.JInternalFrame {
                 
         }
     
-    public void actualizarDietaEnLista(int idDietaSeleccionada, String nombreDieta, String nombrePaciente, LocalDate fechaInicial, LocalDate fechaFinal, double totalCalorias, boolean estado) {
+    public void actualizarDietaEnLista(int idDietaSeleccionada, String nombreDieta, LocalDate fechaInicial, LocalDate fechaFinal, double totalCalorias) {
     // Buscar la dieta en la lista y actualizar los valores
     for (Dieta dieta : listaDieta) {
        
             dieta.setNombreD(nombreDieta);
-            dieta.getPaciente().setNombre(nombrePaciente);
             dieta.setFechaIni(fechaInicial);
             dieta.setFechaFin(fechaFinal);
             dieta.setTotalCalorias(totalCalorias);
-            dieta.setEstado(estado);
       
         
     }
@@ -122,6 +121,7 @@ public class DietaVista extends javax.swing.JInternalFrame {
         jButton7 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
 
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resouces/cycle_11044764.png"))); // NOI18N
         jButton2.setText("Actualizar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -143,7 +143,7 @@ public class DietaVista extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jTablaDietaVista);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jLabel1.setText("Dietas segun paciente");
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resouces/BuscarDietas.png"))); // NOI18N
 
         jLabel3.setText("Buscar por el Nombre de dieta");
 
@@ -166,7 +166,7 @@ public class DietaVista extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jTextFieldIDpaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jCalendariInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -203,6 +203,7 @@ public class DietaVista extends javax.swing.JInternalFrame {
                             .addGap(46, 46, 46)))))
         );
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resouces/delete_4980658.png"))); // NOI18N
         jButton1.setText("Borrar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -210,6 +211,7 @@ public class DietaVista extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resouces/LUPA_CHICA.png"))); // NOI18N
         jButton5.setText("Buscar");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -217,6 +219,7 @@ public class DietaVista extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resouces/refresh_11044876.png"))); // NOI18N
         jButton7.setText("Baja / Alta");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -224,7 +227,7 @@ public class DietaVista extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel6.setText("Personalice la dieta combiandole el nombre");
+        jLabel6.setText("Personalice la dieta combiando nombreDieta, fechas, calorias");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -233,42 +236,45 @@ public class DietaVista extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(49, 49, 49)
-                                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(71, 71, 71)
-                                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jScrollPane1))
-                            .addComponent(jLabel6)))
+                        .addGap(289, 289, 289)
+                        .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(268, 268, 268)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(57, Short.MAX_VALUE))
+                        .addGap(71, 71, 71)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton5)
+                                .addGap(64, 64, 64)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(54, 54, 54)
+                                .addComponent(jButton7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(8, 8, 8))
+                            .addComponent(jLabel6)
+                            .addComponent(jScrollPane1)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(37, 37, 37)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton5)
-                    .addComponent(jButton7))
-                .addGap(39, 39, 39))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton2)
+                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(53, 53, 53))
         );
 
         pack();
@@ -386,14 +392,12 @@ public class DietaVista extends javax.swing.JInternalFrame {
             // Actualizar la fila de la tabla
             actualizarFilaTabla(idDietaSeleccionada, nuevoEstado);
 
-            // Mostrar mensaje de confirmación
             JOptionPane.showMessageDialog(null, "Estado de la dieta actualizado correctamente.");
         } else {
-            // Si el estado no ha cambiado, mostrar mensaje
+           
             JOptionPane.showMessageDialog(null, "No se detectaron cambios en el estado de la dieta.");
         }
     } else {
-        // Si no se ha seleccionado ninguna fila, mostrar mensaje
         JOptionPane.showMessageDialog(this, "No se ha seleccionado ninguna fila.", "Sin cambios", JOptionPane.INFORMATION_MESSAGE);
     }
     }
@@ -403,21 +407,17 @@ public class DietaVista extends javax.swing.JInternalFrame {
         // Obtener el ID de la dieta directamente desde la tabla que se encuentra en la columna 0
         int idDietaSeleccionada = (int) jTablaDietaVista.getValueAt(filaSeleccionada, 0);
        
-        // Buscar la dieta original en la base de datos
+        // Buscar la dieta original en la base de datos con el ID buscado antes en la tabla
     Dieta dietaOriginal = dietaData.buscarDietaSegunID(idDietaSeleccionada);
     String nombreDieta = dietaOriginal.getNombreD();
-    String nombrePaciente = dietaOriginal.getPaciente().getNombre();
     LocalDate fechaInicial = dietaOriginal.getFechaIni();
     LocalDate fechaFinal = dietaOriginal.getFechaFin();
     double totalCalorias = dietaOriginal.getTotalCalorias();
-    boolean estado = dietaOriginal.isEstado();
+   
 
     // Obtener los valores actuales en la tabla y manejar valores null
     String nombreDietaTabla = (jTablaDietaVista.getValueAt(filaSeleccionada, 1) != null)
         ? jTablaDietaVista.getValueAt(filaSeleccionada, 1).toString(): nombreDieta;
-
-    String nombrePacienteTabla = (jTablaDietaVista.getValueAt(filaSeleccionada, 2) != null)
-        ? jTablaDietaVista.getValueAt(filaSeleccionada, 2).toString(): nombrePaciente;
 
     LocalDate fechaInicialTabla = (jTablaDietaVista.getValueAt(filaSeleccionada, 3) != null)
         ? LocalDate.parse(jTablaDietaVista.getValueAt(filaSeleccionada, 3).toString()): fechaInicial;
@@ -427,29 +427,21 @@ public class DietaVista extends javax.swing.JInternalFrame {
 
     double totalCaloriasTabla = (jTablaDietaVista.getValueAt(filaSeleccionada, 5) != null)
         ? Double.parseDouble(jTablaDietaVista.getValueAt(filaSeleccionada, 5).toString()): totalCalorias;
-
-    boolean estadoTabla = (jTablaDietaVista.getValueAt(filaSeleccionada, 6) != null)
-        ? Boolean.parseBoolean(jTablaDietaVista.getValueAt(filaSeleccionada, 6).toString()): estado;
-
-    // Imprimir valores para depuración
-    System.out.println("Valores originales: " + nombreDieta + ", " + nombrePaciente + ", " + fechaInicial + ", " + fechaFinal + ", " + totalCalorias + ", " + estado);
-    System.out.println("Valores de la tabla: " + nombreDietaTabla + ", " + nombrePacienteTabla + ", " + fechaInicialTabla + ", " + fechaFinalTabla + ", " + totalCaloriasTabla + ", " + estadoTabla);
-
+    
     // Verifica si hay cambios entre los valores originales y los de la tabla
-    if (!nombreDieta.equals(nombreDietaTabla) || !nombrePaciente.equals(nombrePacienteTabla) || 
+    if (!nombreDieta.equals(nombreDietaTabla)|| 
     !fechaInicial.equals(fechaInicialTabla) || !fechaFinal.equals(fechaFinalTabla) ||
-    totalCalorias != totalCaloriasTabla || estado != estadoTabla) {
+    totalCalorias != totalCaloriasTabla) {
 
-    // Si hay cambios, actualiza la dieta en la base de datos
+    //reseteo los valores de busque luego de hacerla
     dietaOriginal.setNombreD(nombreDietaTabla);
-    dietaOriginal.getPaciente().setNombre(nombrePacienteTabla);  // Asegúrate de que el paciente esté correctamente referenciado
     dietaOriginal.setFechaIni(fechaInicialTabla);
     dietaOriginal.setFechaFin(fechaFinalTabla);
     dietaOriginal.setTotalCalorias(totalCaloriasTabla);
-    dietaOriginal.setEstado(estadoTabla);
-
-    dietaData.actualizarDieta(dietaOriginal); // Asegúrate de tener un método de actualización en la base de datos
-    actualizarDietaEnLista(idDietaSeleccionada,nombreDieta,nombrePaciente,fechaInicial,fechaFinal,totalCalorias,estado);
+    
+    // Si hay cambios, actualiza la dieta en la base de datos
+    dietaData.actualizarDieta(dietaOriginal);
+    actualizarDietaEnLista(idDietaSeleccionada,nombreDieta,fechaInicial,fechaFinal,totalCalorias);
     JOptionPane.showMessageDialog(null, "Dieta actualizada correctamente.");
     
         } else {
