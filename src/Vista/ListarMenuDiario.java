@@ -50,8 +50,8 @@ public class ListarMenuDiario extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         jTFPaciente = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
+        jBSalir = new javax.swing.JButton();
 
-        setClosable(true);
         setFocusable(false);
 
         jLabel1.setText("Seleccione un Dieta:");
@@ -71,7 +71,7 @@ public class ListarMenuDiario extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Estado del Menu:");
 
-        jCBDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jCBDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dia 1", "Dia 2", "Dia 3", "Dia 4", "Dia 5", "Dia 6", "Dia 7" }));
         jCBDia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCBDiaActionPerformed(evt);
@@ -94,22 +94,27 @@ public class ListarMenuDiario extends javax.swing.JInternalFrame {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "IdMenuDiario", "IdComida", "Nombre de Comida", "Tipo de Comida", "Calorias", "Condicion"
+                "IdMenuDiario", "IdComida", "Nombre de Comida", "Tipo de Comida", "Calorias", "Estado"
             }
         ));
         jScrollPane1.setViewportView(jTMenuComida);
 
-        jBHabilitar.setText("Habilitar");
+        jBHabilitar.setText("Alta");
         jBHabilitar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBHabilitarActionPerformed(evt);
             }
         });
 
-        jBEliminar.setText("Deshabilitar");
+        jBEliminar.setText("Baja");
         jBEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBEliminarActionPerformed(evt);
@@ -120,58 +125,62 @@ public class ListarMenuDiario extends javax.swing.JInternalFrame {
         jLabel5.setText("Lista de Menús Almacenados");
 
         jTFPaciente.setEditable(false);
-        jTFPaciente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTFPacienteActionPerformed(evt);
-            }
-        });
 
         jLabel7.setText("Paciente:");
+
+        jBSalir.setText("Salir");
+        jBSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBSalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jBHabilitar)
-                        .addGap(92, 92, 92)
-                        .addComponent(jBEliminar)
-                        .addGap(99, 99, 99))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(112, 112, 112)
+                .addComponent(jLabel5)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(73, 73, 73)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jCBMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jCBDia, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jCBEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jCBDieta, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(112, 112, 112)
-                        .addComponent(jLabel5))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(73, 73, 73)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jTFPaciente)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jCBMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jCBDia, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jCBEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel7))
+                                .addComponent(jBHabilitar)
                                 .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTFPaciente)
-                                    .addComponent(jCBDieta, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addGap(0, 0, Short.MAX_VALUE))
+                                .addComponent(jBEliminar)
+                                .addGap(23, 23, 23)
+                                .addComponent(jBSalir)))
+                        .addGap(34, 34, 34))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(112, 112, 112))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -179,45 +188,46 @@ public class ListarMenuDiario extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel5)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jCBDieta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTFPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jCBEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jCBDieta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jCBEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTFPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jCBDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jCBMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBHabilitar)
-                    .addComponent(jBEliminar))
-                .addGap(28, 28, 28)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jBSalir)
+                        .addComponent(jBHabilitar)
+                        .addComponent(jBEliminar))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)
+                        .addComponent(jCBMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(51, 51, 51)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -226,17 +236,63 @@ public class ListarMenuDiario extends javax.swing.JInternalFrame {
     private void jBHabilitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBHabilitarActionPerformed
         if (jCBDieta.getSelectedItem() != null && jCBEstado.getSelectedItem() != null && jCBDia.getSelectedItem() != null
                 && jCBMenu.getSelectedItem() != null) {
-            menuAcceso.altaLogica(((MenuDiario) jCBMenu.getSelectedItem()).getIdMenu());
-            deshabilitar();
+            int dia = 1;
+            switch (jCBDia.getSelectedItem().toString()) {
+                case "Dia 1":
+                    dia = 1;
+                    break;
+                case "Dia 2":
+                    dia = 2;
+                    break;
+                case "Dia 3":
+                    dia = 3;
+                    break;
+                case "Dia 4":
+                    dia = 4;
+                    break;
+                case "Dia 5":
+                    dia = 5;
+                    break;
+                case "Dia 6":
+                    dia = 6;
+                    break;
+                case "Dia 7":
+                    dia = 7;
+                    break;
+            }
+
+            if (!Objects.nonNull(menuAcceso.buscarMenuDiarioPorDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), dia))) {
+                menuAcceso.altaLogica(((MenuDiario) jCBMenu.getSelectedItem()).getIdMenu());
+            } else {
+                JOptionPane.showMessageDialog(this, "Ya existe un menu diario asociado a ese dia habilitado");
+            }
+
+            if (menuAcceso.verificarDiasActivosMenuDiarioPorDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()) == false) {
+                jCBDieta.setEnabled(false);
+            } else {
+                jCBDieta.setEnabled(false);
+                jBEliminar.setEnabled(false);
+                jBHabilitar.setEnabled(false);
+
+                jCBDia.setSelectedIndex(-1);
+                jCBEstado.setSelectedIndex(-1);
+                jCBMenu.setSelectedIndex(-1);
+
+                jCBDia.setEnabled(false);
+                jCBMenu.setEnabled(false);
+                modelo.setRowCount(0);
+            }
         }
+
     }//GEN-LAST:event_jBHabilitarActionPerformed
 
     private void jCBMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBMenuActionPerformed
         if (Objects.nonNull(((MenuDiario) jCBMenu.getSelectedItem()))) {
-            listarMenuComidas(menuAcceso.buscarMenuDiario(((MenuDiario) jCBMenu.getSelectedItem()).getIdMenu()));
-            if (jCBMenu.getSelectedItem().equals("Menu Activo")) {
+            //Mostrar todas las comidas asociadas al menudiario 
+            listarMenuComidas(((MenuDiario) jCBMenu.getSelectedItem()));
+            if (jCBEstado.getSelectedItem().equals("Menu Activo")) {
                 jBEliminar.setEnabled(true);
-            } else if (jCBMenu.getSelectedItem().equals("Menu Inactivo")) {
+            } else if (jCBEstado.getSelectedItem().equals("Menu Inactivo")) {
                 jBHabilitar.setEnabled(true);
             }
         }
@@ -246,126 +302,311 @@ public class ListarMenuDiario extends javax.swing.JInternalFrame {
         if (jCBDieta.getSelectedItem() != null && jCBEstado.getSelectedItem() != null && jCBDia.getSelectedItem() != null
                 && jCBMenu.getSelectedItem() != null) {
             menuAcceso.bajaLogica(((MenuDiario) jCBMenu.getSelectedItem()).getIdMenu());
-            deshabilitar();
+            if (menuAcceso.verificarDiasActivosMenuDiarioPorDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()) == false) {
+                jCBDieta.setEnabled(false);
+                jBEliminar.setEnabled(false);
+                jBHabilitar.setEnabled(false);
+
+                jCBDia.setSelectedIndex(-1);
+                jCBEstado.setSelectedIndex(-1);
+                jCBMenu.setSelectedIndex(-1);
+
+                jCBDia.setEnabled(false);
+                jCBMenu.setEnabled(false);
+                modelo.setRowCount(0);
+            } else {
+                deshabilitar();
+            }
+
         }
     }//GEN-LAST:event_jBEliminarActionPerformed
 
     private void jCBDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBDiaActionPerformed
         // Carga los Menudiarios que son activos/inactivos y restringido por el dia
-        if (Objects.nonNull((String) jCBDia.getSelectedItem())) {
+        jCBMenu.removeAllItems();
+
+        if (Objects.nonNull((String) jCBDia.getSelectedItem()) && jCBDia.getSelectedIndex() != -1 && Objects.nonNull((String) jCBEstado.getSelectedItem()) && Objects.nonNull((Dieta) jCBDieta.getSelectedItem())) {
+            ArrayList<MenuDiario> comidas = null;
+
             switch ((String) jCBDia.getSelectedItem()) {
                 case "Dia 1":
                     // Si son habilitados
                     if (jCBEstado.getSelectedItem() == "Menu Activo") {
-                        enlistarMenuComidas(menuAcceso.listarMenuDiarioActivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 1));
-
+                        comidas = menuAcceso.listarMenuDiarioActivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 1);
+                        if (!comidas.isEmpty()) {
+                            for (MenuDiario comida : comidas) {
+                                jCBMenu.addItem(menuAcceso.buscarMenuDiario(comida.getIdMenu()));
+                            }
+                            enlistarMenuComidas(comidas);
+                            jCBMenu.setEnabled(true);
+                        } else {
+                            JOptionPane.showMessageDialog(this, "No existen menus diarios asociados al " + jCBDia.getSelectedItem());
+                            jCBMenu.setEnabled(false);
+                            modelo.setRowCount(0);
+                        }
                     }
                     // Si son deshabilitados
                     if (jCBEstado.getSelectedItem() == "Menu Inactivo") {
-                        enlistarMenuComidas(menuAcceso.listarMenuDiarioInactivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 1));
+                        comidas = menuAcceso.listarMenuDiarioInactivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 1);
+
+                        if (!comidas.isEmpty()) {
+                            for (MenuDiario comida : comidas) {
+                                jCBMenu.addItem(menuAcceso.buscarMenuDiario(comida.getIdMenu()));
+                            }
+                            enlistarMenuComidas(comidas);
+                            jCBMenu.setEnabled(true);
+                        } else {
+                            JOptionPane.showMessageDialog(this, "No existen menus diarios asociados al " + jCBDia.getSelectedItem());
+                            jCBMenu.setEnabled(false);
+                            modelo.setRowCount(0);
+                        }
                     }
                     break;
                 case "Dia 2":
+                    
                     // Si son habilitados
                     if (jCBEstado.getSelectedItem() == "Menu Activo") {
-                        enlistarMenuComidas(menuAcceso.listarMenuDiarioActivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 2));
-
+                        comidas = menuAcceso.listarMenuDiarioActivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 2);
+                        if (!comidas.isEmpty()) {
+                            for (MenuDiario comida : comidas) {
+                                jCBMenu.addItem(menuAcceso.buscarMenuDiario(comida.getIdMenu()));
+                            }
+                            enlistarMenuComidas(comidas);
+                            jCBMenu.setEnabled(true);
+                        } else {
+                            JOptionPane.showMessageDialog(this, "No existen menus diarios asociados al " + jCBDia.getSelectedItem());
+                            jCBMenu.setEnabled(false);
+                            modelo.setRowCount(0);
+                        }
                     }
                     // Si son deshabilitados
                     if (jCBEstado.getSelectedItem() == "Menu Inactivo") {
-                        enlistarMenuComidas(menuAcceso.listarMenuDiarioInactivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 2));
+                        comidas = menuAcceso.listarMenuDiarioInactivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 2);
+                        
+                        if (!comidas.isEmpty()) {
+                            for (MenuDiario comida : comidas) {
+                                jCBMenu.addItem(menuAcceso.buscarMenuDiario(comida.getIdMenu()));
+                            }
+                            enlistarMenuComidas(comidas);
+                            jCBMenu.setEnabled(true);
+                        } else {
+                            JOptionPane.showMessageDialog(this, "No existen menus diarios asociados al " + jCBDia.getSelectedItem());
+                            jCBMenu.setEnabled(false);
+                            modelo.setRowCount(0);
+                        }
                     }
                     break;
                 case "Dia 3":
                     // Si son habilitados
                     if (jCBEstado.getSelectedItem() == "Menu Activo") {
-                        enlistarMenuComidas(menuAcceso.listarMenuDiarioActivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 3));
-
+                        comidas = menuAcceso.listarMenuDiarioActivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 3);
+                        if (!comidas.isEmpty()) {
+                            for (MenuDiario comida : comidas) {
+                                jCBMenu.addItem(menuAcceso.buscarMenuDiario(comida.getIdMenu()));
+                            }
+                            enlistarMenuComidas(comidas);
+                            jCBMenu.setEnabled(true);
+                        } else {
+                            JOptionPane.showMessageDialog(this, "No existen menus diarios asociados al " + jCBDia.getSelectedItem());
+                            jCBMenu.setEnabled(false);
+                            modelo.setRowCount(0);
+                        }
                     }
                     // Si son deshabilitados
                     if (jCBEstado.getSelectedItem() == "Menu Inactivo") {
-                        enlistarMenuComidas(menuAcceso.listarMenuDiarioInactivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 3));
+                        comidas = menuAcceso.listarMenuDiarioInactivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 3);
+                        if (!comidas.isEmpty()) {
+                            for (MenuDiario comida : comidas) {
+                                jCBMenu.addItem(menuAcceso.buscarMenuDiario(comida.getIdMenu()));
+                            }
+                            enlistarMenuComidas(comidas);
+                            jCBMenu.setEnabled(true);
+                        } else {
+                            JOptionPane.showMessageDialog(this, "No existen menus diarios asociados al " + jCBDia.getSelectedItem());
+                            jCBMenu.setEnabled(false);
+                            modelo.setRowCount(0);
+                        }
                     }
                     break;
                 case "Dia 4":
                     // Si son habilitados
                     if (jCBEstado.getSelectedItem() == "Menu Activo") {
-                        enlistarMenuComidas(menuAcceso.listarMenuDiarioActivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 4));
-
+                        comidas = menuAcceso.listarMenuDiarioActivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 4);
+                        if (!comidas.isEmpty()) {
+                            for (MenuDiario comida : comidas) {
+                                jCBMenu.addItem(menuAcceso.buscarMenuDiario(comida.getIdMenu()));
+                            }
+                            enlistarMenuComidas(comidas);
+                            jCBMenu.setEnabled(true);
+                        } else {
+                            JOptionPane.showMessageDialog(this, "No existen menus diarios asociados al " + jCBDia.getSelectedItem());
+                            jCBMenu.setEnabled(false);
+                            modelo.setRowCount(0);
+                        }
                     }
                     // Si son deshabilitados
                     if (jCBEstado.getSelectedItem() == "Menu Inactivo") {
-                        enlistarMenuComidas(menuAcceso.listarMenuDiarioInactivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 4));
+                        comidas = menuAcceso.listarMenuDiarioInactivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 4);
+                        if (!comidas.isEmpty()) {
+                            for (MenuDiario comida : comidas) {
+                                jCBMenu.addItem(menuAcceso.buscarMenuDiario(comida.getIdMenu()));
+                            }
+                            enlistarMenuComidas(comidas);
+                            jCBMenu.setEnabled(true);
+                        } else {
+                            JOptionPane.showMessageDialog(this, "No existen menus diarios asociados al " + jCBDia.getSelectedItem());
+                            jCBMenu.setEnabled(false);
+                            modelo.setRowCount(0);
+                        }
                     }
                     break;
                 case "Dia 5":
                     // Si son habilitados
                     if (jCBEstado.getSelectedItem() == "Menu Activo") {
-                        enlistarMenuComidas(menuAcceso.listarMenuDiarioActivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 5));
-
+                        comidas = menuAcceso.listarMenuDiarioActivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 5);
+                        if (!comidas.isEmpty()) {
+                            for (MenuDiario comida : comidas) {
+                                jCBMenu.addItem(menuAcceso.buscarMenuDiario(comida.getIdMenu()));
+                            }
+                            enlistarMenuComidas(comidas);
+                            jCBMenu.setEnabled(true);
+                        } else {
+                            JOptionPane.showMessageDialog(this, "No existen menus diarios asociados al " + jCBDia.getSelectedItem());
+                            jCBMenu.setEnabled(false);
+                            modelo.setRowCount(0);
+                        }
                     }
                     // Si son deshabilitados
                     if (jCBEstado.getSelectedItem() == "Menu Inactivo") {
-                        enlistarMenuComidas(menuAcceso.listarMenuDiarioInactivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 5));
+                        comidas = menuAcceso.listarMenuDiarioInactivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 5);
+                        if (!comidas.isEmpty()) {
+                            for (MenuDiario comida : comidas) {
+                                jCBMenu.addItem(menuAcceso.buscarMenuDiario(comida.getIdMenu()));
+                            }
+                            enlistarMenuComidas(comidas);
+                            jCBMenu.setEnabled(true);
+                        } else {
+                            JOptionPane.showMessageDialog(this, "No existen menus diarios asociados al " + jCBDia.getSelectedItem());
+                            jCBMenu.setEnabled(false);
+                            modelo.setRowCount(0);
+                        }
                     }
                     break;
                 case "Dia 6":
                     // Si son habilitados
                     if (jCBEstado.getSelectedItem() == "Menu Activo") {
-                        enlistarMenuComidas(menuAcceso.listarMenuDiarioActivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 6));
-
+                        comidas = menuAcceso.listarMenuDiarioActivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 6);
+                        if (!comidas.isEmpty()) {
+                            for (MenuDiario comida : comidas) {
+                                jCBMenu.addItem(menuAcceso.buscarMenuDiario(comida.getIdMenu()));
+                            }
+                            enlistarMenuComidas(comidas);
+                            jCBMenu.setEnabled(true);
+                        } else {
+                            JOptionPane.showMessageDialog(this, "No existen menus diarios asociados al " + jCBDia.getSelectedItem());
+                            jCBMenu.setEnabled(false);
+                            modelo.setRowCount(0);
+                        }
                     }
                     // Si son deshabilitados
                     if (jCBEstado.getSelectedItem() == "Menu Inactivo") {
-                        enlistarMenuComidas(menuAcceso.listarMenuDiarioInactivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 6));
+                        comidas = menuAcceso.listarMenuDiarioInactivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 6);
+                        if (!comidas.isEmpty()) {
+                            for (MenuDiario comida : comidas) {
+                                jCBMenu.addItem(menuAcceso.buscarMenuDiario(comida.getIdMenu()));
+                            }
+                            enlistarMenuComidas(comidas);
+                            jCBMenu.setEnabled(true);
+                        } else {
+                            JOptionPane.showMessageDialog(this, "No existen menus diarios asociados al " + jCBDia.getSelectedItem());
+                            jCBMenu.setEnabled(false);
+                            modelo.setRowCount(0);
+                        }
                     }
                     break;
                 case "Dia 7":
                     // Si son habilitados
                     if (jCBEstado.getSelectedItem() == "Menu Activo") {
-                        enlistarMenuComidas(menuAcceso.listarMenuDiarioActivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 7));
-
+                        comidas = menuAcceso.listarMenuDiarioActivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 7);
+                        if (!comidas.isEmpty()) {
+                            for (MenuDiario comida : comidas) {
+                                jCBMenu.addItem(menuAcceso.buscarMenuDiario(comida.getIdMenu()));
+                            }
+                            enlistarMenuComidas(comidas);
+                            jCBMenu.setEnabled(true);
+                        } else {
+                            JOptionPane.showMessageDialog(this, "No existen menus diarios asociados al " + jCBDia.getSelectedItem());
+                            jCBMenu.setEnabled(false);
+                            modelo.setRowCount(0);
+                        }
                     }
                     // Si son deshabilitados
                     if (jCBEstado.getSelectedItem() == "Menu Inactivo") {
-                        enlistarMenuComidas(menuAcceso.listarMenuDiarioInactivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 7));
+                        comidas = menuAcceso.listarMenuDiarioInactivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 7);
+                        if (!comidas.isEmpty()) {
+                            for (MenuDiario comida : comidas) {
+                                jCBMenu.addItem(menuAcceso.buscarMenuDiario(comida.getIdMenu()));
+                            }
+                            enlistarMenuComidas(comidas);
+                            jCBMenu.setEnabled(true);
+                        } else {
+                            JOptionPane.showMessageDialog(this, "No existen menus diarios asociados al " + jCBDia.getSelectedItem());
+                            jCBMenu.setEnabled(false);
+                            modelo.setRowCount(0);
+                        }
                     }
                     break;
             }
-            jCBMenu.setEnabled(true);
-        }
 
+        }
+        jCBMenu.setSelectedIndex(-1);
+        jBEliminar.setEnabled(false);
+        jBHabilitar.setEnabled(false);
 
     }//GEN-LAST:event_jCBDiaActionPerformed
 
     private void jCBEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBEstadoActionPerformed
-
-//Listar todos los menus por el estado seleccionado
-        if (Objects.nonNull(jCBDieta.getSelectedItem())) {
+        // Listar todos los menus por el estado seleccionado
+        if (Objects.nonNull(jCBDieta.getSelectedItem()) && Objects.nonNull(jCBEstado.getSelectedItem())) {
             if (jCBEstado.getSelectedItem().equals("Menu Activo")) {
-                if (!(menuAcceso.listarMenuDiarioActivoPorDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta())).isEmpty()) {
+                if (!menuAcceso.listarMenuDiarioActivoPorDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()).isEmpty()) {
                     enlistarMenuComidas(menuAcceso.listarMenuDiarioActivoPorDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()));
+
+                    // Habilitar jCBDia y desactivar jCBMenu
                     jCBDia.setEnabled(true);
+                    jCBDia.setSelectedIndex(-1);
+                    jCBMenu.setEnabled(false); // Desactiva jCBMenu
+
                 } else {
-                    JOptionPane.showMessageDialog(this, "Esta Dieta no tienen Menus Diarios Activos");
+                    JOptionPane.showMessageDialog(this, "Esta Dieta no tiene Menus Diarios Activos");
+                    modelo.setRowCount(0);
                 }
             } else if (jCBEstado.getSelectedItem().equals("Menu Inactivo")) {
-                if (!(menuAcceso.listarMenuDiarioInactivoPorDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta())).isEmpty()) {
+                if (!menuAcceso.listarMenuDiarioInactivoPorDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()).isEmpty()) {
                     enlistarMenuComidas(menuAcceso.listarMenuDiarioInactivoPorDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()));
+
                     jCBDia.setEnabled(true);
+                    jCBDia.setSelectedIndex(-1);
+                    jCBMenu.setEnabled(false);
+
                 } else {
-                    JOptionPane.showMessageDialog(this, "Esta Dieta no tienen Menus Diarios Inctivos");
+                    JOptionPane.showMessageDialog(this, "Esta Dieta no tiene Menus Diarios Inactivos");
+                    modelo.setRowCount(0);
                 }
             } else if (jCBEstado.getSelectedItem().equals("Todos los Menu")) {
-                if (!(menuAcceso.listarMenuDiarioPorDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta())).isEmpty()) {
-                    enlistarMenuComidas((ArrayList<MenuDiario>) menuAcceso.listarMenuDiarioPorDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()));
+                if (!menuAcceso.listarMenuDiarioPorDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()).isEmpty()) {
+                    enlistarMenuComidas(menuAcceso.listarMenuDiarioPorDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()));
+
                     jCBDia.setEnabled(true);
+                    jCBDia.setSelectedIndex(-1);
+                    jCBMenu.setEnabled(false);
+
                 } else {
-                    JOptionPane.showMessageDialog(this, "Esta Dieta no tiene Menu Diarios");
+                    JOptionPane.showMessageDialog(this, "Esta Dieta no tiene Menus Diarios");
+                    modelo.setRowCount(0);
                 }
 
             }
-
         }
 
     }//GEN-LAST:event_jCBEstadoActionPerformed
@@ -385,9 +626,22 @@ public class ListarMenuDiario extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jCBDietaActionPerformed
 
-    private void jTFPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFPacienteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTFPacienteActionPerformed
+    private void jBSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalirActionPerformed
+        if (Objects.nonNull(((Dieta) jCBDieta.getSelectedItem()))) {
+            if (menuAcceso.contadorMenuDiariosDeUnaDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()) > 3) {
+                if (menuAcceso.verificarDiasActivosMenuDiarioPorDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()) == true) {
+                    this.dispose();
+                }
+            } else if (menuAcceso.contadorMenuDiariosDeUnaDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()) == 0) {
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "La Cantidad de menu diarios activos es menor a 3");
+            }
+        } else {
+            this.dispose();
+        }
+
+    }//GEN-LAST:event_jBSalirActionPerformed
 
     //Auxiliares
     private void cargarDietas() {
@@ -416,7 +670,13 @@ public class ListarMenuDiario extends javax.swing.JInternalFrame {
     private void enlistarMenuComidas(ArrayList<MenuDiario> menuLista) {
         modelo.setRowCount(0);
         if (!menuLista.isEmpty()) {
+            String estado = "";
             for (MenuDiario aux : menuLista) {
+                if (aux.isEstado()) {
+                    estado = "Activo";
+                } else {
+                    estado = "Inactivo";
+                }
                 for (Comidas comidas : menuAcceso.listarComidasPorMenuDiario(aux.getIdMenu())) {
                     modelo.addRow(new Object[]{
                         aux.getIdMenu(),
@@ -424,9 +684,8 @@ public class ListarMenuDiario extends javax.swing.JInternalFrame {
                         comidas.getNombre(),
                         comidas.getTipoDeComida(),
                         comidas.getCaloriasComida(),
-                        comidas.getNoApto(),
-                        comidas.isEstado()
-                    });
+                        estado}
+                    );
                 }
             }
         }
@@ -434,16 +693,22 @@ public class ListarMenuDiario extends javax.swing.JInternalFrame {
 
     private void listarMenuComidas(MenuDiario menu) {
         modelo.setRowCount(0);
-        if (!menu.isEmpty()) {
+        if (Objects.nonNull(menu)) {
+            String estado = "";
+            if (menu.isEstado()) {
+                estado = "Activo";
+            } else {
+                estado = "Inactivo";
+            }
             for (Comidas comidas : menuAcceso.listarComidasPorMenuDiario(menu.getIdMenu())) {
+
                 modelo.addRow(new Object[]{
                     menu.getIdMenu(),
                     comidas.getIdComida(),
                     comidas.getNombre(),
                     comidas.getTipoDeComida(),
                     comidas.getCaloriasComida(),
-                    comidas.getNoApto(),
-                    comidas.isEstado()
+                    estado
                 });
             }
         }
@@ -453,6 +718,7 @@ public class ListarMenuDiario extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBEliminar;
     private javax.swing.JButton jBHabilitar;
+    private javax.swing.JButton jBSalir;
     private javax.swing.JComboBox<String> jCBDia;
     private javax.swing.JComboBox<Dieta> jCBDieta;
     private javax.swing.JComboBox<String> jCBEstado;

@@ -1,4 +1,3 @@
-
 package Modelo;
 
 import java.time.LocalDate;
@@ -135,7 +134,7 @@ public class Dieta {
 
     @Override
     public String toString() {
-        return "Dieta{" + "idDieta=" + idDieta + ", nombreD=" + nombreD + ", Menus=" + Menus + ", paciente=" + paciente + ", fechaIni=" + fechaIni + ", fechaFin=" + fechaFin + ", totalCalorias=" + totalCalorias + ", estado=" + estado + '}';
+        return idDieta + " " + nombreD;
     }
 
    

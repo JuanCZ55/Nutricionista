@@ -88,11 +88,8 @@ private boolean estado;
 
     @Override
     public String toString() {
-        return "MenuDiario{" + "idMenu=" + idMenu + ", dia=" + dia + ", caloriasDelMenu=" + caloriasDelMenu + '}';
+        return idMenu + " Dia" + dia + " Calorias" + caloriasDelMenu;
     }
 
-    public boolean isEmpty() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
   
 }
