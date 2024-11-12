@@ -38,6 +38,12 @@ public class Comidas {
         this.noApto = noApto;
         this.estado = estado;
     }
+    public Comidas(int idComida, String nombre, String tipoDeComida, double caloriasComida) {
+        this.idComida = idComida;
+        this.nombre = nombre;
+        this.tipoDeComida = tipoDeComida;
+        this.caloriasComida = caloriasComida;
+    }
 
     public int getIdComida() {
         return idComida;

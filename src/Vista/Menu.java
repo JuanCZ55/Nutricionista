@@ -20,6 +20,7 @@ public class Menu extends javax.swing.JFrame {
         this.setSize(900, 700);
         this.setLocationRelativeTo(null);
         jDesktopPane1.setBorder(new ImagenFondo());
+
     }
 
     /**
@@ -49,6 +50,7 @@ public class Menu extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMIComidas = new javax.swing.JMenuItem();
+        jMiListarComidas = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMIIngredientes = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -62,7 +64,7 @@ public class Menu extends javax.swing.JFrame {
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 651, Short.MAX_VALUE)
+            .addGap(0, 652, Short.MAX_VALUE)
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,7 +171,20 @@ public class Menu extends javax.swing.JFrame {
         jMenu1.setText("Comidas");
 
         jMIComidas.setText("Comidas");
+        jMIComidas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIComidasActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMIComidas);
+
+        jMiListarComidas.setText("Listar Comidas");
+        jMiListarComidas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMiListarComidasActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMiListarComidas);
 
         jMenuBar1.add(jMenu1);
 
@@ -222,7 +237,7 @@ public class Menu extends javax.swing.JFrame {
         JDPMenu.repaint();
         internaPrueba ingredientes = new internaPrueba();
         JDPMenu.add(ingredientes);
-       ingredientes.setVisible(true);
+        ingredientes.setVisible(true);
     }//GEN-LAST:event_jMIIngredientesActionPerformed
 
     private void jMIListaPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIListaPacientesActionPerformed
@@ -237,10 +252,10 @@ public class Menu extends javax.swing.JFrame {
         JDPMenu.removeAll();
         JDPMenu.repaint();
         DietaVista listP = new DietaVista();
-        
+
         JDPMenu.add(listP);
         listP.setVisible(true);
-        
+
     }//GEN-LAST:event_jMiDietaActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -292,12 +307,28 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-       JDPMenu.removeAll();
+        JDPMenu.removeAll();
         JDPMenu.repaint();
         GenerarIngredientes cargarIngredientes = new GenerarIngredientes();
         JDPMenu.add(cargarIngredientes);
         cargarIngredientes.setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMiListarComidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMiListarComidasActionPerformed
+        JDPMenu.removeAll();
+        JDPMenu.repaint();
+        ListarComidas listCom = new ListarComidas();
+        JDPMenu.add(listCom);
+        listCom.setVisible(true);
+    }//GEN-LAST:event_jMiListarComidasActionPerformed
+
+    private void jMIComidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIComidasActionPerformed
+        JDPMenu.removeAll();
+        JDPMenu.repaint();
+        CrearComidas cc = new CrearComidas();
+        JDPMenu.add(cc);
+        cc.setVisible(true);
+}//GEN-LAST:event_jMIComidasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -356,5 +387,6 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMiDieta;
+    private javax.swing.JMenuItem jMiListarComidas;
     // End of variables declaration//GEN-END:variables
 }

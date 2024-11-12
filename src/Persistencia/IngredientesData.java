@@ -108,7 +108,7 @@ public class IngredientesData {
         }
     }
     public Ingredientes buscarIngredientes(int id) {
-        String sql = "SELECT * FROM  ingredientes WHERE IdIngrediente=?;";
+        String sql = "SELECT * FROM  ingredientes WHERE IdIngredientes =?;";
         Ingredientes ingr = null;
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -116,10 +116,9 @@ public class IngredientesData {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 ingr = new Ingredientes();
-               ingr.setIdIngredientes(rs.getInt("IdIngrediente"));
+               ingr.setIdIngredientes(rs.getInt("IdIngredientes"));
                ingr.setNombre(rs.getString("Nombre"));
                ingr.setCaloriasPor100(rs.getDouble("CaloriasPor100"));
-               ingr.setPeso(rs.getDouble("Peso"));
                ingr.setEstado(rs.getBoolean("Estado"));
                ingr.setNoApto(rs.getString("NoApto"));
                
@@ -144,10 +143,9 @@ public class IngredientesData {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 ingredientes = new Ingredientes();
-               ingredientes.setIdIngredientes(rs.getInt("IdIngrediente"));
+               ingredientes.setIdIngredientes(rs.getInt("IdIngredientes"));
                ingredientes.setNombre(rs.getString("Nombre"));
                ingredientes.setCaloriasPor100(rs.getDouble("CaloriasPor100"));
-               ingredientes.setPeso(rs.getDouble("Peso"));
                ingredientes.setEstado(rs.getBoolean("Estado"));
                ingredientes.setNoApto(rs.getString("NoApto"));
 
@@ -195,7 +193,6 @@ public class IngredientesData {
                 ingr.setIdIngredientes(rs.getInt("idIngredientes"));
                 ingr.setNombre(rs.getString("Nombre"));
                 ingr.setCaloriasPor100(rs.getDouble("CaloriasPor100"));
-                ingr.setPeso(rs.getDouble("Peso"));
                 ingr.setNoApto(rs.getString("NoApto"));
                 ingr.setEstado(rs.getBoolean("Estado"));
             } else {

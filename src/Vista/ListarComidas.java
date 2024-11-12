@@ -11,6 +11,7 @@ import Persistencia.IngredientesData;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -28,6 +29,8 @@ public class ListarComidas extends javax.swing.JInternalFrame {
         modelo = (DefaultTableModel) jTListaComidas.getModel();
         jLTipo.setEnabled(false);
         JCBTipo.setEnabled(false);
+        jCBlistar.setSelectedIndex(-1);
+        JCBTipo.setSelectedIndex(-1);
     }
 
     /**
@@ -138,46 +141,90 @@ public class ListarComidas extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void JCBTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCBTipoActionPerformed
-        // TODO add your handling code here:
+        if (JCBTipo.getSelectedItem() != null) {
+            ArrayList<Comidas> listacompleta = cd.listarComidas();
+            String tipoSeleccionado = (String) JCBTipo.getSelectedItem();
+            ArrayList<Comidas> lista = new ArrayList<>();
+            ArrayList<String> ingredientes = new ArrayList<>();
+
+            for (Comidas comidas : listacompleta) {
+                if (tipoSeleccionado.equals(comidas.getTipoDeComida())) {
+                    String ingred = "";
+                    lista.add(comidas);
+                    HashMap<Integer, Double> ingredientesPesos = cd.buscarIngredientesComidas(comidas.getIdComida());
+                    for (Map.Entry<Integer, Double> entry : ingredientesPesos.entrySet()) {
+                        ingred += id.buscar(entry.getKey()).getNombre() + " ";
+                    }
+                    ingredientes.add(ingred.trim());
+                }
+            }
+            enlistarComidas(lista, ingredientes);
+        }
     }//GEN-LAST:event_JCBTipoActionPerformed
 
     private void jCBlistarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBlistarActionPerformed
-        String seleccion = (String) jCBlistar.getSelectedItem();
-        ArrayList<Comidas> list = cd.listarComidas();
-        ArrayList<String> ingredientes = new ArrayList<>();
-        switch (seleccion) {
-            case "Listar Todos":
-                cd.listarComidas();
-                break;
-            case "Listar Activos":
-                ArrayList<Comidas> act = new ArrayList<>();
-                for (Comidas com : list) {
-                    if (com.isEstado() == true) {
-                        act.add(com);
-                    }
-                }
-                break;
-            case "Listar No Activos":
-                ArrayList<Comidas> noact = new ArrayList<>();
-                String ingreds = null;
-                for (Comidas com : list) {
-                    if (com.isEstado() == false) {
-                        noact.add(com);
+        if (jCBlistar.getSelectedItem() != null) {
+
+            String seleccion = (String) jCBlistar.getSelectedItem();
+            ArrayList<Comidas> list = cd.listarComidas();
+            ArrayList<String> ingredientes = new ArrayList<>();
+            switch (seleccion) {
+                case "Listar Todos" -> {
+                    for (Comidas com : list) {
+                        String ingreds0 = "";
                         HashMap<Integer, Double> ingredientesPesos = cd.buscarIngredientesComidas(com.getIdComida());
                         for (Map.Entry<Integer, Double> entry : ingredientesPesos.entrySet()) {
-                            ingreds += id.buscar(entry.getKey()).getNombre()+" ";
+                            ingreds0 += id.buscar(entry.getKey()).getNombre() + " ";
+                        }
+                        ingredientes.add(ingreds0);
+                    }
+                    jLTipo.setEnabled(false);
+                    JCBTipo.setEnabled(false);
+                    enlistarComidas(list, ingredientes);
+                }
+                case "Listar Activos" -> {
+                    ArrayList<Comidas> act = new ArrayList<>();
+                    for (Comidas com : list) {
+                        String ingreds1 = "";
+                        if (com.isEstado() == true) {
+                            act.add(com);
+                            HashMap<Integer, Double> ingredientesPesos = cd.buscarIngredientesComidas(com.getIdComida());
+                            for (Map.Entry<Integer, Double> entry : ingredientesPesos.entrySet()) {
+                                ingreds1 += id.buscar(entry.getKey()).getNombre() + " ";
+                            }
+                            ingredientes.add(ingreds1);
                         }
                     }
+                    jLTipo.setEnabled(false);
+                    JCBTipo.setEnabled(false);
+                    enlistarComidas(act, ingredientes);
                 }
-                enlistarComidas(list, seleccion);
-                break;
-            case "Listar Por Tipo":
-
-                break;
-
+                case "Listar No Activos" -> {
+                    ArrayList<Comidas> noact = new ArrayList<>();
+                    for (Comidas com : list) {
+                        String ingreds = "";
+                        if (com.isEstado() == false) {
+                            noact.add(com);
+                            HashMap<Integer, Double> ingredientesPesos = cd.buscarIngredientesComidas(com.getIdComida());
+                            for (Map.Entry<Integer, Double> entry : ingredientesPesos.entrySet()) {
+                                ingreds += id.buscar(entry.getKey()).getNombre() + " ";
+                            }
+                            ingredientes.add(ingreds);
+                        }
+                    }
+                    jLTipo.setEnabled(false);
+                    JCBTipo.setEnabled(false);
+                    enlistarComidas(noact, ingredientes);
+                }
+                case "Listar Por Tipo" -> {
+                    jLTipo.setEnabled(true);
+                    JCBTipo.setEnabled(true);
+                }
+            }
         }
     }//GEN-LAST:event_jCBlistarActionPerformed
-    private void enlistarComidas(ArrayList<Comidas> lista, String ingredientes) {
+    private void enlistarComidas(ArrayList<Comidas> lista, ArrayList<String> ingredientes) {
+        int i = 0;
         modelo.setRowCount(0);
         if (!lista.isEmpty()) {
             for (Comidas aux : lista) {
@@ -187,10 +234,13 @@ public class ListarComidas extends javax.swing.JInternalFrame {
                     aux.getTipoDeComida(),
                     aux.getCaloriasComida(),
                     aux.getNoApto(),
-                    ingredientes,
+                    ingredientes.get(i),
                     aux.isEstado()
                 });
+                i++;
             }
+        } else {
+            JOptionPane.showMessageDialog(this, "No hay comidas para esa restriccion");
         }
     }
 
