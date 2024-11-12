@@ -27,8 +27,8 @@ public class ListarComidas extends javax.swing.JInternalFrame {
     public ListarComidas() {
         initComponents();
         modelo = (DefaultTableModel) jTListaComidas.getModel();
-        jLTipo.setEnabled(false);
-        JCBTipo.setEnabled(false);
+        setfal();
+        setResizable(true);
         jCBlistar.setSelectedIndex(-1);
         JCBTipo.setSelectedIndex(-1);
     }
@@ -50,8 +50,13 @@ public class ListarComidas extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTListaComidas = new javax.swing.JTable();
+        jLMin = new javax.swing.JLabel();
+        jTFMin = new javax.swing.JTextField();
+        jTFMax = new javax.swing.JTextField();
+        jLMax = new javax.swing.JLabel();
+        jBbuscar = new javax.swing.JButton();
 
-        jCBlistar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Listar Todos", "Listar Activos", "Listar No Activos", "Listar Por Tipo" }));
+        jCBlistar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Listar Todos", "Listar Activos", "Listar No Activos", "Listar Por Tipo", "Calorias" }));
         jCBlistar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCBlistarActionPerformed(evt);
@@ -97,11 +102,25 @@ public class ListarComidas extends javax.swing.JInternalFrame {
             jTListaComidas.getColumnModel().getColumn(5).setPreferredWidth(200);
         }
 
+        jLMin.setText("Minimo");
+
+        jLMax.setText("Maximo");
+
+        jBbuscar.setText("Buscar");
+        jBbuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBbuscarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 847, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(46, 46, 46)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -109,13 +128,27 @@ public class ListarComidas extends javax.swing.JInternalFrame {
                 .addGap(68, 68, 68)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jCBlistar, 0, 149, Short.MAX_VALUE)
-                        .addComponent(JCBTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jCBlistar, 0, 149, Short.MAX_VALUE)
+                            .addComponent(JCBTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(176, 176, 176)
+                                .addComponent(jBbuscar))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(109, 109, 109)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(11, 11, 11)
+                                        .addComponent(jLMax)
+                                        .addGap(88, 88, 88)
+                                        .addComponent(jLMin))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jTFMin, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(57, 57, 57)
+                                        .addComponent(jTFMax, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 669, Short.MAX_VALUE)
-                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -123,16 +156,31 @@ public class ListarComidas extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel3)
                 .addGap(56, 56, 56)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCBlistar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(38, 38, 38)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(JCBTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLTipo))
-                .addGap(37, 37, 37)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jCBlistar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(58, 58, 58)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(JCBTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLTipo))
+                                .addGap(26, 26, 26)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(48, 48, 48)
+                                .addComponent(jBbuscar))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLMin)
+                            .addComponent(jLMax))
+                        .addGap(8, 8, 8)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTFMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTFMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -142,7 +190,7 @@ public class ListarComidas extends javax.swing.JInternalFrame {
 
     private void JCBTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCBTipoActionPerformed
         if (JCBTipo.getSelectedItem() != null) {
-            ArrayList<Comidas> listacompleta = cd.listarComidas();
+            ArrayList<Comidas> listacompleta = cd.listarComidasAll();
             String tipoSeleccionado = (String) JCBTipo.getSelectedItem();
             ArrayList<Comidas> lista = new ArrayList<>();
             ArrayList<String> ingredientes = new ArrayList<>();
@@ -166,7 +214,7 @@ public class ListarComidas extends javax.swing.JInternalFrame {
         if (jCBlistar.getSelectedItem() != null) {
 
             String seleccion = (String) jCBlistar.getSelectedItem();
-            ArrayList<Comidas> list = cd.listarComidas();
+            ArrayList<Comidas> list = cd.listarComidasAll();
             ArrayList<String> ingredientes = new ArrayList<>();
             switch (seleccion) {
                 case "Listar Todos" -> {
@@ -178,8 +226,8 @@ public class ListarComidas extends javax.swing.JInternalFrame {
                         }
                         ingredientes.add(ingreds0);
                     }
-                    jLTipo.setEnabled(false);
-                    JCBTipo.setEnabled(false);
+                    setfal();
+
                     enlistarComidas(list, ingredientes);
                 }
                 case "Listar Activos" -> {
@@ -195,8 +243,7 @@ public class ListarComidas extends javax.swing.JInternalFrame {
                             ingredientes.add(ingreds1);
                         }
                     }
-                    jLTipo.setEnabled(false);
-                    JCBTipo.setEnabled(false);
+                    setfal();
                     enlistarComidas(act, ingredientes);
                 }
                 case "Listar No Activos" -> {
@@ -212,17 +259,76 @@ public class ListarComidas extends javax.swing.JInternalFrame {
                             ingredientes.add(ingreds);
                         }
                     }
-                    jLTipo.setEnabled(false);
-                    JCBTipo.setEnabled(false);
+                    setfal();
                     enlistarComidas(noact, ingredientes);
                 }
                 case "Listar Por Tipo" -> {
                     jLTipo.setEnabled(true);
                     JCBTipo.setEnabled(true);
                 }
+                case "Calorias" -> {
+                    jLMax.setEnabled(true);
+                    jLMin.setEnabled(true);
+                    jTFMax.setEnabled(true);
+                    jTFMin.setEnabled(true);
+                    jBbuscar.setEnabled(true);
+                }
             }
         }
     }//GEN-LAST:event_jCBlistarActionPerformed
+
+    private void jBbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBbuscarActionPerformed
+        ArrayList<String> ingredientes = new ArrayList<>();
+        try {
+            if (jTFMin.getText().isEmpty() && jTFMax.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Debe ingresar al menos un valor para las calorías.");
+                return;
+            }
+
+            ArrayList<Comidas> lista = new ArrayList<>();
+
+            if (!jTFMin.getText().isEmpty() && jTFMax.getText().isEmpty()) {
+                double min = Double.parseDouble(jTFMin.getText());
+                for (Comidas com : cd.listaMinCalorias(min)) {
+                    String ingreds = "";
+                    lista.add(com);
+                    HashMap<Integer, Double> ingredientesPesos = cd.buscarIngredientesComidas(com.getIdComida());
+                    for (Map.Entry<Integer, Double> entry : ingredientesPesos.entrySet()) {
+                        ingreds += id.buscar(entry.getKey()).getNombre() + " ";
+                    }
+                    ingredientes.add(ingreds);
+                }
+            } else if (jTFMin.getText().isEmpty() && !jTFMax.getText().isEmpty()) {
+                double max = Double.parseDouble(jTFMax.getText());
+                for (Comidas com : cd.listaMaxCalorias(max)) {
+                    String ingreds = "";
+                    lista.add(com);
+                    HashMap<Integer, Double> ingredientesPesos = cd.buscarIngredientesComidas(com.getIdComida());
+                    for (Map.Entry<Integer, Double> entry : ingredientesPesos.entrySet()) {
+                        ingreds += id.buscar(entry.getKey()).getNombre() + " ";
+                    }
+                    ingredientes.add(ingreds);
+                }
+            } else if (!jTFMin.getText().isEmpty() && !jTFMax.getText().isEmpty()) {
+                double min = Double.parseDouble(jTFMin.getText());
+                double max = Double.parseDouble(jTFMax.getText());
+                for (Comidas com : cd.listaMinMaxCalorias(min, max)) {
+                    String ingreds = "";
+                    lista.add(com);
+                    HashMap<Integer, Double> ingredientesPesos = cd.buscarIngredientesComidas(com.getIdComida());
+                    for (Map.Entry<Integer, Double> entry : ingredientesPesos.entrySet()) {
+                        ingreds += id.buscar(entry.getKey()).getNombre() + " ";
+                    }
+                    ingredientes.add(ingreds);
+                }
+            }
+
+            enlistarComidas(lista, ingredientes);
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese unicamente numeros");
+        }
+    }//GEN-LAST:event_jBbuscarActionPerformed
     private void enlistarComidas(ArrayList<Comidas> lista, ArrayList<String> ingredientes) {
         int i = 0;
         modelo.setRowCount(0);
@@ -240,18 +346,35 @@ public class ListarComidas extends javax.swing.JInternalFrame {
                 i++;
             }
         } else {
-            JOptionPane.showMessageDialog(this, "No hay comidas para esa restriccion");
+            JOptionPane.showMessageDialog(this, "No hay comidas para esa restriccion, ingrese nuevamente los valores");
         }
+    }
+
+    public void setfal() {
+        jLTipo.setEnabled(false);
+        JCBTipo.setEnabled(false);
+        jTFMin.setEnabled(false);
+        jTFMax.setEnabled(false);
+        jLMin.setEnabled(false);
+        jLMax.setEnabled(false);
+        jTFMin.setText("");
+        jTFMax.setText("");
+        jBbuscar.setEnabled(false);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> JCBTipo;
+    private javax.swing.JButton jBbuscar;
     private javax.swing.JComboBox<String> jCBlistar;
+    private javax.swing.JLabel jLMax;
+    private javax.swing.JLabel jLMin;
     private javax.swing.JLabel jLTipo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTFMax;
+    private javax.swing.JTextField jTFMin;
     private javax.swing.JTable jTListaComidas;
     // End of variables declaration//GEN-END:variables
 }

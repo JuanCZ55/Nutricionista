@@ -315,6 +315,30 @@ public class ComidaData {
         }
         return lista;
     }
+    public ArrayList<Comidas> listarComidasAll() {
+        ArrayList<Comidas> lista = new ArrayList<>();
+        String sql = "SELECT * FROM comidas ";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Comidas comida = new Comidas();
+                comida.setIdComida(rs.getInt("IdComidas"));
+                comida.setNombre(rs.getString("Nombre"));
+                comida.setCaloriasComida(rs.getDouble("CaloriasComida"));
+                comida.setTipoDeComida(rs.getString("TipoDeComida"));
+                comida.setNoApto(rs.getString("NoApto"));
+                comida.setEstado(rs.getBoolean("Estado"));
+
+                lista.add(comida);
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al listar comidas: " + ex.getMessage());
+        }
+        return lista;
+    }
 
     public ArrayList<Comidas> listarComidasPorTipoDeComida(String tipo) {
         ArrayList<Comidas> lista = new ArrayList<>();
@@ -376,79 +400,121 @@ public class ComidaData {
         return lista;
     }
 
-    public Map<String, ArrayList<Comidas>> mostrarComidasPorIngredientes(ArrayList<String> IngredientesData) {
-        Map<String, ArrayList<Comidas>> comidasPorIngrediente = new HashMap<>();
-
-        String sql = "SELECT i.Nombre AS Ingrediente, c.* FROM comida c "
-                + "JOIN ingredientescomidas ci ON c.IdComida = ci.IdComida "
-                + "JOIN ingredientes i ON ci.IdIngrediente = i.IdIngrediente "
-                + "WHERE c.Estado = 1 AND (";
-
-        for (int i = 0; i < IngredientesData.size(); i++) {
-            sql += "i.Nombre LIKE ?";
-            if (i < IngredientesData.size() - 1) {
-                sql += " OR ";
+    public List<Comidas> listarComidasPorMenuDiario(int idMenu) {
+        String sql = "SELECT c.IdComidas, c.Nombre, c.TipoDeComida, c.CaloriasComida, c.NoApto, c.Estado"
+                + " FROM menucomidas mc JOIN comidas c ON mc.IdComidas = c.IdComidas"
+                + " WHERE mc.IdMenuDiario = ?";
+        List<Comidas> lista = new ArrayList<>();
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, idMenu);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Comidas comida = new Comidas();
+                    comida.setIdComida(rs.getInt("IdComidas"));
+                    comida.setNombre(rs.getString("Nombre"));
+                    comida.setTipoDeComida(rs.getString("TipoDeComida"));
+                    comida.setCaloriasComida(rs.getDouble("CaloriasComida"));
+                    comida.setNoApto(rs.getString("NoApto"));
+                    comida.setEstado(rs.getBoolean("Estado"));
+                    lista.add(comida);
+                }
             }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Comidas: " + ex.getMessage());
         }
-        sql += ") ORDER BY i.Nombre;";
+        return lista;
+    }
 
+    public ArrayList<Comidas> listaMaxCalorias(double maxCalorias) {
+        ArrayList<Comidas> lista = new ArrayList<>();
+        int x = 1;
+        String sql = "SELECT * FROM comidas WHERE Estado = 1 AND CaloriasComida <= ?;";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-
-            for (int i = 0; i < IngredientesData.size(); i++) {
-                ps.setString(i + 1, "%" + IngredientesData.get(i) + "%");
-            }
-
+            ps.setDouble(1, maxCalorias);
             ResultSet rs = ps.executeQuery();
-
             while (rs.next()) {
-                String ingrediente = rs.getString("Ingrediente");
-                Comidas comida = new Comidas();
-                comida.setIdComida(rs.getInt("IdComidas"));
-                comida.setNombre(rs.getString("Nombre"));
-                comida.setCaloriasComida(rs.getDouble("CaloriasTotal"));
-                comida.setTipoDeComida(rs.getString("TipoDeComida"));
-                comida.setNoApto(rs.getString("Apto"));
-                comida.setEstado(rs.getBoolean("Estado"));
-
-
-                comidasPorIngrediente
-                        .computeIfAbsent(ingrediente, k -> new ArrayList<>())
-                        .add(comida);
+                Comidas in = new Comidas();
+                in.setIdComida(rs.getInt("IdComidas"));
+                in.setNombre(rs.getString("Nombre"));
+                in.setTipoDeComida(rs.getString("TipoDeComida"));
+                in.setCaloriasComida(rs.getDouble("CaloriasComida"));
+                in.setNoApto(rs.getString("NoApto"));
+                in.setEstado(rs.getBoolean("Estado"));
+                lista.add(in);
+                x++;
             }
-
-            rs.close();
+            if (x == 0) {
+                JOptionPane.showMessageDialog(null, "No hay ingredientes menores a esa cantidad de calorias");
+            }
             ps.close();
+            rs.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al listar comidas por ingredientes: " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al listar maximas calorias");
         }
-
-        return comidasPorIngrediente;
+        return lista;
     }
- public List<Comidas> listarComidasPorMenuDiario(int idMenu) {
-    String sql = "SELECT c.IdComidas, c.Nombre, c.TipoDeComida, c.CaloriasComida, c.NoApto, c.Estado"
-               + " FROM menucomidas mc JOIN comidas c ON mc.IdComidas = c.IdComidas"
-               + " WHERE mc.IdMenuDiario = ?";
-    List<Comidas> lista = new ArrayList<>();
 
-    try (PreparedStatement ps = con.prepareStatement(sql)) {
-        ps.setInt(1, idMenu);
-        try (ResultSet rs = ps.executeQuery()) {
+    public ArrayList<Comidas> listaMinCalorias(double minCalorias) {
+        ArrayList<Comidas> lista = new ArrayList<>();
+        int x = 1;
+        String sql = "SELECT * FROM comidas WHERE Estado = 1 AND CaloriasComida >= ?;";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setDouble(1, minCalorias);
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Comidas comida = new Comidas();
-                comida.setIdComida(rs.getInt("IdComidas"));
-                comida.setNombre(rs.getString("Nombre"));
-                comida.setTipoDeComida(rs.getString("TipoDeComida"));
-                comida.setCaloriasComida(rs.getDouble("CaloriasComida"));
-                comida.setNoApto(rs.getString("NoApto"));
-                comida.setEstado(rs.getBoolean("Estado"));
-                lista.add(comida);
+                Comidas in = new Comidas();
+                in.setIdComida(rs.getInt("IdComidas"));
+                in.setNombre(rs.getString("Nombre"));
+                in.setTipoDeComida(rs.getString("TipoDeComida"));
+                in.setCaloriasComida(rs.getDouble("CaloriasComida"));
+                in.setNoApto(rs.getString("NoApto"));
+                in.setEstado(rs.getBoolean("Estado"));
+                lista.add(in);
+                x++;
             }
+            if (x == 0) {
+                JOptionPane.showMessageDialog(null, "No hay ingredientes mayores a esa cantidad de calorias");
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al listar minimas calorias");
         }
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Comidas: " + ex.getMessage());
+        return lista;
     }
 
-    return lista;
-}
+    public ArrayList<Comidas> listaMinMaxCalorias(double minCalorias, double maxCalorias) {
+        ArrayList<Comidas> lista = new ArrayList<>();
+        int x = 1;
+        String sql = "SELECT * FROM comidas WHERE Estado = 1 AND CaloriasComida BETWEEN ? AND ?;";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setDouble(1, minCalorias);
+            ps.setDouble(2, maxCalorias);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                double caloT = rs.getDouble("CaloriasComida");
+                Comidas in = new Comidas();
+                in.setIdComida(rs.getInt("IdComidas"));
+                in.setNombre(rs.getString("Nombre"));
+                in.setTipoDeComida(rs.getString("TipoDeComida"));
+                in.setCaloriasComida(rs.getDouble("CaloriasComida"));
+                in.setNoApto(rs.getString("NoApto"));
+                in.setEstado(rs.getBoolean("Estado"));
+                lista.add(in);
+                x++;
+            }
+            if (x == 0) {
+                JOptionPane.showMessageDialog(null, "No hay ingredientes entre ese rango de calorias.");
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al listar ingredientes del rango establecido");
+        }
+        return lista;
+    }
+
 }
