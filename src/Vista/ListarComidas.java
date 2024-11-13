@@ -201,7 +201,7 @@ public class ListarComidas extends javax.swing.JInternalFrame {
                     lista.add(comidas);
                     HashMap<Integer, Double> ingredientesPesos = cd.buscarIngredientesComidas(comidas.getIdComida());
                     for (Map.Entry<Integer, Double> entry : ingredientesPesos.entrySet()) {
-                        ingred += id.buscar(entry.getKey()).getNombre() + " ";
+                        ingred += id.buscarIngredientes(entry.getKey()).getNombre() + " ";
                     }
                     ingredientes.add(ingred.trim());
                 }
@@ -222,7 +222,7 @@ public class ListarComidas extends javax.swing.JInternalFrame {
                         String ingreds0 = "";
                         HashMap<Integer, Double> ingredientesPesos = cd.buscarIngredientesComidas(com.getIdComida());
                         for (Map.Entry<Integer, Double> entry : ingredientesPesos.entrySet()) {
-                            ingreds0 += id.buscar(entry.getKey()).getNombre() + " ";
+                            ingreds0 += id.buscarIngredientes(entry.getKey()).getNombre() + " ";
                         }
                         ingredientes.add(ingreds0);
                     }
@@ -238,7 +238,7 @@ public class ListarComidas extends javax.swing.JInternalFrame {
                             act.add(com);
                             HashMap<Integer, Double> ingredientesPesos = cd.buscarIngredientesComidas(com.getIdComida());
                             for (Map.Entry<Integer, Double> entry : ingredientesPesos.entrySet()) {
-                                ingreds1 += id.buscar(entry.getKey()).getNombre() + " ";
+                                ingreds1 += id.buscarIngredientes(entry.getKey()).getNombre() + " ";
                             }
                             ingredientes.add(ingreds1);
                         }
@@ -254,7 +254,7 @@ public class ListarComidas extends javax.swing.JInternalFrame {
                             noact.add(com);
                             HashMap<Integer, Double> ingredientesPesos = cd.buscarIngredientesComidas(com.getIdComida());
                             for (Map.Entry<Integer, Double> entry : ingredientesPesos.entrySet()) {
-                                ingreds += id.buscar(entry.getKey()).getNombre() + " ";
+                                ingreds += id.buscarIngredientes(entry.getKey()).getNombre() + " ";
                             }
                             ingredientes.add(ingreds);
                         }
@@ -294,7 +294,7 @@ public class ListarComidas extends javax.swing.JInternalFrame {
                     lista.add(com);
                     HashMap<Integer, Double> ingredientesPesos = cd.buscarIngredientesComidas(com.getIdComida());
                     for (Map.Entry<Integer, Double> entry : ingredientesPesos.entrySet()) {
-                        ingreds += id.buscar(entry.getKey()).getNombre() + " ";
+                        ingreds += id.buscarIngredientes(entry.getKey()).getNombre() + " ";
                     }
                     ingredientes.add(ingreds);
                 }
@@ -305,7 +305,7 @@ public class ListarComidas extends javax.swing.JInternalFrame {
                     lista.add(com);
                     HashMap<Integer, Double> ingredientesPesos = cd.buscarIngredientesComidas(com.getIdComida());
                     for (Map.Entry<Integer, Double> entry : ingredientesPesos.entrySet()) {
-                        ingreds += id.buscar(entry.getKey()).getNombre() + " ";
+                        ingreds += id.buscarIngredientes(entry.getKey()).getNombre() + " ";
                     }
                     ingredientes.add(ingreds);
                 }
@@ -317,7 +317,7 @@ public class ListarComidas extends javax.swing.JInternalFrame {
                     lista.add(com);
                     HashMap<Integer, Double> ingredientesPesos = cd.buscarIngredientesComidas(com.getIdComida());
                     for (Map.Entry<Integer, Double> entry : ingredientesPesos.entrySet()) {
-                        ingreds += id.buscar(entry.getKey()).getNombre() + " ";
+                        ingreds += id.buscarIngredientes(entry.getKey()).getNombre() + " ";
                     }
                     ingredientes.add(ingreds);
                 }

@@ -6,7 +6,6 @@ public class Ingredientes {
     private int idIngredientes;
     private String nombre;
     private double caloriasPor100;
-    private double peso;
     private String noApto;
     private boolean estado;
 
@@ -17,29 +16,34 @@ public class Ingredientes {
         this.idIngredientes = idIngredientes;
     }
 
-    public Ingredientes(String nombre, double caloriasPor100, double peso, String noApto) {
+    public Ingredientes(String nombre, double caloriasPor100, String noApto) {
         this.nombre = nombre;
         this.caloriasPor100 = caloriasPor100;
-        this.peso = peso;
         this.noApto = noApto;
     }
 
-    public Ingredientes(String nombre, double caloriasPor100, double peso, String noApto, boolean estado) {
+    public Ingredientes(String nombre, double caloriasPor100,  String noApto, boolean estado) {
         this.nombre = nombre;
         this.caloriasPor100 = caloriasPor100;
-        this.peso = peso;
         this.noApto = noApto;
         this.estado = estado;
     }
 
-    public Ingredientes(int idIngredientes, String nombre, double caloriasPor100, double peso, String noApto, boolean estado) {
+    public Ingredientes(int idIngredientes, String nombre, double caloriasPor100,  String noApto) {
         this.idIngredientes = idIngredientes;
         this.nombre = nombre;
         this.caloriasPor100 = caloriasPor100;
-        this.peso = peso;
+        this.noApto = noApto;
+    }
+
+    public Ingredientes(int idIngredientes, String nombre, double caloriasPor100, String noApto, boolean estado) {
+        this.idIngredientes = idIngredientes;
+        this.nombre = nombre;
+        this.caloriasPor100 = caloriasPor100;
         this.noApto = noApto;
         this.estado = estado;
     }
+    
 
     public int getIdIngredientes() {
         return idIngredientes;
@@ -63,14 +67,6 @@ public class Ingredientes {
 
     public void setCaloriasPor100(double caloriasPor100) {
         this.caloriasPor100 = caloriasPor100;
-    }
-
-    public double getPeso() {
-        return peso;
-    }
-
-    public void setPeso(double peso) {
-        this.peso = peso;
     }
 
     public String getNoApto() {
@@ -133,3 +129,4 @@ public class Ingredientes {
     
     
 }
+

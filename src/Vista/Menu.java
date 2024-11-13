@@ -236,9 +236,9 @@ public class Menu extends javax.swing.JFrame {
     private void jMIIngredientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIIngredientesActionPerformed
         JDPMenu.removeAll();
         JDPMenu.repaint();
-        internaPrueba ingredientes = new internaPrueba();
-        JDPMenu.add(ingredientes);
-        ingredientes.setVisible(true);
+        GestionarIngredientes gi = new GestionarIngredientes();
+        JDPMenu.add(gi);
+        gi.setVisible(true);
     }//GEN-LAST:event_jMIIngredientesActionPerformed
 
     private void jMIListaPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIListaPacientesActionPerformed
@@ -310,9 +310,9 @@ public class Menu extends javax.swing.JFrame {
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         JDPMenu.removeAll();
         JDPMenu.repaint();
-        GenerarIngredientes cargarIngredientes = new GenerarIngredientes();
-        JDPMenu.add(cargarIngredientes);
-        cargarIngredientes.setVisible(true);
+        ListarIngredientes li = new ListarIngredientes();
+        JDPMenu.add(li);
+        li.setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMiListarComidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMiListarComidasActionPerformed

@@ -365,7 +365,7 @@ public class CrearComidas extends javax.swing.JInternalFrame {
             for (HashMap.Entry<Integer, Double> ipa : ing.entrySet()) {
                 JComboBox combo = jcbs.get(i);
                 JTextField jt = txts.get(i);
-                Ingredientes ingrediente = id.buscar(ipa.getKey());
+                Ingredientes ingrediente = id.buscarIngredientes(ipa.getKey());
                 combo.setSelectedItem(ingrediente);
                 jt.setText(String.valueOf(ipa.getValue()));
                 i++;
