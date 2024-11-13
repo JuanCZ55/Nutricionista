@@ -332,8 +332,15 @@ public class ListarComidas extends javax.swing.JInternalFrame {
     private void enlistarComidas(ArrayList<Comidas> lista, ArrayList<String> ingredientes) {
         int i = 0;
         modelo.setRowCount(0);
+        String estado = "";
         if (!lista.isEmpty()) {
             for (Comidas aux : lista) {
+                if (aux.isEstado()) {
+                    estado = "Activo";
+                } else {
+                    estado = "Inactivo";
+
+                }
                 modelo.addRow(new Object[]{
                     aux.getIdComida(),
                     aux.getNombre(),
@@ -341,7 +348,7 @@ public class ListarComidas extends javax.swing.JInternalFrame {
                     aux.getCaloriasComida(),
                     aux.getNoApto(),
                     ingredientes.get(i),
-                    aux.isEstado()
+                    estado
                 });
                 i++;
             }

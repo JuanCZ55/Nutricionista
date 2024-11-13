@@ -190,8 +190,14 @@ public class ListaPacientes extends javax.swing.JInternalFrame {
 
     private void enlistarPacientes(ArrayList<Paciente> lista) {
         modelo.setRowCount(0);
+        String estado = "";
         if (!lista.isEmpty()) {
             for (Paciente aux : lista) {
+                if (aux.isEstado()) {
+                    estado = "Activo";
+                } else {
+                    estado = "Inactivo";
+                }
                 modelo.addRow(new Object[]{
                     aux.getIdPaciente(),
                     aux.getNombre(),
@@ -201,7 +207,7 @@ public class ListaPacientes extends javax.swing.JInternalFrame {
                     aux.getPesoActual(),
                     aux.getPesoBuscado(),
                     aux.getPesoInicial(),
-                    aux.isEstado()
+                    estado
                 });
             }
         }

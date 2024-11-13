@@ -349,13 +349,19 @@ public class GestionarIngredientes extends javax.swing.JInternalFrame {
 
     public void enlistar() {
         modelo.setRowCount(0);
+        String estado = "";
         for (Ingredientes aux : id.listarIngredientes()) {
+            if (aux.isEstado()) {
+                estado = "Activo";
+            } else {
+                estado = "Inactivo";
+            }
             modelo.addRow(new Object[]{
                 aux.getIdIngredientes(),
                 aux.getNombre(),
                 aux.getCaloriasPor100(),
                 aux.getNoApto(),
-                aux.isEstado()
+                estado
             });
         }
     }

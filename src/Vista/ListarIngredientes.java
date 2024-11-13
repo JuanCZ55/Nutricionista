@@ -228,14 +228,21 @@ public class ListarIngredientes extends javax.swing.JInternalFrame {
 
     public void enlistar(ArrayList<Ingredientes> lista) {
         modelo.setRowCount(0);
+        String estado = "";
         if (!lista.isEmpty()) {
             for (Ingredientes aux : lista) {
+                if (aux.isEstado()) {
+                    estado = "Activo";
+                } else {
+                    estado = "Inactivo";
+
+                }
                 modelo.addRow(new Object[]{
                     aux.getIdIngredientes(),
                     aux.getNombre(),
                     aux.getCaloriasPor100(),
                     aux.getNoApto(),
-                    aux.isEstado()
+                    estado
                 });
             }
         } else {

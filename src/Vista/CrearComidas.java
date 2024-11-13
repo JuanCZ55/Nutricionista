@@ -699,10 +699,16 @@ public class CrearComidas extends javax.swing.JInternalFrame {
     }
 
     private void enlistarPacientes() {
-        ArrayList<Comidas> lista = cd.listarComidas();
+        ArrayList<Comidas> lista = cd.listarComidasAll();
         modelo.setRowCount(0);
+        String estado = "";
         if (!lista.isEmpty()) {
             for (Comidas com : lista) {
+                if (com.isEstado()) {
+                    estado = "Activo";
+                } else {
+                    estado = "Inactivo";
+                }
                 ArrayList<String> listIngre = new ArrayList<>();
                 int idcom = com.getIdComida();
                 HashMap<Integer, Double> ingrePesos = cd.buscarIngredientesComidas(idcom);
@@ -732,7 +738,7 @@ public class CrearComidas extends javax.swing.JInternalFrame {
                     com.getCaloriasComida(),
                     com.getNoApto(),
                     ingredientes[0], ingredientes[1], ingredientes[2], ingredientes[3], ingredientes[4],
-                    com.isEstado()
+                    estado
                 });
             }
         }
