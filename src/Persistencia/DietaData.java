@@ -22,11 +22,13 @@ public class DietaData {
     private Connection con = null;
     private MenuDiarioData menudiario;
     private ComidaData comidaData;
+    private PacienteData pacienteData;
 
     public DietaData() {
         this.menudiario = new MenuDiarioData();
         this.comidaData = new ComidaData();
         con = (Connection) Conexion.getConexion();
+        this.pacienteData = new PacienteData();
     }
     public int insertarDietaGeneraID(Dieta dieta) {  
     String sql = "INSERT INTO dieta (NombreDieta, FechaInicial, FechaFinal, TotalCalorias, IdPaciente, Estado) VALUES (?, ?, ?, ?, ?, ?)";  
@@ -316,68 +318,100 @@ public class DietaData {
     }
 }
 
+//    public Dieta obtenerDieta(int idPaciente) {
+//         Dieta dieta = null;  
+//        String preguntaDieta = "SELECT * FROM dieta WHERE IdPaciente = ?";  
+//
+//        try {  
+//            PreparedStatement obtDieta = con.prepareStatement(preguntaDieta);  
+//            obtDieta.setInt(1, idPaciente);  
+//            ResultSet rsDieta = obtDieta.executeQuery();  
+//
+//            if (rsDieta.next()) {  
+//                dieta = new Dieta();  
+//                dieta.setIdDieta(rsDieta.getInt("IdDieta"));  
+//                dieta.setNombreD(rsDieta.getString("NombreDieta"));  
+//                dieta.setFechaIni(rsDieta.getDate("FechaInicial").toLocalDate());  
+//                dieta.setFechaFin(rsDieta.getDate("FechaFinal").toLocalDate());  
+//                dieta.setTotalCalorias(rsDieta.getDouble("TotalCalorias"));  
+//
+//                // Obtiene los menús diarios para esta dieta  
+//                MenuDiarioData menuData = new MenuDiarioData();  
+//                List<MenuDiario> menusDiarios = menuData.listarMenuDiarioPorPacientse(idPaciente);  
+//                dieta.setMenus((ArrayList<MenuDiario>) menusDiarios);  
+//
+//            } else {  
+//                JOptionPane.showMessageDialog(null, "No se encontró ninguna dieta para el paciente con ID: " + idPaciente);
+//            }  
+//        } catch (SQLException e) {
+//            JOptionPane.showMessageDialog(null, "Error al obtener dieta: " + e.getMessage());
+//        }
+//        return dieta;
+//    }
     public Dieta obtenerDieta(int idPaciente) {
-         Dieta dieta = null;  
-        String preguntaDieta = "SELECT * FROM dieta WHERE IdPaciente = ?";  
+    Dieta dieta = null;
+    String preguntaDieta = "SELECT * FROM dieta WHERE IdPaciente = ?";
 
-        try {  
-            PreparedStatement obtDieta = con.prepareStatement(preguntaDieta);  
-            obtDieta.setInt(1, idPaciente);  
-            ResultSet rsDieta = obtDieta.executeQuery();  
+    try {
+        PreparedStatement obtDieta = con.prepareStatement(preguntaDieta);
+        obtDieta.setInt(1, idPaciente);
+        ResultSet rsDieta = obtDieta.executeQuery();
 
-            if (rsDieta.next()) {  
-                dieta = new Dieta();  
-                dieta.setIdDieta(rsDieta.getInt("IdDieta"));  
-                dieta.setNombreD(rsDieta.getString("NombreDieta"));  
-                dieta.setFechaIni(rsDieta.getDate("FechaInicial").toLocalDate());  
-                dieta.setFechaFin(rsDieta.getDate("FechaFinal").toLocalDate());  
-                dieta.setTotalCalorias(rsDieta.getDouble("TotalCalorias"));  
+        if (rsDieta.next()) {
+            dieta = new Dieta();
+            dieta.setIdDieta(rsDieta.getInt("IdDieta"));
+            dieta.setNombreD(rsDieta.getString("NombreDieta"));
+            dieta.setFechaIni(rsDieta.getDate("FechaInicial").toLocalDate());
+            dieta.setFechaFin(rsDieta.getDate("FechaFinal").toLocalDate());
+            dieta.setTotalCalorias(rsDieta.getDouble("TotalCalorias"));
+            dieta.setEstado(rsDieta.getBoolean("Estado"));
 
-                // Obtiene los menús diarios para esta dieta  
-                MenuDiarioData menuData = new MenuDiarioData();  
-                List<MenuDiario> menusDiarios = menuData.listarMenuDiarioPorPacientse(idPaciente);  
-                dieta.setMenus((ArrayList<MenuDiario>) menusDiarios);  
+//             Cargar datos del paciente y asignarlo a la dieta
+            Paciente paciente = pacienteData.buscarPaciente(idPaciente);  // Crear este método si aún no existe
+            dieta.setPaciente(paciente);
 
-            } else {  
-                JOptionPane.showMessageDialog(null, "No se encontró ninguna dieta para el paciente con ID: " + idPaciente);
-            }  
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al obtener dieta: " + e.getMessage());
+        } else {
+            JOptionPane.showMessageDialog(null, "No se encontró ninguna dieta para el paciente con ID: " + idPaciente);
         }
-        return dieta;
-    }
-    public Dieta obtenerDietaConID(int idDieta) {
-    Dieta dieta = null;  
-    String preguntaDieta = "SELECT dieta.IdDieta, dieta.NombreDieta, dieta.FechaInicial, dieta.FechaFinal, dieta.TotalCalorias " +
-                       "FROM dieta " +
-                       "JOIN menudiario ON dieta.IdDieta = menudiario.IdDieta " +
-                       "WHERE dieta.IdDieta = ?";
-
-    try {  
-        PreparedStatement obtDieta = con.prepareStatement(preguntaDieta);  
-        obtDieta.setInt(1, idDieta);  // Asegúrate de que estés pasando el idDieta
-        ResultSet rsDieta = obtDieta.executeQuery();  
-
-        if (rsDieta.next()) {  
-            dieta = new Dieta();  
-            dieta.setIdDieta(rsDieta.getInt("IdDieta"));  
-            dieta.setNombreD(rsDieta.getString("NombreDieta"));  
-            dieta.setFechaIni(rsDieta.getDate("FechaInicial").toLocalDate());  
-            dieta.setFechaFin(rsDieta.getDate("FechaFinal").toLocalDate());  
-            dieta.setTotalCalorias(rsDieta.getDouble("TotalCalorias"));  
-
-            // Obtiene los menús diarios para esta dieta  
-            MenuDiarioData menuData = new MenuDiarioData();  
-            List<MenuDiario> menusDiarios = menuData.listarMenuDiarioPorPacientse(idDieta);  // Asegúrate de que el parámetro sea idDieta
-            dieta.setMenus((ArrayList<MenuDiario>) menusDiarios);  
-        } else {  
-            JOptionPane.showMessageDialog(null, "No se encontró ninguna dieta con ID: " + idDieta);
-        }  
+        
+        obtDieta.close();
     } catch (SQLException e) {
         JOptionPane.showMessageDialog(null, "Error al obtener dieta: " + e.getMessage());
     }
     return dieta;
 }
+//    public Dieta obtenerDietaConID(int idDieta) {
+//    Dieta dieta = null;  
+//    String preguntaDieta = "SELECT dieta.IdDieta, dieta.NombreDieta, dieta.FechaInicial, dieta.FechaFinal, dieta.TotalCalorias " +
+//                       "FROM dieta " +
+//                       "JOIN menudiario ON dieta.IdDieta = menudiario.IdDieta " +
+//                       "WHERE dieta.IdDieta = ?";
+//
+//    try {  
+//        PreparedStatement obtDieta = con.prepareStatement(preguntaDieta);  
+//        obtDieta.setInt(1, idDieta);  // Asegúrate de que estés pasando el idDieta
+//        ResultSet rsDieta = obtDieta.executeQuery();  
+//
+//        if (rsDieta.next()) {  
+//            dieta = new Dieta();  
+//            dieta.setIdDieta(rsDieta.getInt("IdDieta"));  
+//            dieta.setNombreD(rsDieta.getString("NombreDieta"));  
+//            dieta.setFechaIni(rsDieta.getDate("FechaInicial").toLocalDate());  
+//            dieta.setFechaFin(rsDieta.getDate("FechaFinal").toLocalDate());  
+//            dieta.setTotalCalorias(rsDieta.getDouble("TotalCalorias"));  
+//
+//            // Obtiene los menús diarios para esta dieta  
+//            MenuDiarioData menuData = new MenuDiarioData();  
+//            List<MenuDiario> menusDiarios = menuData.listarMenuDiarioPorPacientse(idDieta);  // Asegúrate de que el parámetro sea idDieta
+//            dieta.setMenus((ArrayList<MenuDiario>) menusDiarios);  
+//        } else {  
+//            JOptionPane.showMessageDialog(null, "No se encontró ninguna dieta con ID: " + idDieta);
+//        }  
+//    } catch (SQLException e) {
+//        JOptionPane.showMessageDialog(null, "Error al obtener dieta: " + e.getMessage());
+//    }
+//    return dieta;
+//}
     public List<MenuDiario> obtenerMenuDiario(int idDieta) {  
         List<MenuDiario> menuDiarioList = new ArrayList<>();  
         String sql = "SELECT * FROM menudario WHERE IdDieta = ?";  
@@ -450,45 +484,6 @@ public class DietaData {
     }
     return listaDietas;
 }
-   public void generarMenusDeDieta(Dieta dieta) {
-    // Calcular la cantidad de días de la dieta
-    long diasDeDieta = ChronoUnit.DAYS.between(dieta.getFechaIni(), dieta.getFechaFin()) + 1; // 1 es para que Incluya el día de inicio
-
-    // Obtener las calorías totales de la dieta 
-    double caloriasTotales = menudiario.calcularCaloriasTotalesPorDieta(dieta.getIdDieta());
-    // Inicializar la lista de menús de la dieta
-    ArrayList<MenuDiario> menus = new ArrayList<>();
-
-    LocalDate fechaActual = dieta.getFechaIni(); 
-    // Recorremos todos los días de la dieta
-    for (long i = 0; i < diasDeDieta; i++) {
-        // Crear un MenuDiario para cada día
-        MenuDiario menu = new MenuDiario();
-        menu.setDia(fechaActual.getDayOfMonth());
-        menu.setIdDieta(dieta.getIdDieta());
-        menu.setCaloriasDelMenu(caloriasTotales); // Usamos las calorías totales para todo el período
-        menu.setEstado(dieta.isEstado()); // El estado de la dieta se propaga al menú diario
-
-        // Insertar el MenuDiario en la base de datos y obtener su id
-        int idMenuGenerado = menudiario.insertMenuDiarioObtenerID(menu);
-
-        // Asignar el id generado al objeto MenuDiario
-        menu.setIdMenu(idMenuGenerado);
-
-        // Obtener las comidas para este día
-        ArrayList<Comidas> comidasDelDia = (ArrayList<Comidas>) comidaData.listarComidasPorMenuDiario(menu.getIdMenu()); // Usamos el idMenu generado
-        menu.setComidas(comidasDelDia);
-        // Insertar las comidas en la base de datos
-        for (Comidas comida : comidasDelDia) {
-            menudiario.insertMenuComidas(menu.getIdMenu(), comida.getIdComida());
-        }
-        menus.add(menu);
-        //obtener el menu para el siguiente dia
-        fechaActual = fechaActual.plusDays(1);
-    }
-        dieta.setMenus(menus);  
-
-    
-}
+   
 
 }

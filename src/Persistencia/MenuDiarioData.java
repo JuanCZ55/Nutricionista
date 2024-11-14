@@ -227,31 +227,41 @@ public class MenuDiarioData {
         return lista;
     }
     
-    public ArrayList<MenuDiario> listarMenuDiarioPorDieta(int idDieta){
-        String sql = """
-                     SELECT IdMenuDiario, Dia FROM menudiario WHERE IdDieta = ? AND Estado = 1;
-                     """;
-        int x = 0;
-        MenuDiario menu = null;
-        ArrayList<MenuDiario> lista = new ArrayList<>();
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, idDieta);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                menu = new MenuDiario();
-                menu.setIdMenu(rs.getInt("IdMenuDiario"));
-                menu.setDia(rs.getInt("Dia"));
-                menu.setComidas(listarComidasPorMenuDieta(idDieta));
-                lista.add(menu);
-                x++;
-            }
-            ps.close();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al accedeer a la tabla menu diario");
+    public ArrayList<MenuDiario> listarMenusPorDietaMostrar(int idDieta) {
+    String sql = "SELECT IdMenuDiario, Dia, CaloriasDia, IdDieta, Estado FROM menudiario WHERE IdDieta = ?;";
+    ArrayList<MenuDiario> listaMenus = new ArrayList<>();
+
+    try {
+        // Preparar la consulta
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, idDieta); 
+
+        ResultSet rs = ps.executeQuery();
+
+        // Imprimir para depurar
+        System.out.println("Ejecutando consulta con ID Dieta: " + idDieta);
+
+        while (rs.next()) {
+            MenuDiario menuDiario = new MenuDiario();
+
+            menuDiario.setIdMenu(rs.getInt("IdMenuDiario"));
+            menuDiario.setDia(rs.getInt("Dia"));
+            menuDiario.setCaloriasDelMenu(rs.getDouble("CaloriasDia"));
+            menuDiario.setIdDieta(rs.getInt("IdDieta"));
+            menuDiario.setEstado(rs.getBoolean("Estado"));
+
+            // Imprimir el contenido de cada menú encontrado
+            System.out.println("Menú encontrado: " + menuDiario.getIdMenu());
+            listaMenus.add(menuDiario);
         }
-        return lista;
+
+        ps.close();
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error al acceder a la tabla MenuDiario: " + ex.getMessage());
     }
+
+    return listaMenus;
+}
     
      public ArrayList<Comidas> listarComidasPorMenuDieta(int idDieta) {
         String sql = """

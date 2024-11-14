@@ -57,10 +57,7 @@ public class CargarDieta extends JInternalFrameImagen {
         int idDietaGenerado = dietaData.insertarDietaGeneraID(dieta);  
         if (idDietaGenerado != -1) {  
             dieta.setIdDieta(idDietaGenerado); // Ahora que tenemos el ID asignado  
-
-            // Generar los menús con el IdDieta ya asignado  
-            dietaData.generarMenusDeDieta(dieta);  
-            JOptionPane.showMessageDialog(null, "Dieta asignada correctamente al paciente.");  
+            
         } else {  
             JOptionPane.showMessageDialog(null, "Error al asignar dieta, no se generó un ID válido.");  
         }  
