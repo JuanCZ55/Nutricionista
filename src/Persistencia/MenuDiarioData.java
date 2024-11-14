@@ -100,7 +100,7 @@ public class MenuDiarioData {
 
     // Método para obtener comidas aptas según las restricciones
     public ArrayList<Comidas> obtenerComidasAptas(ArrayList<Comidas> comidas, String restricciones) {
-        String[] restriccionesArray = restricciones.split(",\\s*"); // Separar por coma y eliminar espacios
+        String[] restriccionesArray = restricciones.split(","); // Separar por coma y eliminar espacios
         List<String> listaRestricciones = List.of(restriccionesArray);
 
         ArrayList<Comidas> comidasAptas = new ArrayList<>();
@@ -227,7 +227,7 @@ public class MenuDiarioData {
         return lista;
     }
     
-    public ArrayList<MenuDiario> listarMenuDiarioPorDieta(int idDieta){
+    public ArrayList<MenuDiario> listarMenuDiarioPorDietaActivos(int idDieta){
         String sql = """
                      SELECT IdMenuDiario, Dia FROM menudiario WHERE IdDieta = ? AND Estado = 1;
                      """;
@@ -365,6 +365,26 @@ public class MenuDiarioData {
             ps.setInt(1, idComidasNew);
             ps.setInt(2, idMenu);
             ps.setInt(3, idComidaOld);
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla MenuComidas");
+        }
+    }
+    
+    public void actualizarTotalCaloriasDieta (int idDieta){
+        String sql = """
+                     UPDATE dieta 
+                     SET TotalCalorias = (
+                         SELECT SUM(CaloriasDia)
+                         FROM menudiario
+                         WHERE IdDieta = dieta.IdDieta AND Estado = 1
+                     )
+                     WHERE IdDieta = ? AND Estado = 1;
+                     """;
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idDieta);
             ps.executeUpdate();
             ps.close();
         } catch (SQLException ex) {
@@ -774,4 +794,7 @@ public class MenuDiarioData {
 
         return lista;
     }
+    
+    
+    
 }
