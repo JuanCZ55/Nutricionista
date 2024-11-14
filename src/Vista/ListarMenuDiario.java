@@ -236,6 +236,86 @@ public class ListarMenuDiario extends javax.swing.JInternalFrame {
     private void jBHabilitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBHabilitarActionPerformed
         if (jCBDieta.getSelectedItem() != null && jCBEstado.getSelectedItem() != null && jCBDia.getSelectedItem() != null
                 && jCBMenu.getSelectedItem() != null) {
+
+            int dia = 1;
+            switch (jCBDia.getSelectedItem().toString()) {
+            case "Dia 1": dia = 1; break;
+            case "Dia 2": dia = 2; break;
+            case "Dia 3": dia = 3; break;
+            case "Dia 4": dia = 4; break;
+            case "Dia 5": dia = 5; break;
+            case "Dia 6": dia = 6; break;
+            case "Dia 7": dia = 7; break;
+        }
+
+            if (menuAcceso.buscarMenuDiarioPorDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), dia) == null) {
+                if (menuAcceso.contadorMenuDiariosInactivoDeUnaDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()) != 0) {
+                    menuAcceso.altaLogica(((MenuDiario) jCBMenu.getSelectedItem()).getIdMenu());
+
+                    if (menuAcceso.buscarMenuDiarioPorDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), dia) != null) {
+                        int contador = menuAcceso.contadorMenuDiariosDeUnaDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta());
+                        if (contador >= 3) {
+                            if (menuAcceso.verificarDiasActivosMenuDiarioPorDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta())) {
+                                jCBDieta.setEnabled(true);
+                                jCBDieta.setSelectedIndex(-1);
+                                jCBMenu.setSelectedIndex(-1);
+                                jCBDia.setSelectedIndex(-1);
+                                jCBMenu.setEnabled(false);
+                                jCBDia.setEnabled(false);
+                                
+                                
+                            } else {
+                                jCBDieta.setEnabled(false);
+                                jCBDia.setEnabled(false);
+                                jCBMenu.setEnabled(false);
+                                jCBEstado.setSelectedIndex(-1);
+                                jCBDia.setSelectedIndex(-1);
+                                jCBMenu.setSelectedIndex(-1);
+                            }
+                        } else {
+                            jCBDieta.setEnabled(false);
+                            jCBDia.setEnabled(false);
+                            jCBMenu.setEnabled(false);
+                            jCBEstado.setSelectedIndex(-1);
+                            jCBDia.setSelectedIndex(-1);
+                            jCBMenu.setSelectedIndex(-1);
+                        }
+                        if (contador == 0) {
+
+                            jCBDieta.setEnabled(true);
+                            jCBDieta.setSelectedIndex(-1);
+                            jCBMenu.setSelectedIndex(-1);
+                            jCBDia.setSelectedIndex(-1);
+                            jCBMenu.setEnabled(false);
+                            jCBDia.setEnabled(false);
+
+                        }
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Ya existe un menu diario asociado a ese dia habilitado");
+            }
+
+        }
+
+    }//GEN-LAST:event_jBHabilitarActionPerformed
+
+    private void jCBMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBMenuActionPerformed
+        if (Objects.nonNull(((MenuDiario) jCBMenu.getSelectedItem()))) {
+            //Mostrar todas las comidas asociadas al menudiario 
+            listarMenuComidas(((MenuDiario) jCBMenu.getSelectedItem()));
+            if (jCBEstado.getSelectedItem().equals("Menu Activo")) {
+                jBEliminar.setEnabled(true);
+            } else if (jCBEstado.getSelectedItem().equals("Menu Inactivo")) {
+                jBHabilitar.setEnabled(true);
+            }
+        }
+    }//GEN-LAST:event_jCBMenuActionPerformed
+
+    private void jBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEliminarActionPerformed
+        if (jCBDieta.getSelectedItem() != null && jCBEstado.getSelectedItem() != null && jCBDia.getSelectedItem() != null
+                && jCBMenu.getSelectedItem() != null) {
+
             int dia = 1;
             switch (jCBDia.getSelectedItem().toString()) {
                 case "Dia 1":
@@ -260,62 +340,47 @@ public class ListarMenuDiario extends javax.swing.JInternalFrame {
                     dia = 7;
                     break;
             }
+            if (Objects.nonNull(menuAcceso.buscarMenuDiarioPorDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), dia))) {
+                if (menuAcceso.contadorMenuDiariosDeUnaDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()) != 0) {
+                    menuAcceso.bajaLogica(((MenuDiario) jCBMenu.getSelectedItem()).getIdMenu());
+                    if (menuAcceso.contadorMenuDiariosDeUnaDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()) >= 3) {
+                        if (menuAcceso.verificarDiasActivosMenuDiarioPorDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta())) {
+                            jCBDieta.setEnabled(true);
+                            jCBDieta.setSelectedIndex(-1);
+                            jCBMenu.setSelectedIndex(-1);
+                            jCBDia.setSelectedIndex(-1);
+                            jCBMenu.setEnabled(false);
+                            jCBDia.setEnabled(false);
+                        } else {
+                            jCBDieta.setEnabled(false);
+                            jCBDia.setEnabled(false);
+                            jCBMenu.setEnabled(false);
+                            jCBEstado.setSelectedIndex(-1);
+                            jCBDia.setSelectedIndex(-1);
+                            jCBMenu.setSelectedIndex(-1);
+                        }
+                    } else {
+                        jCBDieta.setEnabled(false);
+                        jCBDia.setEnabled(false);
+                        jCBMenu.setEnabled(false);
+                        jCBEstado.setSelectedIndex(-1);
+                        jCBDia.setSelectedIndex(-1);
+                        jCBMenu.setSelectedIndex(-1);
+                    }
+                    if (menuAcceso.contadorMenuDiariosDeUnaDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()) == 0) {
 
-            if (!Objects.nonNull(menuAcceso.buscarMenuDiarioPorDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), dia))) {
-                menuAcceso.altaLogica(((MenuDiario) jCBMenu.getSelectedItem()).getIdMenu());
+                        jCBDieta.setEnabled(true);
+                        jCBDieta.setSelectedIndex(-1);
+                        jCBMenu.setSelectedIndex(-1);
+                        jCBDia.setSelectedIndex(-1);
+                        jCBMenu.setEnabled(false);
+                        jCBDia.setEnabled(false);
+
+                    }
+
+                }
             } else {
-                JOptionPane.showMessageDialog(this, "Ya existe un menu diario asociado a ese dia habilitado");
-            }
-
-            if (menuAcceso.verificarDiasActivosMenuDiarioPorDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()) == false) {
-                jCBDieta.setEnabled(false);
-            } else {
-                jCBDieta.setEnabled(false);
-                jBEliminar.setEnabled(false);
-                jBHabilitar.setEnabled(false);
-
-                jCBDia.setSelectedIndex(-1);
-                jCBEstado.setSelectedIndex(-1);
-                jCBMenu.setSelectedIndex(-1);
-
-                jCBDia.setEnabled(false);
-                jCBMenu.setEnabled(false);
-                modelo.setRowCount(0);
-            }
-        }
-
-    }//GEN-LAST:event_jBHabilitarActionPerformed
-
-    private void jCBMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBMenuActionPerformed
-        if (Objects.nonNull(((MenuDiario) jCBMenu.getSelectedItem()))) {
-            //Mostrar todas las comidas asociadas al menudiario 
-            listarMenuComidas(((MenuDiario) jCBMenu.getSelectedItem()));
-            if (jCBEstado.getSelectedItem().equals("Menu Activo")) {
-                jBEliminar.setEnabled(true);
-            } else if (jCBEstado.getSelectedItem().equals("Menu Inactivo")) {
-                jBHabilitar.setEnabled(true);
-            }
-        }
-    }//GEN-LAST:event_jCBMenuActionPerformed
-
-    private void jBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEliminarActionPerformed
-        if (jCBDieta.getSelectedItem() != null && jCBEstado.getSelectedItem() != null && jCBDia.getSelectedItem() != null
-                && jCBMenu.getSelectedItem() != null) {
-            menuAcceso.bajaLogica(((MenuDiario) jCBMenu.getSelectedItem()).getIdMenu());
-            if (menuAcceso.verificarDiasActivosMenuDiarioPorDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()) == false) {
-                jCBDieta.setEnabled(false);
-                jBEliminar.setEnabled(false);
-                jBHabilitar.setEnabled(false);
-
-                jCBDia.setSelectedIndex(-1);
-                jCBEstado.setSelectedIndex(-1);
-                jCBMenu.setSelectedIndex(-1);
-
-                jCBDia.setEnabled(false);
-                jCBMenu.setEnabled(false);
-                modelo.setRowCount(0);
-            } else {
-                deshabilitar();
+                JOptionPane.showMessageDialog(this, "No existe el menu diario a deshabilitar");
             }
 
         }
@@ -361,9 +426,24 @@ public class ListarMenuDiario extends javax.swing.JInternalFrame {
                             modelo.setRowCount(0);
                         }
                     }
+                    //Todos los menus diarios
+                    if (jCBEstado.getSelectedItem() == "Todos los Menu"){
+                        comidas = menuAcceso.listarMenuDiarioPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 1);
+                        if (!comidas.isEmpty()) {
+                            for (MenuDiario comida : comidas) {
+                                jCBMenu.addItem(menuAcceso.buscarMenuDiario(comida.getIdMenu()));
+                            }
+                            enlistarMenuComidas(comidas);
+                        } else {
+                            JOptionPane.showMessageDialog(this, "No existen menus diarios asociados al " + jCBDia.getSelectedItem());
+                            jCBMenu.setEnabled(false);
+                            modelo.setRowCount(0);
+                        }
+                    }
+                    
                     break;
                 case "Dia 2":
-                    
+
                     // Si son habilitados
                     if (jCBEstado.getSelectedItem() == "Menu Activo") {
                         comidas = menuAcceso.listarMenuDiarioActivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 2);
@@ -382,13 +462,27 @@ public class ListarMenuDiario extends javax.swing.JInternalFrame {
                     // Si son deshabilitados
                     if (jCBEstado.getSelectedItem() == "Menu Inactivo") {
                         comidas = menuAcceso.listarMenuDiarioInactivoPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 2);
-                        
+
                         if (!comidas.isEmpty()) {
                             for (MenuDiario comida : comidas) {
                                 jCBMenu.addItem(menuAcceso.buscarMenuDiario(comida.getIdMenu()));
                             }
                             enlistarMenuComidas(comidas);
                             jCBMenu.setEnabled(true);
+                        } else {
+                            JOptionPane.showMessageDialog(this, "No existen menus diarios asociados al " + jCBDia.getSelectedItem());
+                            jCBMenu.setEnabled(false);
+                            modelo.setRowCount(0);
+                        }
+                    }
+                    //Todos los menus diarios
+                    if (jCBEstado.getSelectedItem() == "Todos los Menu"){
+                        comidas = menuAcceso.listarMenuDiarioPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 2);
+                        if (!comidas.isEmpty()) {
+                            for (MenuDiario comida : comidas) {
+                                jCBMenu.addItem(menuAcceso.buscarMenuDiario(comida.getIdMenu()));
+                            }
+                            enlistarMenuComidas(comidas);
                         } else {
                             JOptionPane.showMessageDialog(this, "No existen menus diarios asociados al " + jCBDia.getSelectedItem());
                             jCBMenu.setEnabled(false);
@@ -427,6 +521,20 @@ public class ListarMenuDiario extends javax.swing.JInternalFrame {
                             modelo.setRowCount(0);
                         }
                     }
+                    //Todos los menus diarios
+                    if (jCBEstado.getSelectedItem() == "Todos los Menu"){
+                        comidas = menuAcceso.listarMenuDiarioPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 3);
+                        if (!comidas.isEmpty()) {
+                            for (MenuDiario comida : comidas) {
+                                jCBMenu.addItem(menuAcceso.buscarMenuDiario(comida.getIdMenu()));
+                            }
+                            enlistarMenuComidas(comidas);
+                        } else {
+                            JOptionPane.showMessageDialog(this, "No existen menus diarios asociados al " + jCBDia.getSelectedItem());
+                            jCBMenu.setEnabled(false);
+                            modelo.setRowCount(0);
+                        }
+                    }
                     break;
                 case "Dia 4":
                     // Si son habilitados
@@ -459,6 +567,21 @@ public class ListarMenuDiario extends javax.swing.JInternalFrame {
                             modelo.setRowCount(0);
                         }
                     }
+                    //Todos los menus diarios
+                    if (jCBEstado.getSelectedItem() == "Todos los Menu"){
+                        comidas = menuAcceso.listarMenuDiarioPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 4);
+                        if (!comidas.isEmpty()) {
+                            for (MenuDiario comida : comidas) {
+                                jCBMenu.addItem(menuAcceso.buscarMenuDiario(comida.getIdMenu()));
+                            }
+                            enlistarMenuComidas(comidas);
+                        } else {
+                            JOptionPane.showMessageDialog(this, "No existen menus diarios asociados al " + jCBDia.getSelectedItem());
+                            jCBMenu.setEnabled(false);
+                            modelo.setRowCount(0);
+                        }
+                    }
+                    
                     break;
                 case "Dia 5":
                     // Si son habilitados
@@ -485,6 +608,20 @@ public class ListarMenuDiario extends javax.swing.JInternalFrame {
                             }
                             enlistarMenuComidas(comidas);
                             jCBMenu.setEnabled(true);
+                        } else {
+                            JOptionPane.showMessageDialog(this, "No existen menus diarios asociados al " + jCBDia.getSelectedItem());
+                            jCBMenu.setEnabled(false);
+                            modelo.setRowCount(0);
+                        }
+                    }
+                    //Todos los menus diarios
+                    if (jCBEstado.getSelectedItem() == "Todos los Menu"){
+                        comidas = menuAcceso.listarMenuDiarioPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 5);
+                        if (!comidas.isEmpty()) {
+                            for (MenuDiario comida : comidas) {
+                                jCBMenu.addItem(menuAcceso.buscarMenuDiario(comida.getIdMenu()));
+                            }
+                            enlistarMenuComidas(comidas);
                         } else {
                             JOptionPane.showMessageDialog(this, "No existen menus diarios asociados al " + jCBDia.getSelectedItem());
                             jCBMenu.setEnabled(false);
@@ -523,6 +660,20 @@ public class ListarMenuDiario extends javax.swing.JInternalFrame {
                             modelo.setRowCount(0);
                         }
                     }
+                    //Todos los menus diarios
+                    if (jCBEstado.getSelectedItem() == "Todos los Menu"){
+                        comidas = menuAcceso.listarMenuDiarioPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 6);
+                        if (!comidas.isEmpty()) {
+                            for (MenuDiario comida : comidas) {
+                                jCBMenu.addItem(menuAcceso.buscarMenuDiario(comida.getIdMenu()));
+                            }
+                            enlistarMenuComidas(comidas);
+                        } else {
+                            JOptionPane.showMessageDialog(this, "No existen menus diarios asociados al " + jCBDia.getSelectedItem());
+                            jCBMenu.setEnabled(false);
+                            modelo.setRowCount(0);
+                        }
+                    }
                     break;
                 case "Dia 7":
                     // Si son habilitados
@@ -555,6 +706,20 @@ public class ListarMenuDiario extends javax.swing.JInternalFrame {
                             modelo.setRowCount(0);
                         }
                     }
+                    //Todos los menus diarios
+                    if (jCBEstado.getSelectedItem() == "Todos los Menu"){
+                        comidas = menuAcceso.listarMenuDiarioPorDietaYDia(((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), 7);
+                        if (!comidas.isEmpty()) {
+                            for (MenuDiario comida : comidas) {
+                                jCBMenu.addItem(menuAcceso.buscarMenuDiario(comida.getIdMenu()));
+                            }
+                            enlistarMenuComidas(comidas);
+                        } else {
+                            JOptionPane.showMessageDialog(this, "No existen menus diarios asociados al " + jCBDia.getSelectedItem());
+                            jCBMenu.setEnabled(false);
+                            modelo.setRowCount(0);
+                        }
+                    }
                     break;
             }
 
@@ -567,6 +732,7 @@ public class ListarMenuDiario extends javax.swing.JInternalFrame {
 
     private void jCBEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBEstadoActionPerformed
         // Listar todos los menus por el estado seleccionado
+
         if (Objects.nonNull(jCBDieta.getSelectedItem()) && Objects.nonNull(jCBEstado.getSelectedItem())) {
             if (jCBEstado.getSelectedItem().equals("Menu Activo")) {
                 if (!menuAcceso.listarMenuDiarioActivoPorDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()).isEmpty()) {
@@ -580,6 +746,9 @@ public class ListarMenuDiario extends javax.swing.JInternalFrame {
                 } else {
                     JOptionPane.showMessageDialog(this, "Esta Dieta no tiene Menus Diarios Activos");
                     modelo.setRowCount(0);
+                    jCBDia.setEnabled(false);
+                    jCBDia.setSelectedIndex(-1);
+                    jCBMenu.setEnabled(false);
                 }
             } else if (jCBEstado.getSelectedItem().equals("Menu Inactivo")) {
                 if (!menuAcceso.listarMenuDiarioInactivoPorDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()).isEmpty()) {
@@ -588,10 +757,12 @@ public class ListarMenuDiario extends javax.swing.JInternalFrame {
                     jCBDia.setEnabled(true);
                     jCBDia.setSelectedIndex(-1);
                     jCBMenu.setEnabled(false);
-
                 } else {
                     JOptionPane.showMessageDialog(this, "Esta Dieta no tiene Menus Diarios Inactivos");
                     modelo.setRowCount(0);
+                    jCBDia.setEnabled(false);
+                    jCBDia.setSelectedIndex(-1);
+                    jCBMenu.setEnabled(false);
                 }
             } else if (jCBEstado.getSelectedItem().equals("Todos los Menu")) {
                 if (!menuAcceso.listarMenuDiarioPorDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()).isEmpty()) {
@@ -604,6 +775,9 @@ public class ListarMenuDiario extends javax.swing.JInternalFrame {
                 } else {
                     JOptionPane.showMessageDialog(this, "Esta Dieta no tiene Menus Diarios");
                     modelo.setRowCount(0);
+                    jCBDia.setEnabled(false);
+                    jCBDia.setSelectedIndex(-1);
+                    jCBMenu.setEnabled(false);
                 }
 
             }
@@ -612,6 +786,8 @@ public class ListarMenuDiario extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jCBEstadoActionPerformed
 
     private void jCBDietaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBDietaActionPerformed
+        jCBEstado.setSelectedIndex(-1);
+        jCBEstado.setEnabled(false);
         if (jCBDieta.getSelectedIndex() != -1 && Objects.nonNull(jCBDieta.getSelectedItem())) {
             jCBEstado.setEnabled(true);
             DietaData dietaData = new DietaData();
@@ -620,6 +796,7 @@ public class ListarMenuDiario extends javax.swing.JInternalFrame {
             pac = pacData.buscarPaciente(dietaData.buscarDietaSegunID(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()).getPaciente().getIdPaciente());
             if (pac != null) { // Verificación de null
                 jTFPaciente.setText(pac.getIdPaciente() + " " + pac.getNombre());
+                jCBEstado.setEnabled(true);
             } else {
                 jTFPaciente.setText("");
             }
@@ -628,7 +805,7 @@ public class ListarMenuDiario extends javax.swing.JInternalFrame {
 
     private void jBSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalirActionPerformed
         if (Objects.nonNull(((Dieta) jCBDieta.getSelectedItem()))) {
-            if (menuAcceso.contadorMenuDiariosDeUnaDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()) > 3) {
+            if (menuAcceso.contadorMenuDiariosDeUnaDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()) >= 3) {
                 if (menuAcceso.verificarDiasActivosMenuDiarioPorDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()) == true) {
                     this.dispose();
                 }

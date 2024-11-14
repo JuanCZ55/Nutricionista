@@ -27,11 +27,9 @@ public class MenuDiarioVista extends javax.swing.JInternalFrame {
     public MenuDiarioVista() {
         initComponents();
         cargarDietas();
-
         deshabilitar();
-
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -245,44 +243,45 @@ public class MenuDiarioVista extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(183, 183, 183)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel3))
-                        .addGap(35, 35, 35)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCBDieta, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTFPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jCBDia, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(42, 42, 42)
-                .addComponent(jBInsert)
+                .addComponent(jBInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(61, 61, 61)
-                .addComponent(jBActualizar)
+                .addComponent(jBActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jBSalir)
+                .addComponent(jBSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(52, 52, 52))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(24, 24, 24)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel2)
+                                .addComponent(jLabel11)
+                                .addComponent(jLabel3))
+                            .addGap(35, 35, 35)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jCBDieta, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTFPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jCBDia, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(152, 152, 152)
+                        .addComponent(jLabel1)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
+                        .addGap(61, 61, 61)
                         .addComponent(jLabel3))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1)
                         .addGap(18, 18, 18)
                         .addComponent(jCBDieta, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -297,10 +296,10 @@ public class MenuDiarioVista extends javax.swing.JInternalFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBInsert)
-                    .addComponent(jBActualizar)
-                    .addComponent(jBSalir))
-                .addContainerGap(24, Short.MAX_VALUE))
+                    .addComponent(jBInsert, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jBActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -313,7 +312,9 @@ public class MenuDiarioVista extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -387,95 +388,6 @@ public class MenuDiarioVista extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_jCBDietaActionPerformed
-
-    private void jBInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBInsertActionPerformed
-
-        if (jCBDieta.getSelectedItem() != null && jCBDia.getSelectedItem() != null
-                && jCBDesayuno.getSelectedItem() != null && jCBMerienda.getSelectedItem() != null
-                && jCBColacion.getSelectedItem() != null && jCBAlmuerzo.getSelectedItem() != null
-                && jCBCena.getSelectedItem() != null) {
-            MenuDiario menuDiario;
-            menuDiario = menuAcceso.buscarMenuDiarioPorDietaYDia(
-                    ((Dieta) jCBDieta.getSelectedItem()).getIdDieta(),
-                    Integer.parseInt((String) jCBDia.getSelectedItem()));
-
-            if (!Objects.nonNull(menuDiario)) {
-                if (Integer.parseInt((String) jCBDia.getSelectedItem()) == 1) {
-                    MenuDiario menu = new MenuDiario();
-                    menu.setDia(Integer.parseInt((String) jCBDia.getSelectedItem()));
-                    menu.setIdDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta());
-                    menu.setCaloriasDelMenu(
-                            ((Comidas) jCBAlmuerzo.getSelectedItem()).getCaloriasComida()
-                            + ((Comidas) jCBCena.getSelectedItem()).getCaloriasComida()
-                            + ((Comidas) jCBColacion.getSelectedItem()).getCaloriasComida()
-                            + ((Comidas) jCBDesayuno.getSelectedItem()).getCaloriasComida()
-                            + ((Comidas) jCBMerienda.getSelectedItem()).getCaloriasComida()
-                    );
-                    menu.getComidas().add((Comidas) jCBAlmuerzo.getSelectedItem());
-                    menu.getComidas().add((Comidas) jCBCena.getSelectedItem());
-                    menu.getComidas().add((Comidas) jCBColacion.getSelectedItem());
-                    menu.getComidas().add((Comidas) jCBDesayuno.getSelectedItem());
-                    menu.getComidas().add((Comidas) jCBMerienda.getSelectedItem());
-
-                    menuAcceso.insertMenuDiario(menu);
-
-                } else {
-                    if (Objects.nonNull(menuAcceso.buscarMenuDiarioPorDietaYDia(
-                            ((Dieta) jCBDieta.getSelectedItem()).getIdDieta(),
-                            (Integer.parseInt((String) jCBDia.getSelectedItem())) - 1))) {
-                        MenuDiario menu = new MenuDiario();
-                        menu.setDia(Integer.parseInt((String) jCBDia.getSelectedItem()));
-                        menu.setIdDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta());
-
-                        menu.setCaloriasDelMenu(
-                                ((Comidas) jCBAlmuerzo.getSelectedItem()).getCaloriasComida()
-                                + ((Comidas) jCBCena.getSelectedItem()).getCaloriasComida()
-                                + ((Comidas) jCBColacion.getSelectedItem()).getCaloriasComida()
-                                + ((Comidas) jCBDesayuno.getSelectedItem()).getCaloriasComida()
-                                + ((Comidas) jCBMerienda.getSelectedItem()).getCaloriasComida()
-                        );
-
-                        menu.getComidas().add((Comidas) jCBAlmuerzo.getSelectedItem());
-                        menu.getComidas().add((Comidas) jCBCena.getSelectedItem());
-                        menu.getComidas().add((Comidas) jCBColacion.getSelectedItem());
-                        menu.getComidas().add((Comidas) jCBDesayuno.getSelectedItem());
-                        menu.getComidas().add((Comidas) jCBMerienda.getSelectedItem());
-
-                        menuAcceso.insertMenuDiario(menu);
-                    } else {
-                        JOptionPane.showMessageDialog(this, "No existe un MenuDiario anterior al de la fecha por lo cual no se podra insertar el actual");
-                    }
-                }
-                if (menuAcceso.contadorMenuDiariosDeUnaDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()) < 3 && menuAcceso.contadorMenuDiariosDeUnaDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()) != 0) {
-                    JOptionPane.showMessageDialog(this, "No se podra cambiar hasta la dieta hasta que tenga por lo menos 3 meenus del dia asociados");
-                    jCBDieta.setEnabled(false);
-                } else {
-                    jCBDieta.setEnabled(true);
-                }
-                jCBDia.setSelectedIndex(-1);
-                jCBAlmuerzo.setSelectedIndex(-1);
-                jCBCena.setSelectedIndex(-1);
-                jCBColacion.setSelectedIndex(-1);
-                jCBDesayuno.setSelectedIndex(-1);
-                jCBMerienda.setSelectedIndex(-1);
-
-                jCBAlmuerzo.setEnabled(false);
-                jCBCena.setEnabled(false);
-                jCBColacion.setEnabled(false);
-                jCBDesayuno.setEnabled(false);
-                jCBMerienda.setEnabled(false);
-
-                jBActualizar.setEnabled(false);
-                jBInsert.setEnabled(false);
-                jBSalir.setEnabled(false);
-            } else {
-                JOptionPane.showMessageDialog(this, "Ya existe un Menu Diario asociado");
-            }
-
-        } else {
-            JOptionPane.showMessageDialog(this, "Seleccione cada una de las opciones que se solicitan");
-        }
-    }//GEN-LAST:event_jBInsertActionPerformed
 
     private void jBActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBActualizarActionPerformed
         if (jCBDieta.getSelectedItem() != null && jCBDia.getSelectedItem() != null
@@ -562,33 +474,127 @@ public class MenuDiarioVista extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jCBCenaActionPerformed
 
     private void jBSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalirActionPerformed
-        if (menuAcceso.contadorMenuDiariosDeUnaDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()) < 3 && menuAcceso.contadorMenuDiariosDeUnaDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()) != 0) {
+        if (Objects.nonNull(((Dieta) jCBDieta.getSelectedItem()))){
+            if (menuAcceso.contadorMenuDiariosDeUnaDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()) < 3 && menuAcceso.contadorMenuDiariosDeUnaDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()) != 0) {
             JOptionPane.showMessageDialog(this, "No podra salir hasta que increse un minimo de 3 menu del dias la dieta seleccionada");
             jCBDieta.setEnabled(false);
         } else {
+            
+        }
+        } else {
             this.dispose();
         }
+        
     }//GEN-LAST:event_jBSalirActionPerformed
 
     private void jBRandomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBRandomActionPerformed
-        if (Objects.nonNull(jCBDieta.getSelectedItem()) && Objects.nonNull(jCBDia.getSelectedItem())){
-            if (jCBAlmuerzo.getItemCount() !=0 && jCBCena.getItemCount() != 0 && jCBColacion.getItemCount() !=0 &&
-                jCBDesayuno.getItemCount() !=0 && jCBMerienda.getItemCount() != 0){
-                jCBAlmuerzo.setSelectedIndex((int) ((Math.random()*(jCBAlmuerzo.getItemCount()-0))+0));
-            jCBCena.setSelectedIndex((int) ((Math.random()*(jCBCena.getItemCount()-0))+0));
-            jCBColacion.setSelectedIndex((int) ((Math.random()*(jCBColacion.getItemCount()-0))+0));
-            jCBDesayuno.setSelectedIndex((int) ((Math.random()*(jCBDesayuno.getItemCount()-0))+0));
-            jCBMerienda.setSelectedIndex((int) ((Math.random()*(jCBMerienda.getItemCount()-0))+0)); 
-            }else{
+        if (Objects.nonNull(jCBDieta.getSelectedItem()) && Objects.nonNull(jCBDia.getSelectedItem())) {
+            if (jCBAlmuerzo.getItemCount() != 0 && jCBCena.getItemCount() != 0 && jCBColacion.getItemCount() != 0
+                    && jCBDesayuno.getItemCount() != 0 && jCBMerienda.getItemCount() != 0) {
+                jCBAlmuerzo.setSelectedIndex((int) ((Math.random() * (jCBAlmuerzo.getItemCount() - 0)) + 0));
+                jCBCena.setSelectedIndex((int) ((Math.random() * (jCBCena.getItemCount() - 0)) + 0));
+                jCBColacion.setSelectedIndex((int) ((Math.random() * (jCBColacion.getItemCount() - 0)) + 0));
+                jCBDesayuno.setSelectedIndex((int) ((Math.random() * (jCBDesayuno.getItemCount() - 0)) + 0));
+                jCBMerienda.setSelectedIndex((int) ((Math.random() * (jCBMerienda.getItemCount() - 0)) + 0));
+            } else {
                 JOptionPane.showMessageDialog(this, "No se pudo generar porque faltan ingredientes");
             }
-              
-        }else{
+
+        } else {
             JOptionPane.showMessageDialog(this, "Seleccione una Dieta y un Dia");
         }
-        
-        
+
+
     }//GEN-LAST:event_jBRandomActionPerformed
+
+    private void jBInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBInsertActionPerformed
+
+        if (jCBDieta.getSelectedItem() != null && jCBDia.getSelectedItem() != null
+            && jCBDesayuno.getSelectedItem() != null && jCBMerienda.getSelectedItem() != null
+            && jCBColacion.getSelectedItem() != null && jCBAlmuerzo.getSelectedItem() != null
+            && jCBCena.getSelectedItem() != null) {
+            MenuDiario menuDiario;
+            menuDiario = menuAcceso.buscarMenuDiarioPorDietaYDia(
+                ((Dieta) jCBDieta.getSelectedItem()).getIdDieta(),
+                Integer.parseInt((String) jCBDia.getSelectedItem()));
+
+            if (!Objects.nonNull(menuDiario)) {
+                if (Integer.parseInt((String) jCBDia.getSelectedItem()) == 1) {
+                    MenuDiario menu = new MenuDiario();
+                    menu.setDia(Integer.parseInt((String) jCBDia.getSelectedItem()));
+                    menu.setIdDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta());
+                    menu.setCaloriasDelMenu(
+                        ((Comidas) jCBAlmuerzo.getSelectedItem()).getCaloriasComida()
+                        + ((Comidas) jCBCena.getSelectedItem()).getCaloriasComida()
+                        + ((Comidas) jCBColacion.getSelectedItem()).getCaloriasComida()
+                        + ((Comidas) jCBDesayuno.getSelectedItem()).getCaloriasComida()
+                        + ((Comidas) jCBMerienda.getSelectedItem()).getCaloriasComida()
+                    );
+                    menu.getComidas().add((Comidas) jCBAlmuerzo.getSelectedItem());
+                    menu.getComidas().add((Comidas) jCBCena.getSelectedItem());
+                    menu.getComidas().add((Comidas) jCBColacion.getSelectedItem());
+                    menu.getComidas().add((Comidas) jCBDesayuno.getSelectedItem());
+                    menu.getComidas().add((Comidas) jCBMerienda.getSelectedItem());
+
+                    menuAcceso.insertMenuDiario(menu);
+
+                } else {
+                    if (Objects.nonNull(menuAcceso.buscarMenuDiarioPorDietaYDia(
+                        ((Dieta) jCBDieta.getSelectedItem()).getIdDieta(),
+                        (Integer.parseInt((String) jCBDia.getSelectedItem())) - 1))) {
+                MenuDiario menu = new MenuDiario();
+                menu.setDia(Integer.parseInt((String) jCBDia.getSelectedItem()));
+                menu.setIdDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta());
+
+                menu.setCaloriasDelMenu(
+                    ((Comidas) jCBAlmuerzo.getSelectedItem()).getCaloriasComida()
+                    + ((Comidas) jCBCena.getSelectedItem()).getCaloriasComida()
+                    + ((Comidas) jCBColacion.getSelectedItem()).getCaloriasComida()
+                    + ((Comidas) jCBDesayuno.getSelectedItem()).getCaloriasComida()
+                    + ((Comidas) jCBMerienda.getSelectedItem()).getCaloriasComida()
+                );
+
+                menu.getComidas().add((Comidas) jCBAlmuerzo.getSelectedItem());
+                menu.getComidas().add((Comidas) jCBCena.getSelectedItem());
+                menu.getComidas().add((Comidas) jCBColacion.getSelectedItem());
+                menu.getComidas().add((Comidas) jCBDesayuno.getSelectedItem());
+                menu.getComidas().add((Comidas) jCBMerienda.getSelectedItem());
+
+                menuAcceso.insertMenuDiario(menu);
+            } else {
+                JOptionPane.showMessageDialog(this, "Faltan menus previos al dia "+(jCBDia.getSelectedItem())+",\ningrese los menus correspondientes");
+            }
+        }
+        if (menuAcceso.contadorMenuDiariosDeUnaDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()) < 3 && menuAcceso.contadorMenuDiariosDeUnaDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()) != 0) {
+            JOptionPane.showMessageDialog(this, "No se podra cambiar hasta la dieta hasta que tenga por lo menos 3 meenus del dia asociados");
+            jCBDieta.setEnabled(false);
+        } else {
+            jCBDieta.setEnabled(true);
+        }
+        jCBDia.setSelectedIndex(-1);
+        jCBAlmuerzo.setSelectedIndex(-1);
+        jCBCena.setSelectedIndex(-1);
+        jCBColacion.setSelectedIndex(-1);
+        jCBDesayuno.setSelectedIndex(-1);
+        jCBMerienda.setSelectedIndex(-1);
+
+        jCBAlmuerzo.setEnabled(false);
+        jCBCena.setEnabled(false);
+        jCBColacion.setEnabled(false);
+        jCBDesayuno.setEnabled(false);
+        jCBMerienda.setEnabled(false);
+
+        jBActualizar.setEnabled(false);
+        jBInsert.setEnabled(false);
+        jBSalir.setEnabled(false);
+        } else {
+            JOptionPane.showMessageDialog(this, "Ya existe un Menu Diario asociado");
+        }
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione cada una de las opciones que se solicitan");
+        }
+    }//GEN-LAST:event_jBInsertActionPerformed
 
     // Metodos  auxiliares
     private void cargarDietas() {
@@ -598,7 +604,6 @@ public class MenuDiarioVista extends javax.swing.JInternalFrame {
         }
     }
 
-    
     private void deshabilitar() {
         jCBDieta.setSelectedIndex(-1);
         jCBDia.setSelectedIndex(-1);
