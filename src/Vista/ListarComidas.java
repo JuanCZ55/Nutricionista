@@ -55,6 +55,9 @@ public class ListarComidas extends javax.swing.JInternalFrame {
         jTFMax = new javax.swing.JTextField();
         jLMax = new javax.swing.JLabel();
         jBbuscar = new javax.swing.JButton();
+        jBsalir = new javax.swing.JButton();
+
+        jPanel1.setBackground(new java.awt.Color(255, 102, 102));
 
         jCBlistar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Listar Todos", "Listar Activos", "Listar No Activos", "Listar Por Tipo", "Calorias" }));
         jCBlistar.addActionListener(new java.awt.event.ActionListener() {
@@ -70,11 +73,16 @@ public class ListarComidas extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Listar por:");
 
+        jLTipo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLTipo.setForeground(new java.awt.Color(255, 255, 255));
         jLTipo.setText("Tipo de Comida:");
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Listar Comidas");
 
         jTListaComidas.setModel(new javax.swing.table.DefaultTableModel(
@@ -102,14 +110,27 @@ public class ListarComidas extends javax.swing.JInternalFrame {
             jTListaComidas.getColumnModel().getColumn(5).setPreferredWidth(200);
         }
 
+        jLMin.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLMin.setForeground(new java.awt.Color(255, 255, 255));
         jLMin.setText("Minimo");
 
+        jLMax.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLMax.setForeground(new java.awt.Color(255, 255, 255));
         jLMax.setText("Maximo");
 
+        jBbuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/buscar.png"))); // NOI18N
         jBbuscar.setText("Buscar");
         jBbuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBbuscarActionPerformed(evt);
+            }
+        });
+
+        jBsalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/puerta-abierta.png"))); // NOI18N
+        jBsalir.setText("Salir");
+        jBsalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBsalirActionPerformed(evt);
             }
         });
 
@@ -124,31 +145,40 @@ public class ListarComidas extends javax.swing.JInternalFrame {
                 .addGap(46, 46, 46)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLTipo, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE))
+                    .addComponent(jLTipo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(68, 68, 68)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jCBlistar, 0, 149, Short.MAX_VALUE)
                             .addComponent(JCBTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jBsalir)
+                                .addGap(18, 18, 18))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(176, 176, 176)
-                                .addComponent(jBbuscar))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(109, 109, 109)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(11, 11, 11)
-                                        .addComponent(jLMax)
-                                        .addGap(88, 88, 88)
-                                        .addComponent(jLMin))
+                                        .addGap(176, 176, 176)
+                                        .addComponent(jBbuscar))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jTFMin, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(57, 57, 57)
-                                        .addComponent(jTFMax, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGap(109, 109, 109)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addGap(11, 11, 11)
+                                                .addComponent(jLMax)
+                                                .addGap(76, 76, 76)
+                                                .addComponent(jLMin))
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jTFMin, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(57, 57, 57)
+                                                .addComponent(jTFMax, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addContainerGap())))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,11 +193,17 @@ public class ListarComidas extends javax.swing.JInternalFrame {
                             .addComponent(jLabel1))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(58, 58, 58)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(JCBTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLTipo))
-                                .addGap(26, 26, 26)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(58, 58, 58)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(JCBTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLTipo))
+                                        .addGap(26, 26, 26))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jBsalir)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(48, 48, 48)
@@ -329,6 +365,10 @@ public class ListarComidas extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Ingrese unicamente numeros");
         }
     }//GEN-LAST:event_jBbuscarActionPerformed
+
+    private void jBsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBsalirActionPerformed
+this.dispose();
+    }//GEN-LAST:event_jBsalirActionPerformed
     private void enlistarComidas(ArrayList<Comidas> lista, ArrayList<String> ingredientes) {
         int i = 0;
         modelo.setRowCount(0);
@@ -372,6 +412,7 @@ public class ListarComidas extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> JCBTipo;
     private javax.swing.JButton jBbuscar;
+    private javax.swing.JButton jBsalir;
     private javax.swing.JComboBox<String> jCBlistar;
     private javax.swing.JLabel jLMax;
     private javax.swing.JLabel jLMin;

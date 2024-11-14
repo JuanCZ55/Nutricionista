@@ -171,7 +171,7 @@ public class Menu extends javax.swing.JFrame {
 
         jMenu1.setText("Comidas");
 
-        jMIComidas.setText("Comidas");
+        jMIComidas.setText("Gestionar Comidas");
         jMIComidas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMIComidasActionPerformed(evt);
@@ -191,7 +191,7 @@ public class Menu extends javax.swing.JFrame {
 
         jMenu4.setText("Ingredientes");
 
-        jMIIngredientes.setText("Ingredientes");
+        jMIIngredientes.setText("Gestionar Ingredientes");
         jMIIngredientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMIIngredientesActionPerformed(evt);
@@ -199,7 +199,7 @@ public class Menu extends javax.swing.JFrame {
         });
         jMenu4.add(jMIIngredientes);
 
-        jMenuItem3.setText("Generar Ingredientes");
+        jMenuItem3.setText("Listar Ingredientes");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem3ActionPerformed(evt);

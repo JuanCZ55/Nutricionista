@@ -100,7 +100,7 @@ public class PacienteData {
             ps.setInt(1, id);
             int exito = ps.executeUpdate();
             if (exito == 1) {
-                JOptionPane.showMessageDialog(null, "Paciente Eliminado");
+                JOptionPane.showMessageDialog(null, "Paciente Inactivo");
             } else {
                 JOptionPane.showMessageDialog(null, "Paciente no encontrado");
             }
@@ -126,7 +126,7 @@ public class PacienteData {
             ps.setInt(1, id);
             int exito = ps.executeUpdate();
             if (exito == 1) {
-                JOptionPane.showMessageDialog(null, "Paciente Habilitado");
+                JOptionPane.showMessageDialog(null, "Paciente Activo");
             } else {
                 JOptionPane.showMessageDialog(null, "Paciente no encontrado");
             }
@@ -155,7 +155,7 @@ public class PacienteData {
             ps.setInt(2, id);
             int exito = ps.executeUpdate();
             if (exito == 1) {
-                JOptionPane.showMessageDialog(null, "Peso Cambiado");
+                JOptionPane.showMessageDialog(null, "Peso Buscado Cambiado");
             } else {
                 JOptionPane.showMessageDialog(null, "Paciente no encontrado");
             }
@@ -204,7 +204,7 @@ public class PacienteData {
                 JOptionPane.showMessageDialog(null, "No se encontró el paciente con ese ID");
             }
             } catch (SQLException ex) {
-                 JOptionPane.showMessageDialog(null, "Error al actualizar el nombre: " + ex.getMessage());
+                 JOptionPane.showMessageDialog(null, "Error al actualizar el nombre " );
             }
 }   
 //verifica si acerca al peso sin importar si sube o baja

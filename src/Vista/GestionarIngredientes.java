@@ -54,16 +54,23 @@ public class GestionarIngredientes extends javax.swing.JInternalFrame {
         jBActualizar = new javax.swing.JButton();
         jBbaja = new javax.swing.JButton();
         jBAlta = new javax.swing.JButton();
+        jBsalir2 = new javax.swing.JButton();
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jPanel1.setBackground(new java.awt.Color(255, 235, 59));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setText("Gestion de Ingredientes");
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("ID");
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Nombre:");
 
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("Calorias x 100gramos");
 
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setText("No Apto");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -95,6 +102,7 @@ public class GestionarIngredientes extends javax.swing.JInternalFrame {
             }
         });
 
+        jBBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/buscar.png"))); // NOI18N
         jBBuscar.setText("Buscar");
         jBBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -102,6 +110,7 @@ public class GestionarIngredientes extends javax.swing.JInternalFrame {
             }
         });
 
+        jBNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/nuevo.png"))); // NOI18N
         jBNuevo.setText("Nuevo");
         jBNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -109,6 +118,7 @@ public class GestionarIngredientes extends javax.swing.JInternalFrame {
             }
         });
 
+        jBActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/actualizar.png"))); // NOI18N
         jBActualizar.setText("Actualizar");
         jBActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -116,6 +126,7 @@ public class GestionarIngredientes extends javax.swing.JInternalFrame {
             }
         });
 
+        jBbaja.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/baja.png"))); // NOI18N
         jBbaja.setText("Baja");
         jBbaja.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -123,10 +134,19 @@ public class GestionarIngredientes extends javax.swing.JInternalFrame {
             }
         });
 
+        jBAlta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/alta.png"))); // NOI18N
         jBAlta.setText("Alta");
         jBAlta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBAltaActionPerformed(evt);
+            }
+        });
+
+        jBsalir2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/puerta-abierta.png"))); // NOI18N
+        jBsalir2.setText("Salir");
+        jBsalir2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBsalir2ActionPerformed(evt);
             }
         });
 
@@ -135,13 +155,11 @@ public class GestionarIngredientes extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(188, 188, 188)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(188, 188, 188)
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap())
+                    .addComponent(jBActualizar)
+                    .addComponent(jLabel1))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(54, 54, 54)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -162,13 +180,17 @@ public class GestionarIngredientes extends javax.swing.JInternalFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jBNuevo)
-                        .addGap(46, 46, 46)
-                        .addComponent(jBActualizar)
-                        .addGap(53, 53, 53)
-                        .addComponent(jBbaja)
-                        .addGap(51, 51, 51)
+                        .addGap(197, 197, 197)
                         .addComponent(jBAlta)
-                        .addGap(141, 141, 141))))
+                        .addGap(38, 38, 38)
+                        .addComponent(jBbaja)
+                        .addGap(43, 43, 43)
+                        .addComponent(jBsalir2)
+                        .addGap(23, 23, 23))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,12 +213,13 @@ public class GestionarIngredientes extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jCBNoApto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBNuevo)
                     .addComponent(jBActualizar)
                     .addComponent(jBbaja)
-                    .addComponent(jBAlta))
+                    .addComponent(jBAlta)
+                    .addComponent(jBsalir2))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -347,6 +370,10 @@ public class GestionarIngredientes extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jBBuscarActionPerformed
 
+    private void jBsalir2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBsalir2ActionPerformed
+this.dispose();
+    }//GEN-LAST:event_jBsalir2ActionPerformed
+
     public void enlistar() {
         modelo.setRowCount(0);
         String estado = "";
@@ -372,6 +399,7 @@ public class GestionarIngredientes extends javax.swing.JInternalFrame {
     private javax.swing.JButton jBBuscar;
     private javax.swing.JButton jBNuevo;
     private javax.swing.JButton jBbaja;
+    private javax.swing.JButton jBsalir2;
     private javax.swing.JComboBox<String> jCBNoApto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

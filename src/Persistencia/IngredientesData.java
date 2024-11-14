@@ -81,7 +81,7 @@ public class IngredientesData {
             ps.setInt(1, id);
             int exito = ps.executeUpdate();
             if (exito == 1) {
-                JOptionPane.showMessageDialog(null, "Ingrediente Eliminado");
+                JOptionPane.showMessageDialog(null, "Ingrediente Inactivo");
             } else {
                 JOptionPane.showMessageDialog(null, "Ingrediente no encontrado");
             }
@@ -99,7 +99,7 @@ public class IngredientesData {
             ps.setInt(1, id);
             int exito = ps.executeUpdate();
             if (exito == 1) {
-                JOptionPane.showMessageDialog(null, "Ingrediente Eliminado");
+                JOptionPane.showMessageDialog(null, "Ingrediente Activo");
             } else {
                 JOptionPane.showMessageDialog(null, "Ingrediente no encontrado");
             }

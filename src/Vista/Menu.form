@@ -110,7 +110,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMIComidas">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Comidas"/>
+                <Property name="text" type="java.lang.String" value="Gestionar Comidas"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMIComidasActionPerformed"/>
@@ -133,7 +133,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMIIngredientes">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Ingredientes"/>
+                <Property name="text" type="java.lang.String" value="Gestionar Ingredientes"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMIIngredientesActionPerformed"/>
@@ -141,7 +141,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem3">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Generar Ingredientes"/>
+                <Property name="text" type="java.lang.String" value="Listar Ingredientes"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem3ActionPerformed"/>

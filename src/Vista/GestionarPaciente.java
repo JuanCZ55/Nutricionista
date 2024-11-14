@@ -44,7 +44,6 @@ public class GestionarPaciente extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         jBNuevo = new javax.swing.JButton();
         jBActualizar = new javax.swing.JButton();
-        jBBajaLogica = new javax.swing.JButton();
         jBAltaLogica = new javax.swing.JButton();
         JBbuscar = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
@@ -60,17 +59,31 @@ public class GestionarPaciente extends javax.swing.JInternalFrame {
         jBABuscado = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         jTFID = new javax.swing.JTextField();
+        jBBajaLogica = new javax.swing.JButton();
+        jBsalir = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel1.setBackground(new java.awt.Color(74, 144, 205));
         jPanel1.setToolTipText("");
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Nombre");
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Edad");
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Altura");
 
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Peso Actual");
 
+        jBNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/nuevo.png"))); // NOI18N
         jBNuevo.setText("Nuevo");
         jBNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -78,6 +91,7 @@ public class GestionarPaciente extends javax.swing.JInternalFrame {
             }
         });
 
+        jBActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/actualizar.png"))); // NOI18N
         jBActualizar.setText("Actualizar");
         jBActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -85,20 +99,15 @@ public class GestionarPaciente extends javax.swing.JInternalFrame {
             }
         });
 
-        jBBajaLogica.setText("Baja");
-        jBBajaLogica.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBBajaLogicaActionPerformed(evt);
-            }
-        });
-
-        jBAltaLogica.setText("Habilitar");
+        jBAltaLogica.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/alta.png"))); // NOI18N
+        jBAltaLogica.setText("Alta");
         jBAltaLogica.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBAltaLogicaActionPerformed(evt);
             }
         });
 
+        JBbuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/buscar.png"))); // NOI18N
         JBbuscar.setText("Buscar");
         JBbuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -106,8 +115,12 @@ public class GestionarPaciente extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Condiciones Cronicas");
 
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Peso Buscado");
 
         jTFCondiciones.setEditable(false);
@@ -127,13 +140,19 @@ public class GestionarPaciente extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel5.setText("Insertar Paciente");
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Gestionar Paciente");
 
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Agregar");
 
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Quitar");
 
+        jBActualizarActual.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/actualizar.png"))); // NOI18N
         jBActualizarActual.setText("Actualizar");
         jBActualizarActual.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -141,6 +160,7 @@ public class GestionarPaciente extends javax.swing.JInternalFrame {
             }
         });
 
+        jBABuscado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/actualizar.png"))); // NOI18N
         jBABuscado.setText("Modificar");
         jBABuscado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -148,7 +168,25 @@ public class GestionarPaciente extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("ID");
+
+        jBBajaLogica.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/baja.png"))); // NOI18N
+        jBBajaLogica.setText("Baja");
+        jBBajaLogica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBBajaLogicaActionPerformed(evt);
+            }
+        });
+
+        jBsalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/puerta-abierta.png"))); // NOI18N
+        jBsalir.setText("Salir");
+        jBsalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBsalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -173,26 +211,15 @@ public class GestionarPaciente extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel9)
-                                .addGap(108, 108, 108))
+                                .addGap(114, 114, 114))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jCBQuitarCronicas, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(65, 65, 65))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jBNuevo)
-                        .addGap(20, 20, 20)
-                        .addComponent(jBActualizar)
-                        .addGap(20, 20, 20)
-                        .addComponent(jBBajaLogica)
-                        .addGap(20, 20, 20)
-                        .addComponent(jBAltaLogica)
-                        .addGap(43, 43, 43))
+                                .addGap(71, 71, 71))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(184, 184, 184)
                                 .addComponent(jLabel6))
-                            .addComponent(jTFCondiciones, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel4)
@@ -206,18 +233,31 @@ public class GestionarPaciente extends javax.swing.JInternalFrame {
                                     .addComponent(jTFID, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jTFNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jTFAltura, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jTFBuscado, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jTFActual, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jTFEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(jTFEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jTFActual, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(40, 40, 40)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jBActualizarActual, javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addComponent(jBABuscado, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(JBbuscar, javax.swing.GroupLayout.Alignment.TRAILING))))))
-                        .addGap(0, 8, Short.MAX_VALUE)))
-                .addContainerGap())
+                                            .addComponent(JBbuscar, javax.swing.GroupLayout.Alignment.TRAILING)))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(19, 19, 19)
+                                .addComponent(jBNuevo)
+                                .addGap(18, 18, 18)
+                                .addComponent(jBActualizar)
+                                .addGap(18, 18, 18)
+                                .addComponent(jBAltaLogica)
+                                .addGap(18, 18, 18)
+                                .addComponent(jBBajaLogica)
+                                .addGap(18, 18, 18)
+                                .addComponent(jBsalir))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(42, 42, 42)
+                                .addComponent(jTFCondiciones, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -244,15 +284,15 @@ public class GestionarPaciente extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTFActual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBActualizarActual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jBActualizarActual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTFActual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTFBuscado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
                     .addComponent(jBABuscado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
@@ -262,32 +302,18 @@ public class GestionarPaciente extends javax.swing.JInternalFrame {
                     .addComponent(jCBAgregarCronicas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jCBQuitarCronicas, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jTFCondiciones, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                .addComponent(jTFCondiciones)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jBActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jBAltaLogica, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jBBajaLogica, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jBAltaLogica, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jBsalir))
                 .addContainerGap())
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -359,7 +385,6 @@ public class GestionarPaciente extends javax.swing.JInternalFrame {
             int edad = Integer.parseInt(jTFEdad.getText());
             if (edad <= 0) {
                 JOptionPane.showMessageDialog(this, "La edad debe ser un numero mayor a cero.");
-
                 return;
             }
             double altura = Double.parseDouble(jTFAltura.getText());
@@ -397,39 +422,50 @@ public class GestionarPaciente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jBAltaLogicaActionPerformed
 
     private void jBActualizarActualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBActualizarActualActionPerformed
-        int id = Integer.parseInt(jTFID.getText());
-        if (jTFID.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Complete el campo de ID");
-            return;
+        try {
+            int id = Integer.parseInt(jTFID.getText());
+            if (jTFID.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Complete el campo de ID");
+                return;
+            }
+
+            double Pactual = Double.parseDouble(jTFActual.getText());
+            if (jTFActual.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Complete el campo de Peso Actual");
+                return;
+            }
+            pd.actualizarPesoActual(id, Pactual);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese el peso correctamente, solo numeros");
+
         }
 
-        double Pactual = Double.parseDouble(jTFActual.getText());
-        if (jTFActual.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Complete el campo de Peso Actual");
-            return;
-        }
-        pd.actualizarPesoActual(id, Pactual);
     }//GEN-LAST:event_jBActualizarActualActionPerformed
 
     private void jBABuscadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBABuscadoActionPerformed
-        int id = Integer.parseInt(jTFID.getText());
-        if (jTFID.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Complete el campo de ID");
-            return;
-        }
+        try {
+            int id = Integer.parseInt(jTFID.getText());
+            if (jTFID.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Complete el campo de ID");
+                return;
+            }
 
-        double Pbuscado = Double.parseDouble(jTFBuscado.getText());
-        if (jTFBuscado.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Complete el campo de Peso Buscado");
-            return;
+            double Pbuscado = Double.parseDouble(jTFBuscado.getText());
+            if (jTFBuscado.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Complete el campo de Peso Buscado");
+                return;
+            }
+            pd.cambiarPesoBuscado(id, Pbuscado);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese el peso correctamente, solo numeros");
+
         }
-        pd.cambiarPesoBuscado(id, Pbuscado);
     }//GEN-LAST:event_jBABuscadoActionPerformed
 
     private void JBbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBbuscarActionPerformed
         try {
             if (jTFID.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Complete todos los campos");
+                JOptionPane.showMessageDialog(this, "Complete el Campo de ID");
                 return;
             }
             int id = Integer.parseInt(jTFID.getText());
@@ -472,6 +508,10 @@ public class GestionarPaciente extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_JBbuscarActionPerformed
 
+    private void jBsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBsalirActionPerformed
+this.dispose();
+    }//GEN-LAST:event_jBsalirActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JBbuscar;
@@ -481,6 +521,7 @@ public class GestionarPaciente extends javax.swing.JInternalFrame {
     private javax.swing.JButton jBAltaLogica;
     private javax.swing.JButton jBBajaLogica;
     private javax.swing.JButton jBNuevo;
+    private javax.swing.JButton jBsalir;
     private javax.swing.JComboBox<String> jCBAgregarCronicas;
     private javax.swing.JComboBox<String> jCBQuitarCronicas;
     private javax.swing.JLabel jLabel1;

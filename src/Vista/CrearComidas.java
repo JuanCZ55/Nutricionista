@@ -29,7 +29,6 @@ public class CrearComidas extends javax.swing.JInternalFrame {
     public CrearComidas() {
         initComponents();
         cargarVacio();
-        setClosable(true);
         cargarIngredientes();
         JBModificar.setEnabled(false);
         JBAlta.setEnabled(false);
@@ -73,12 +72,20 @@ public class CrearComidas extends javax.swing.JInternalFrame {
         JTFid = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTComidas = new javax.swing.JTable();
+        jBsalir = new javax.swing.JButton();
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jPanel1.setBackground(new java.awt.Color(255, 102, 102));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Crear Comidas");
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Nombre: ");
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Tipo de Comida: ");
 
         JCBTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Desayuno", "Colacion", "Almuerzo", "Merienda", "Cena" }));
@@ -88,14 +95,24 @@ public class CrearComidas extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Ingridiente 1:");
 
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Ingridiente 3:");
 
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Ingridiente 2:");
 
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Ingridiente 4:");
 
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Ingridiente 5:");
 
         JCBIng1.addActionListener(new java.awt.event.ActionListener() {
@@ -138,8 +155,11 @@ public class CrearComidas extends javax.swing.JInternalFrame {
 
         JTF4.setEnabled(false);
 
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Pesos en gramos");
 
+        JBAlta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/alta.png"))); // NOI18N
         JBAlta.setText("Alta");
         JBAlta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -147,6 +167,7 @@ public class CrearComidas extends javax.swing.JInternalFrame {
             }
         });
 
+        jBBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/buscar.png"))); // NOI18N
         jBBuscar.setText("Buscar");
         jBBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -154,13 +175,15 @@ public class CrearComidas extends javax.swing.JInternalFrame {
             }
         });
 
-        JBModificar.setText("Modificar");
+        JBModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/actualizar.png"))); // NOI18N
+        JBModificar.setText("Actualizar");
         JBModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JBModificarActionPerformed(evt);
             }
         });
 
+        JBBaja.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/baja.png"))); // NOI18N
         JBBaja.setText("Baja");
         JBBaja.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -168,6 +191,7 @@ public class CrearComidas extends javax.swing.JInternalFrame {
             }
         });
 
+        JBNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/nuevo.png"))); // NOI18N
         JBNuevo.setText("Nuevo");
         JBNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -175,6 +199,8 @@ public class CrearComidas extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("ID:");
 
         JTFid.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -206,6 +232,14 @@ public class CrearComidas extends javax.swing.JInternalFrame {
         if (jTComidas.getColumnModel().getColumnCount() > 0) {
             jTComidas.getColumnModel().getColumn(0).setPreferredWidth(25);
         }
+
+        jBsalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/puerta-abierta.png"))); // NOI18N
+        jBsalir.setText("Salir");
+        jBsalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBsalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -253,7 +287,10 @@ public class CrearComidas extends javax.swing.JInternalFrame {
                                             .addComponent(JTF2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(JTF3, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(JTF4, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(JTF5, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addComponent(JTF5, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addGap(103, 103, 103)
+                                                .addComponent(jBsalir))))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(JTFid, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
@@ -268,7 +305,7 @@ public class CrearComidas extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(217, 217, 217)
                         .addComponent(jLabel1)))
-                .addContainerGap(235, Short.MAX_VALUE))
+                .addContainerGap(112, Short.MAX_VALUE))
             .addComponent(jScrollPane1)
         );
         jPanel1Layout.setVerticalGroup(
@@ -321,10 +358,11 @@ public class CrearComidas extends javax.swing.JInternalFrame {
                     .addComponent(JBNuevo)
                     .addComponent(JBModificar)
                     .addComponent(JBAlta)
-                    .addComponent(JBBaja))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(JBBaja)
+                    .addComponent(jBsalir))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -489,6 +527,10 @@ public class CrearComidas extends javax.swing.JInternalFrame {
         }
         enlistarPacientes();
     }//GEN-LAST:event_JBBajaActionPerformed
+
+    private void jBsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBsalirActionPerformed
+this.dispose();
+    }//GEN-LAST:event_jBsalirActionPerformed
     private void cargarIngredientes() {
         for (Ingredientes ingre : id.listarIngredientes()) {
             JCBIng1.addItem(ingre);
@@ -764,6 +806,7 @@ public class CrearComidas extends javax.swing.JInternalFrame {
     private javax.swing.JTextField JTFNombre;
     private javax.swing.JTextField JTFid;
     private javax.swing.JButton jBBuscar;
+    private javax.swing.JButton jBsalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

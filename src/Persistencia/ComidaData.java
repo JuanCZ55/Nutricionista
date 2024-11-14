@@ -169,7 +169,7 @@ public class ComidaData {
      * encontro o ocurrio un error
      */
     public boolean modificarComida(Comidas com, HashMap<Integer, Double> ingredientesPesos) {
-        String sql = "UPDATE comidas SET Nombre=? ,TipoDeComida=? ,CaloriasComida= ?,NoApto=? WHERE IdComidas=? ;";
+        String sql = "UPDATE comidas SET Nombre=? ,TipoDeComida=? ,CaloriasComida= ?,NoApto=? WHERE IdComidas=? AND Estado=1;";
         boolean as = true;
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -183,7 +183,7 @@ public class ComidaData {
                 JOptionPane.showMessageDialog(null, "Se modifico en comidas correctamente");
                 actualizaringredientescomidas(com.getIdComida(), ingredientesPesos);
             } else {
-                JOptionPane.showMessageDialog(null, "No se encontro la comida o esta dada de baja");
+                JOptionPane.showMessageDialog(null, "No se encontro la comida o esta inactivo");
                 as = false;
             }
             ps.close();
@@ -236,7 +236,7 @@ public class ComidaData {
             ps.setInt(1, id);
             int exito = ps.executeUpdate();
             if (exito == 1) {
-                JOptionPane.showMessageDialog(null, "Comida eliminada");
+                JOptionPane.showMessageDialog(null, "Comida Inactiva");
             } else {
                 JOptionPane.showMessageDialog(null, "Comida no encontrada");
             }
@@ -253,7 +253,7 @@ public class ComidaData {
             ps.setInt(1, id);
             int exito = ps.executeUpdate();
             if (exito == 1) {
-                JOptionPane.showMessageDialog(null, "Comida eliminada");
+                JOptionPane.showMessageDialog(null, "Comida Activa");
             } else {
                 JOptionPane.showMessageDialog(null, "Comida no encontrada");
             }
@@ -285,7 +285,7 @@ public class ComidaData {
             rs.close();
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al buscar la comida" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al buscar la comida" );
         }
         return comid;
 
@@ -311,7 +311,7 @@ public class ComidaData {
             ps.close();
             rs.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al listar comidas: " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al listar comidas " );
         }
         return lista;
     }
@@ -335,7 +335,7 @@ public class ComidaData {
             ps.close();
             rs.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al listar comidas: " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al listar comidas todas " );
         }
         return lista;
     }
@@ -361,7 +361,7 @@ public class ComidaData {
             ps.close();
             rs.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al listar comidas por tipo: " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al listar comidas por tipo" );
         }
         return lista;
     }
