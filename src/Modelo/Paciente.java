@@ -57,6 +57,7 @@ public class Paciente {
      * tratamiento en kilogramos.
      */
     public Paciente(String nombre, int edad, double altura, HashSet<String> CondicionSalud, double pesoActual, double pesoBuscado, double pesoInicial) {
+       
         this.nombre = nombre;
         this.edad = edad;
         this.altura = altura;
@@ -76,6 +77,17 @@ public class Paciente {
         this.pesoBuscado = pesoBuscado;
         this.pesoInicial = pesoInicial;
         this.estado = estado;
+    }
+
+    public Paciente(int idPaciente, String nombre, int edad, double altura, HashSet<String> condicionSalud, double pesoActual, double pesoBuscado, double pesoInicial) {
+        this.idPaciente = idPaciente;
+        this.nombre = nombre;
+        this.edad = edad;
+        this.altura = altura;
+        this.condicionSalud = condicionSalud;
+        this.pesoActual = pesoActual;
+        this.pesoBuscado = pesoBuscado;
+        this.pesoInicial = pesoInicial;
     }
 
     public int getIdPaciente() {

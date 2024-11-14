@@ -27,16 +27,21 @@ public class PacienteData {
      * @param paciente - Objeto Paciente con los datos a guardar.
      */
     public void guardarPaciente(Paciente paciente) {//usar el constructor sin id y estado
-        String sql = "INSERT INTO paciente(Nombre, Edad, Altura, CondicionSalud, PesoActual, PesoBuscado, PesoInical) VALUES (?, ?, ?, ?, ?, ?, ?);";
+        if (buscarPacientesincartel(paciente.getIdPaciente()).getIdPaciente() == paciente.getIdPaciente()) {
+            JOptionPane.showMessageDialog(null, "Error: el paciente ya existe en la base de datos");
+            return;
+        }
+        String sql = "INSERT INTO paciente(IdPaciente, Nombre, Edad, Altura, CondicionSalud, PesoActual, PesoBuscado, PesoInical) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, paciente.getNombre());
-            ps.setInt(2, paciente.getEdad());
-            ps.setDouble(3, paciente.getAltura());
-            ps.setString(4, String.join(",", paciente.getCondicionSalud()));//castea el arraylist a string
-            ps.setDouble(5, paciente.getPesoActual());
-            ps.setDouble(6, paciente.getPesoBuscado());
-            ps.setDouble(7, paciente.getPesoInicial());
+            ps.setInt(1, paciente.getIdPaciente());
+            ps.setString(2, paciente.getNombre());
+            ps.setInt(3, paciente.getEdad());
+            ps.setDouble(4, paciente.getAltura());
+            ps.setString(5, convertirSetString(paciente.getCondicionSalud()));//castea el arraylist a string
+            ps.setDouble(6, paciente.getPesoActual());
+            ps.setDouble(7, paciente.getPesoBuscado());
+            ps.setDouble(8, paciente.getPesoInicial());
 
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
@@ -46,6 +51,8 @@ public class PacienteData {
             }
             //
             ps.close();
+        } catch (SQLIntegrityConstraintViolationException ex) {
+            JOptionPane.showMessageDialog(null, "Error: el paciente ya existe en la base de datos");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Paciente");
         }
@@ -63,15 +70,15 @@ public class PacienteData {
      * @param pac - Objeto Paciente con los nuevos datos.
      */
     public void actualizarPaciente(Paciente pac) {//usar constructor con id sin estado 
-        String sql = "UPDATE  paciente  SET  Nombre =?, Edad =?, Altura =?,CondicionSalud=? WHERE  IdPaciente  =?;";
+        String sql = "UPDATE  paciente  SET IdPaciente=?, Nombre =?, Edad =?, Altura =?,CondicionSalud=? WHERE  IdPaciente  =?;";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-
-            ps.setString(1, pac.getNombre());
-            ps.setInt(2, pac.getEdad());
-            ps.setDouble(3, pac.getAltura());
-            ps.setString(4, String.join(",", pac.getCondicionSalud()));
-            ps.setInt(5, pac.getIdPaciente());
+            ps.setInt(1, pac.getIdPaciente());
+            ps.setString(2, pac.getNombre());
+            ps.setInt(3, pac.getEdad());
+            ps.setDouble(4, pac.getAltura());
+            ps.setString(5, convertirSetString(pac.getCondicionSalud()));
+            ps.setInt(6, pac.getIdPaciente());
 
             int exito = ps.executeUpdate();
             if (exito == 1) {
@@ -80,6 +87,8 @@ public class PacienteData {
                 JOptionPane.showMessageDialog(null, "Paciente no encontrado");
             }
             ps.close();
+        } catch (SQLIntegrityConstraintViolationException e) {
+            JOptionPane.showMessageDialog(null, "Error: el paciente ya existe en la base de datos");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al actualizar al Paciente");
         }
@@ -168,7 +177,7 @@ public class PacienteData {
     /**
      * actualizarPesoActual(int id, double pesoAct): Actualiza el peso actual de
      * un paciente. Modifica el peso actual en la base de datos para el paciente
-     * con el ID especificado. Muestra un mensaje de éxito o error según el
+     * con el ID especificado. Muestra un mensaje de éx ito o error según el
      * resultado de la operación.
      *
      *
@@ -191,23 +200,25 @@ public class PacienteData {
             JOptionPane.showMessageDialog(null, "Error al actualizar el peso buscado");
         }
     }
+
     public void actualizarNombrePaciente(int idPaciente, String nuevoNombre) {
         String sql = "UPDATE paciente SET Nombre = ? WHERE IdPaciente = ?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, nuevoNombre);
             ps.setInt(2, idPaciente);
-        
+
             int filasAfectadas = ps.executeUpdate();
             if (filasAfectadas == 1) {
                 JOptionPane.showMessageDialog(null, "Nombre del paciente actualizado correctamente");
             } else {
                 JOptionPane.showMessageDialog(null, "No se encontró el paciente con ese ID");
             }
-            } catch (SQLException ex) {
-                 JOptionPane.showMessageDialog(null, "Error al actualizar el nombre " );
-            }
-}   
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al actualizar el nombre ");
+        }
+    }
 //verifica si acerca al peso sin importar si sube o baja
+
     /**
      * seAcercaAlPaso(int id): Verifica si un paciente está cerca de alcanzar su
      * peso buscado. Realiza la consulta de sql y verifica si busca bajar o
@@ -284,50 +295,76 @@ public class PacienteData {
 
                 pac.setEstado(rs.getBoolean("Estado"));
             } else {
-                JOptionPane.showMessageDialog(null, "No existe ese Alumno");
+                JOptionPane.showMessageDialog(null, "No existe ese Paciente");
             }
             rs.close();
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al buscar paciente" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al buscar paciente");
+        }
+        return pac;
+    }  public Paciente buscarPacientesincartel(int id) {
+        String sql = "SELECT * FROM  paciente WHERE IdPaciente=?;";
+        Paciente pac = null;
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                pac = new Paciente();
+                pac.setIdPaciente(rs.getInt("IdPaciente"));
+                pac.setNombre(rs.getString("Nombre"));
+                pac.setEdad(rs.getInt("Edad"));
+                pac.setAltura(rs.getDouble("Altura"));
+                pac.setPesoActual(rs.getDouble("PesoActual"));
+                pac.setPesoBuscado(rs.getDouble("PesoBuscado"));
+                pac.setPesoInicial(rs.getDouble("PesoInical"));
+                pac.setCondicionSalud(convertirStringSet(rs.getString("CondicionSalud")));
+
+                pac.setEstado(rs.getBoolean("Estado"));
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar paciente");
         }
         return pac;
     }
-    public Paciente buscarPacientePorNombre(String nombre) {
-    String sql = "SELECT * FROM paciente WHERE Nombre=?;";
-    Paciente pac = null;
-    try {
-        // Preparar la consulta SQL con el nombre
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setString(1, nombre);  // Usamos setString porque 'nombre' es un String
-        ResultSet rs = ps.executeQuery();
-        
-        // Verificar si hay resultados
-        if (rs.next()) {
-            pac = new Paciente();
-            pac.setIdPaciente(rs.getInt("IdPaciente"));
-            pac.setNombre(rs.getString("Nombre"));
-            pac.setEdad(rs.getInt("Edad"));
-            pac.setAltura(rs.getDouble("Altura"));
-            pac.setPesoActual(rs.getDouble("PesoActual"));
-            pac.setPesoBuscado(rs.getDouble("PesoBuscado"));
-            pac.setPesoInicial(rs.getDouble("PesoInical"));
-            pac.setCondicionSalud(convertirStringSet(rs.getString("CondicionSalud")));
-            pac.setEstado(rs.getBoolean("Estado"));
-        } else {
-            JOptionPane.showMessageDialog(null, "No existe un paciente con ese nombre");
-        }
-        
-        // Cerrar los recursos
-        rs.close();
-        ps.close();
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(null, "Error al buscar paciente: " + ex.getMessage());
-    }
-    
-    return pac;
-}
 
+    public Paciente buscarPacientePorNombre(String nombre) {
+        String sql = "SELECT * FROM paciente WHERE Nombre=?;";
+        Paciente pac = null;
+        try {
+            // Preparar la consulta SQL con el nombre
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, nombre);  // Usamos setString porque 'nombre' es un String
+            ResultSet rs = ps.executeQuery();
+
+            // Verificar si hay resultados
+            if (rs.next()) {
+                pac = new Paciente();
+                pac.setIdPaciente(rs.getInt("IdPaciente"));
+                pac.setNombre(rs.getString("Nombre"));
+                pac.setEdad(rs.getInt("Edad"));
+                pac.setAltura(rs.getDouble("Altura"));
+                pac.setPesoActual(rs.getDouble("PesoActual"));
+                pac.setPesoBuscado(rs.getDouble("PesoBuscado"));
+                pac.setPesoInicial(rs.getDouble("PesoInical"));
+                pac.setCondicionSalud(convertirStringSet(rs.getString("CondicionSalud")));
+                pac.setEstado(rs.getBoolean("Estado"));
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe un paciente con ese nombre");
+            }
+
+            // Cerrar los recursos
+            rs.close();
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar paciente: " + ex.getMessage());
+        }
+
+        return pac;
+    }
 
     public ArrayList<Paciente> buscarPacientesPorNombre(String nom) {
         String sql = "SELECT * FROM paciente WHERE Nombre LIKE CONCAT('%', ?, '%') ";
@@ -492,67 +529,6 @@ public class PacienteData {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla pacientes");
         }
         return lista;
-    }
-
-    /**
-     * listarLosQueLLegaron2(): Revisa y compara los pesos de los pacientes que
-     * llegaron y hasta superaron su meta, considera si el paciente debe subir o
-     * bajar de peso, se toma en cuenta su peso buscado con el inicial asi
-     * determina si desea subir o bajar, y si su peso actual llega o supera su
-     * meta lo guarda en el ArrayList llamada "llegaron"
-     *
-     * @return ArrayList<Paciente> Devuelve un ArrayList de Paciente
-     */
-    public ArrayList<Paciente> listarLosQueLLegaron2() {
-        ArrayList<Paciente> lista = listarPacientes();
-        ArrayList<Paciente> llegaron = new ArrayList<>();
-        try {
-            for (Paciente pac : lista) {
-                if (pac != null) {
-                    // Perder peso
-                    if (pac.getPesoInicial() > pac.getPesoBuscado()) {
-                        if (pac.getPesoActual() < pac.getPesoInicial() && pac.getPesoActual() <= pac.getPesoBuscado()) {
-                            llegaron.add(pac);
-                        }
-                    } // Ganar peso
-                    else if (pac.getPesoInicial() < pac.getPesoBuscado()) {
-                        if (pac.getPesoActual() > pac.getPesoInicial() && pac.getPesoActual() >= pac.getPesoBuscado()) {
-                            llegaron.add(pac);
-                        }
-                    }
-                }
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al listar los que llegaron");
-
-        }
-
-        return llegaron;
-    }
-
-    public ArrayList<Paciente> listarLosNoQueLLegaron2() {
-        ArrayList<Paciente> lista = listarPacientes();
-        ArrayList<Paciente> nollegaron = new ArrayList<>();
-        try {
-            for (Paciente pac : lista) {
-                if (pac != null) {
-                    // Perder peso
-                    if (pac.getPesoInicial() > pac.getPesoBuscado()) {
-                        if (pac.getPesoActual() > pac.getPesoBuscado()) {
-                            nollegaron.add(pac);
-                        }
-                    } // Ganar peso
-                    else if (pac.getPesoInicial() < pac.getPesoBuscado()) {
-                        if (pac.getPesoActual() < pac.getPesoBuscado()) {
-                            nollegaron.add(pac);
-                        }
-                    }
-                }
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al listar los que llegaron");
-        }
-        return nollegaron;
     }
 
     /**

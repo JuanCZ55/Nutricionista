@@ -167,7 +167,7 @@ public class IMC extends javax.swing.JInternalFrame {
             jLMostrar.setText("Tu IMC es de " + imc + " , tiene Obesidad grado 3.");
         }
 
-        double pesoR = ((altu * 100) - 100) + 0.10 * ((altu * 100) - 100);
+        double pesoR = 21.75*(altu*altu);
         jTFRecomendado.setText(String.format("%.2f",pesoR));
     }//GEN-LAST:event_jCBPacientesActionPerformed
 

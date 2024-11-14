@@ -11,25 +11,25 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-
 public class MostrarDieta extends JInternalFrameImagen {
+
     private DefaultTableModel modeloTabla;
     private DietaData dietaData;
     private Dieta dieta;
-    private List<Dieta> listaDietas ;
-    
+    private List<Dieta> listaDietas;
+
     public MostrarDieta() {
         initComponents();
         this.setImagen("/resouces/verduras.png");//Buscar una imagen y ponerla
         this.dietaData = new DietaData();
         this.dieta = new Dieta();
         modeloTabla = new DefaultTableModel();
-        this.listaDietas =  dietaData.obtenerTodasLasDietas();
+        this.listaDietas = dietaData.obtenerTodasLasDietas();
         this.setSize(885, 650);
         // Inicializar columnas de dieta
         String[] columnasDieta = {"ID Dieta", "Nombre", "ID Paciente", "Fecha Inicio", "Fecha Final", "Total Calorías", "Estado"};
         modeloTabla.setColumnIdentifiers(columnasDieta);
-        
+
         // Asignar el modelo a la tabla y bloquear edición
         jTablaDietaLista.setModel(modeloTabla);
         jTablaDietaLista.setDefaultEditor(Object.class, null);
@@ -37,15 +37,14 @@ public class MostrarDieta extends JInternalFrameImagen {
         // Cargar dietas al inicio
         cargarDietasEnTabla();
     }
-    
-    
+
     public void cargarDietasEnTabla() {
         modeloTabla.setRowCount(0);
-         // Inicializar columnas de dieta
+        // Inicializar columnas de dieta
         String[] columnasDieta = {"ID Dieta", "Nombre", "ID Paciente", "Fecha Inicio", "Fecha Final", "Total Calorías", "Estado"};
         modeloTabla.setColumnIdentifiers(columnasDieta);
         for (Dieta dieta : listaDietas) {
-            modeloTabla.addRow(new Object[] {
+            modeloTabla.addRow(new Object[]{
                 dieta.getIdDieta(),
                 dieta.getNombreD(),
                 dieta.getPaciente().getIdPaciente(),
@@ -55,10 +54,9 @@ public class MostrarDieta extends JInternalFrameImagen {
                 dieta.isEstado()
             });
         }
-        
+
     }
 
-    
     public void cargarMenuYComidasPorDieta(int idDieta) {
         Dieta dietaSeleccionada = dietaData.buscarDietaSegunID(idDieta);
 
@@ -70,7 +68,7 @@ public class MostrarDieta extends JInternalFrameImagen {
         // Cargar datos de menús y comidas
         for (MenuDiario menu : dietaSeleccionada.getMenus()) {
             for (Modelo.Comidas comida : menu.getComidas()) {
-                modeloTabla.addRow(new Object[] {
+                modeloTabla.addRow(new Object[]{
                     menu.getIdMenu(),
                     comida.getIdComida(),
                     comida.getNombre(),
@@ -82,16 +80,17 @@ public class MostrarDieta extends JInternalFrameImagen {
             }
         }
     }
-    public void recargarInternalFrame() {
-    modeloTabla.setRowCount(0);
-   
 
-    // Redibujar y actualizar la vista del JInternalFrame
-    MostrarDieta mostrar = new MostrarDieta();
-    mostrar.revalidate();
-    mostrar.repaint();
-    cargarDietasEnTabla();
-}
+    public void recargarInternalFrame() {
+        modeloTabla.setRowCount(0);
+
+        // Redibujar y actualizar la vista del JInternalFrame
+        MostrarDieta mostrar = new MostrarDieta();
+        mostrar.revalidate();
+        mostrar.repaint();
+        cargarDietasEnTabla();
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -123,9 +122,8 @@ public class MostrarDieta extends JInternalFrameImagen {
         jLabel1.setBackground(new java.awt.Color(0, 102, 0));
         jLabel1.setFont(new java.awt.Font("Algerian", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 153, 51));
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Nutricionista\\src\\resouces\\Lista.png")); // NOI18N
 
-        jButtonVolver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resouces/above_thearrow_1550.png"))); // NOI18N
+        jButtonVolver.setText("Salir");
         jButtonVolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonVolverActionPerformed(evt);
@@ -171,19 +169,19 @@ public class MostrarDieta extends JInternalFrameImagen {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTablaDietaListaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablaDietaListaMouseClicked
-                                              
-    int filaSeleccionada = jTablaDietaLista.getSelectedRow();
+
+        int filaSeleccionada = jTablaDietaLista.getSelectedRow();
         if (filaSeleccionada != -1) {
-        int idDietaSeleccionada = (int) modeloTabla.getValueAt(filaSeleccionada, 0);
-        cargarMenuYComidasPorDieta(idDietaSeleccionada);
+            int idDietaSeleccionada = (int) modeloTabla.getValueAt(filaSeleccionada, 0);
+            cargarMenuYComidasPorDieta(idDietaSeleccionada);
         }
-    
+
     }//GEN-LAST:event_jTablaDietaListaMouseClicked
 
     private void jButtonVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVolverActionPerformed
-      cargarDietasEnTabla();
+        this.dispose();
     }//GEN-LAST:event_jButtonVolverActionPerformed
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonVolver;

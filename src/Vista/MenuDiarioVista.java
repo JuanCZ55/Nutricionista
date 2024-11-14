@@ -356,6 +356,11 @@ public class MenuDiarioVista extends javax.swing.JInternalFrame {
     private void jCBDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBDiaActionPerformed
         //Busca las comidas activas
         ArrayList<Comidas> listaComidas = menuAcceso.listarComidasActivas();
+        jCBDesayuno.removeAllItems();
+        jCBAlmuerzo.removeAllItems();
+        jCBCena.removeAllItems();
+        jCBColacion.removeAllItems();
+        jCBMerienda.removeAllItems();
         //Contempla que existan
         if (!listaComidas.isEmpty()) {
             //Verifica que la Dieta seleccionada no sea null

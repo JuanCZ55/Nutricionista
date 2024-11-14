@@ -382,6 +382,25 @@ public class MenuDiarioData {
         }
     }
 
+     public void actualizarTotalCaloriasDieta (int idDieta){
+        String sql = """
+                     UPDATE dieta 
+                     SET TotalCalorias = (
+                         SELECT SUM(CaloriasDia)
+                         FROM menudiario
+                         WHERE IdDieta = dieta.IdDieta AND Estado = 1
+                     )
+                     WHERE IdDieta = ? AND Estado = 1;
+                     """;
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idDieta);
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla MenuComidas");
+        }
+    }
     //Listar todas las dietas activas
     public ArrayList<Dieta> listarTodasLasDietasActivas() {
         String sql = "SELECT IdDieta, NombreDieta, FechaInicial, FechaFinal, TotalCalorias, IdPaciente, Estado"

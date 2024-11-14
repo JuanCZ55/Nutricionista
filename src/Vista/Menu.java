@@ -5,6 +5,7 @@
 package Vista;
 
 import javax.swing.JDesktopPane;
+import javax.swing.JFrame;
 
 /**
  *
@@ -17,8 +18,9 @@ public class Menu extends javax.swing.JFrame {
      */
     public Menu() {
         initComponents();
-        this.setSize(900, 700);
-        this.setResizable(false);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);  
+        //this.setSize(900, 700);8
+        //this.setResizable(false);
         this.setLocationRelativeTo(null);
         jDesktopPane1.setBorder(new ImagenFondo());
 

@@ -204,7 +204,7 @@ public class DietaVista extends JInternalFrameImagen {
         );
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resouces/delete_4980658.png"))); // NOI18N
-        jButton1.setText("Borrar");
+        jButton1.setText("Salir");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -463,19 +463,7 @@ public class DietaVista extends JInternalFrameImagen {
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-      int filaSeleccionada = jTablaDietaVista.getSelectedRow();
-
-    if (filaSeleccionada != -1) {
-        // Obtener el idDieta de la primera columna (suponiendo que el idDieta está en la primera columna)
-        int idDieta = (int) jTablaDietaVista.getValueAt(filaSeleccionada, 0);  // 0 es el índice de la primera columna
-
-        
-        DietaData dietaData = new DietaData();
-        dietaData.borrarDieta(idDieta);
-        llenarTabla();  
-    } else {
-        JOptionPane.showMessageDialog(null, "Por favor, selecciona una fila para eliminar.");
-    }
+   this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

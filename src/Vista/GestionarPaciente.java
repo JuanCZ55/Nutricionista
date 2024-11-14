@@ -170,7 +170,7 @@ public class GestionarPaciente extends javax.swing.JInternalFrame {
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("ID");
+        jLabel10.setText("DNI");
 
         jBBajaLogica.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/baja.png"))); // NOI18N
         jBBajaLogica.setText("Baja");
@@ -331,7 +331,6 @@ public class GestionarPaciente extends javax.swing.JInternalFrame {
             jTFCondiciones.setText(String.join(", ", listaSet));
             jCBQuitarCronicas.addItem(enfermedad);
         }
-        System.out.println(listaSet);
     }//GEN-LAST:event_jCBAgregarCronicasActionPerformed
     private void jCBQuitarCronicasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBQuitarCronicasActionPerformed
         String enfermedad = (String) jCBQuitarCronicas.getSelectedItem();
@@ -346,9 +345,14 @@ public class GestionarPaciente extends javax.swing.JInternalFrame {
 //boton "Nuevo"
     private void jBNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBNuevoActionPerformed
         try {
-            if (jTFNombre.getText().isEmpty() || jTFEdad.getText().isEmpty()
+            if (jTFID.getText().isEmpty() || jTFNombre.getText().isEmpty() || jTFEdad.getText().isEmpty()
                     || jTFAltura.getText().isEmpty() || jTFActual.getText().isEmpty() || jTFBuscado.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Complete todos los campos");
+                return;
+            }
+            int dni = Integer.parseInt(jTFID.getText());
+            if (dni < 10000000) {
+                JOptionPane.showMessageDialog(this, "Ingrese dni de 8 digitos o mas");
                 return;
             }
             String nombre = jTFNombre.getText();
@@ -358,12 +362,25 @@ public class GestionarPaciente extends javax.swing.JInternalFrame {
                 return;
             }
             double altura = Double.parseDouble(jTFAltura.getText());
+            if (altura < 0.2) {
+                JOptionPane.showMessageDialog(this, "Ingrese una altura mayor a 0.2");
+                return;
+
+            }
             String condicionSalud = jTFCondiciones.getText();
             HashSet<String> listaCond = pd.convertirStringSet(condicionSalud);
             double PActual = Double.parseDouble(jTFActual.getText());
+            if (PActual < 1) {
+                JOptionPane.showMessageDialog(this, "Ingrese un peso mayor a 1 kg");
+                return;
+            }
             double PBuscado = Double.parseDouble(jTFBuscado.getText());
+            if (PBuscado < 1) {
+                JOptionPane.showMessageDialog(this, "Ingrese un peso mayor a 1 kg");
+                return;
+            }
             double PInicial = Double.parseDouble(jTFActual.getText());
-            Paciente pac = new Paciente(nombre, edad, altura, listaCond, PActual, PBuscado, PInicial);
+            Paciente pac = new Paciente(dni, nombre, edad, altura, listaCond, PActual, PBuscado, PInicial);
             pd.guardarPaciente(pac);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Uno de los campos numericos no contiene un valor valido.");
@@ -376,11 +393,16 @@ public class GestionarPaciente extends javax.swing.JInternalFrame {
 //boton "Actualizar"
     private void jBActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBActualizarActionPerformed
         try {
-            if (jTFID.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Ingrese el ID");
+            if (jTFID.getText().isEmpty() || jTFNombre.getText().isEmpty() || jTFEdad.getText().isEmpty()
+                    || jTFAltura.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Complete todos los campos");
                 return;
             }
-            int id = Integer.parseInt(jTFID.getText());
+            int dni = Integer.parseInt(jTFID.getText());
+            if (dni < 10000000) {
+                JOptionPane.showMessageDialog(this, "Ingrese dni de 8 digitos o mas");
+                return;
+            }
             String nombre = jTFNombre.getText();
             int edad = Integer.parseInt(jTFEdad.getText());
             if (edad <= 0) {
@@ -388,10 +410,15 @@ public class GestionarPaciente extends javax.swing.JInternalFrame {
                 return;
             }
             double altura = Double.parseDouble(jTFAltura.getText());
+            if (altura < 0.2) {
+                JOptionPane.showMessageDialog(this, "Ingrese una altura mayor a 0.2");
+                return;
+
+            }
             String condicionSalud = jTFCondiciones.getText();
             HashSet<String> listaCond = pd.convertirStringSet(condicionSalud);
 
-            Paciente pac = new Paciente(id, nombre, edad, altura, listaCond);
+            Paciente pac = new Paciente(dni, nombre, edad, altura, listaCond);
             pd.actualizarPaciente(pac);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Uno de los campos numericos no contiene un valor valido.");
@@ -423,17 +450,18 @@ public class GestionarPaciente extends javax.swing.JInternalFrame {
 
     private void jBActualizarActualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBActualizarActualActionPerformed
         try {
-            int id = Integer.parseInt(jTFID.getText());
             if (jTFID.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Complete el campo de ID");
                 return;
             }
+            int id = Integer.parseInt(jTFID.getText());
 
-            double Pactual = Double.parseDouble(jTFActual.getText());
             if (jTFActual.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Complete el campo de Peso Actual");
                 return;
             }
+            double Pactual = Double.parseDouble(jTFActual.getText());
+
             pd.actualizarPesoActual(id, Pactual);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Ingrese el peso correctamente, solo numeros");
@@ -444,17 +472,18 @@ public class GestionarPaciente extends javax.swing.JInternalFrame {
 
     private void jBABuscadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBABuscadoActionPerformed
         try {
-            int id = Integer.parseInt(jTFID.getText());
             if (jTFID.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Complete el campo de ID");
                 return;
             }
+            int id = Integer.parseInt(jTFID.getText());
 
-            double Pbuscado = Double.parseDouble(jTFBuscado.getText());
             if (jTFBuscado.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Complete el campo de Peso Buscado");
                 return;
             }
+            double Pbuscado = Double.parseDouble(jTFBuscado.getText());
+
             pd.cambiarPesoBuscado(id, Pbuscado);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Ingrese el peso correctamente, solo numeros");
@@ -509,7 +538,7 @@ public class GestionarPaciente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_JBbuscarActionPerformed
 
     private void jBsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBsalirActionPerformed
-this.dispose();
+        this.dispose();
     }//GEN-LAST:event_jBsalirActionPerformed
 
 
