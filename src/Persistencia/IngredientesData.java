@@ -25,9 +25,10 @@ public class IngredientesData {
     }
 
     public void insertarIngrediente(Ingredientes ingr) {
-        String sql = "INSERT INTO ingredientes( "
-                + "Nombre, CaloriasPor100, NoApto"
-                + ") VALUES (?,?,?,?);";
+        String sql = """
+                     INSERT INTO ingredientes (Nombre, CaloriasPor100, NoApto)
+                     VALUES (?,?,?);
+                     """;
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, ingr.getNombre());

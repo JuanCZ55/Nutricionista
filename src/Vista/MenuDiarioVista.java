@@ -29,7 +29,7 @@ public class MenuDiarioVista extends javax.swing.JInternalFrame {
         cargarDietas();
         deshabilitar();
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -83,7 +83,7 @@ public class MenuDiarioVista extends javax.swing.JInternalFrame {
         jLabel3.setForeground(new java.awt.Color(0, 0, 102));
         jLabel3.setText("Seleccione una Dieta:");
 
-        jCBDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7" }));
+        jCBDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dia 1", "Dia 2", "Dia 3", "Dia 4", "Dia 5", "Dia 6", "Dia 7" }));
         jCBDia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCBDiaActionPerformed(evt);
@@ -368,15 +368,15 @@ public class MenuDiarioVista extends javax.swing.JInternalFrame {
                     ArrayList<Comidas> comidas = menuAcceso.obtenerComidasAptas(listaComidas, condicion);
                     if (!comidas.isEmpty()) {
                         for (Comidas comida : comidas) {
-                            if (comida.getTipoDeComida().contains("Desayuno")) {
+                            if (!comida.getTipoDeComida().contains("Desayuno")) {
                                 jCBDesayuno.addItem(comida);
-                            } else if (comida.getTipoDeComida().contains("Merienda")) {
+                            } else if (!comida.getTipoDeComida().contains("Merienda")) {
                                 jCBMerienda.addItem(comida);
-                            } else if (comida.getTipoDeComida().contains("Colacion")) {
+                            } else if (!comida.getTipoDeComida().contains("Colacion")) {
                                 jCBColacion.addItem(comida);
-                            } else if (comida.getTipoDeComida().contains("Almuerzo")) {
+                            } else if (!comida.getTipoDeComida().contains("Almuerzo")) {
                                 jCBAlmuerzo.addItem(comida);
-                            } else if (comida.getTipoDeComida().contains("Cena")) {
+                            } else if (!comida.getTipoDeComida().contains("Cena")) {
                                 jCBCena.addItem(comida);
                             }
                         }
@@ -429,9 +429,33 @@ public class MenuDiarioVista extends javax.swing.JInternalFrame {
                 && jCBCena.getSelectedItem() != null) {
 
             MenuDiario menuDiario;
+            int dia = 0;
+            switch (jCBDia.getSelectedItem().toString()) {
+                case "Dia 1":
+                    dia = 1;
+                    break;
+                case "Dia 2":
+                    dia = 2;
+                    break;
+                case "Dia 3":
+                    dia = 3;
+                    break;
+                case "Dia 4":
+                    dia = 4;
+                    break;
+                case "Dia 5":
+                    dia = 5;
+                    break;
+                case "Dia 6":
+                    dia = 6;
+                    break;
+                case "Dia 7":
+                    dia = 7;
+                    break;
+            }
             menuDiario = menuAcceso.buscarMenuDiarioPorDietaYDia(
                     ((Dieta) jCBDieta.getSelectedItem()).getIdDieta(),
-                    Integer.parseInt((String) jCBDia.getSelectedItem()));
+                    dia);
             if (Objects.nonNull(menuDiario)) {
 
                 ArrayList<Comidas> listaComidaNEw = new ArrayList<>();
@@ -441,7 +465,13 @@ public class MenuDiarioVista extends javax.swing.JInternalFrame {
                 listaComidaNEw.add((Comidas) jCBDesayuno.getSelectedItem());
                 listaComidaNEw.add((Comidas) jCBMerienda.getSelectedItem());
 
+                double calorias = 0;
+                for (Comidas comidas : listaComidaNEw) {
+                    calorias += comidas.getCaloriasComida();
+                }
                 menuDiario.setComidas(menuAcceso.buscarComidasPorMenuDiario(menuDiario));
+
+                menuAcceso.actualizarMenuDiario(calorias, ((Dieta) jCBDieta.getSelectedItem()).getIdDieta(), dia);
 
                 int index = 0;
                 for (Comidas comidas : listaComidaNEw) {
@@ -507,17 +537,17 @@ public class MenuDiarioVista extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jCBCenaActionPerformed
 
     private void jBSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalirActionPerformed
-        if (Objects.nonNull(((Dieta) jCBDieta.getSelectedItem()))){
+        if (Objects.nonNull(((Dieta) jCBDieta.getSelectedItem()))) {
             if (menuAcceso.contadorMenuDiariosDeUnaDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()) < 3 && menuAcceso.contadorMenuDiariosDeUnaDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()) != 0) {
-            JOptionPane.showMessageDialog(this, "No podra salir hasta que increse un minimo de 3 menu del dias la dieta seleccionada");
-            jCBDieta.setEnabled(false);
-        } else {
-            
-        }
+                JOptionPane.showMessageDialog(this, "No podra salir hasta que increse un minimo de 3 menu del dias la dieta seleccionada");
+                jCBDieta.setEnabled(false);
+            } else {
+
+            }
         } else {
             this.dispose();
         }
-        
+
     }//GEN-LAST:event_jBSalirActionPerformed
 
     private void jBRandomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBRandomActionPerformed
@@ -543,25 +573,50 @@ public class MenuDiarioVista extends javax.swing.JInternalFrame {
     private void jBInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBInsertActionPerformed
 
         if (jCBDieta.getSelectedItem() != null && jCBDia.getSelectedItem() != null
-            && jCBDesayuno.getSelectedItem() != null && jCBMerienda.getSelectedItem() != null
-            && jCBColacion.getSelectedItem() != null && jCBAlmuerzo.getSelectedItem() != null
-            && jCBCena.getSelectedItem() != null) {
+                && jCBDesayuno.getSelectedItem() != null && jCBMerienda.getSelectedItem() != null
+                && jCBColacion.getSelectedItem() != null && jCBAlmuerzo.getSelectedItem() != null
+                && jCBCena.getSelectedItem() != null) {
             MenuDiario menuDiario;
+            int dia = 0;
+            switch (jCBDia.getSelectedItem().toString()) {
+                case "Dia 1":
+                    dia = 1;
+                    break;
+                case "Dia 2":
+                    dia = 2;
+                    break;
+                case "Dia 3":
+                    dia = 3;
+                    break;
+                case "Dia 4":
+                    dia = 4;
+                    break;
+                case "Dia 5":
+                    dia = 5;
+                    break;
+                case "Dia 6":
+                    dia = 6;
+                    break;
+                case "Dia 7":
+                    dia = 7;
+                    break;
+            }
+
             menuDiario = menuAcceso.buscarMenuDiarioPorDietaYDia(
-                ((Dieta) jCBDieta.getSelectedItem()).getIdDieta(),
-                Integer.parseInt((String) jCBDia.getSelectedItem()));
+                    ((Dieta) jCBDieta.getSelectedItem()).getIdDieta(),
+                    Integer.parseInt((String) jCBDia.getSelectedItem()));
 
             if (!Objects.nonNull(menuDiario)) {
-                if (Integer.parseInt((String) jCBDia.getSelectedItem()) == 1) {
+                if (dia == 1) {
                     MenuDiario menu = new MenuDiario();
                     menu.setDia(Integer.parseInt((String) jCBDia.getSelectedItem()));
                     menu.setIdDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta());
                     menu.setCaloriasDelMenu(
-                        ((Comidas) jCBAlmuerzo.getSelectedItem()).getCaloriasComida()
-                        + ((Comidas) jCBCena.getSelectedItem()).getCaloriasComida()
-                        + ((Comidas) jCBColacion.getSelectedItem()).getCaloriasComida()
-                        + ((Comidas) jCBDesayuno.getSelectedItem()).getCaloriasComida()
-                        + ((Comidas) jCBMerienda.getSelectedItem()).getCaloriasComida()
+                            ((Comidas) jCBAlmuerzo.getSelectedItem()).getCaloriasComida()
+                            + ((Comidas) jCBCena.getSelectedItem()).getCaloriasComida()
+                            + ((Comidas) jCBColacion.getSelectedItem()).getCaloriasComida()
+                            + ((Comidas) jCBDesayuno.getSelectedItem()).getCaloriasComida()
+                            + ((Comidas) jCBMerienda.getSelectedItem()).getCaloriasComida()
                     );
                     menu.getComidas().add((Comidas) jCBAlmuerzo.getSelectedItem());
                     menu.getComidas().add((Comidas) jCBCena.getSelectedItem());
@@ -573,56 +628,56 @@ public class MenuDiarioVista extends javax.swing.JInternalFrame {
 
                 } else {
                     if (Objects.nonNull(menuAcceso.buscarMenuDiarioPorDietaYDia(
-                        ((Dieta) jCBDieta.getSelectedItem()).getIdDieta(),
-                        (Integer.parseInt((String) jCBDia.getSelectedItem())) - 1))) {
-                MenuDiario menu = new MenuDiario();
-                menu.setDia(Integer.parseInt((String) jCBDia.getSelectedItem()));
-                menu.setIdDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta());
+                            ((Dieta) jCBDieta.getSelectedItem()).getIdDieta(),
+                            dia - 1))) {
+                        MenuDiario menu = new MenuDiario();
+                        menu.setDia(dia);
+                        menu.setIdDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta());
 
-                menu.setCaloriasDelMenu(
-                    ((Comidas) jCBAlmuerzo.getSelectedItem()).getCaloriasComida()
-                    + ((Comidas) jCBCena.getSelectedItem()).getCaloriasComida()
-                    + ((Comidas) jCBColacion.getSelectedItem()).getCaloriasComida()
-                    + ((Comidas) jCBDesayuno.getSelectedItem()).getCaloriasComida()
-                    + ((Comidas) jCBMerienda.getSelectedItem()).getCaloriasComida()
-                );
+                        menu.setCaloriasDelMenu(
+                                ((Comidas) jCBAlmuerzo.getSelectedItem()).getCaloriasComida()
+                                + ((Comidas) jCBCena.getSelectedItem()).getCaloriasComida()
+                                + ((Comidas) jCBColacion.getSelectedItem()).getCaloriasComida()
+                                + ((Comidas) jCBDesayuno.getSelectedItem()).getCaloriasComida()
+                                + ((Comidas) jCBMerienda.getSelectedItem()).getCaloriasComida()
+                        );
 
-                menu.getComidas().add((Comidas) jCBAlmuerzo.getSelectedItem());
-                menu.getComidas().add((Comidas) jCBCena.getSelectedItem());
-                menu.getComidas().add((Comidas) jCBColacion.getSelectedItem());
-                menu.getComidas().add((Comidas) jCBDesayuno.getSelectedItem());
-                menu.getComidas().add((Comidas) jCBMerienda.getSelectedItem());
+                        menu.getComidas().add((Comidas) jCBAlmuerzo.getSelectedItem());
+                        menu.getComidas().add((Comidas) jCBCena.getSelectedItem());
+                        menu.getComidas().add((Comidas) jCBColacion.getSelectedItem());
+                        menu.getComidas().add((Comidas) jCBDesayuno.getSelectedItem());
+                        menu.getComidas().add((Comidas) jCBMerienda.getSelectedItem());
 
-                menuAcceso.insertMenuDiario(menu);
+                        menuAcceso.insertMenuDiario(menu);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Faltan menus previos al dia " + (jCBDia.getSelectedItem()) + ",\ningrese los menus correspondientes");
+                    }
+                }
+                if (menuAcceso.contadorMenuDiariosDeUnaDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()) < 3 && menuAcceso.contadorMenuDiariosDeUnaDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()) != 0) {
+                    JOptionPane.showMessageDialog(this, "No se podra cambiar hasta la dieta hasta que tenga por lo menos 3 meenus del dia asociados");
+                    jCBDieta.setEnabled(false);
+                } else {
+                    jCBDieta.setEnabled(true);
+                }
+                jCBDia.setSelectedIndex(-1);
+                jCBAlmuerzo.setSelectedIndex(-1);
+                jCBCena.setSelectedIndex(-1);
+                jCBColacion.setSelectedIndex(-1);
+                jCBDesayuno.setSelectedIndex(-1);
+                jCBMerienda.setSelectedIndex(-1);
+
+                jCBAlmuerzo.setEnabled(false);
+                jCBCena.setEnabled(false);
+                jCBColacion.setEnabled(false);
+                jCBDesayuno.setEnabled(false);
+                jCBMerienda.setEnabled(false);
+
+                jBActualizar.setEnabled(false);
+                jBInsert.setEnabled(false);
+                jBSalir.setEnabled(false);
             } else {
-                JOptionPane.showMessageDialog(this, "Faltan menus previos al dia "+(jCBDia.getSelectedItem())+",\ningrese los menus correspondientes");
+                JOptionPane.showMessageDialog(this, "Ya existe un Menu Diario asociado");
             }
-        }
-        if (menuAcceso.contadorMenuDiariosDeUnaDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()) < 3 && menuAcceso.contadorMenuDiariosDeUnaDieta(((Dieta) jCBDieta.getSelectedItem()).getIdDieta()) != 0) {
-            JOptionPane.showMessageDialog(this, "No se podra cambiar hasta la dieta hasta que tenga por lo menos 3 meenus del dia asociados");
-            jCBDieta.setEnabled(false);
-        } else {
-            jCBDieta.setEnabled(true);
-        }
-        jCBDia.setSelectedIndex(-1);
-        jCBAlmuerzo.setSelectedIndex(-1);
-        jCBCena.setSelectedIndex(-1);
-        jCBColacion.setSelectedIndex(-1);
-        jCBDesayuno.setSelectedIndex(-1);
-        jCBMerienda.setSelectedIndex(-1);
-
-        jCBAlmuerzo.setEnabled(false);
-        jCBCena.setEnabled(false);
-        jCBColacion.setEnabled(false);
-        jCBDesayuno.setEnabled(false);
-        jCBMerienda.setEnabled(false);
-
-        jBActualizar.setEnabled(false);
-        jBInsert.setEnabled(false);
-        jBSalir.setEnabled(false);
-        } else {
-            JOptionPane.showMessageDialog(this, "Ya existe un Menu Diario asociado");
-        }
 
         } else {
             JOptionPane.showMessageDialog(this, "Seleccione cada una de las opciones que se solicitan");
