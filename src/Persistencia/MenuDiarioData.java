@@ -226,6 +226,63 @@ public class MenuDiarioData {
 
         return lista;
     }
+    
+    public ArrayList<MenuDiario> listarMenuDiarioPorDieta(int idDieta){
+        String sql = """
+                     SELECT IdMenuDiario, Dia FROM menudiario WHERE IdDieta = ? AND Estado = 1;
+                     """;
+        int x = 0;
+        MenuDiario menu = null;
+        ArrayList<MenuDiario> lista = new ArrayList<>();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idDieta);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                menu = new MenuDiario();
+                menu.setIdMenu(rs.getInt("IdMenuDiario"));
+                menu.setDia(rs.getInt("Dia"));
+                menu.setComidas(listarComidasPorMenuDieta(idDieta));
+                lista.add(menu);
+                x++;
+            }
+            ps.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al accedeer a la tabla menu diario");
+        }
+        return lista;
+    }
+    
+     public ArrayList<Comidas> listarComidasPorMenuDieta(int idDieta) {
+        String sql = """
+                     SELECT mc.IdComidas, c.Nombre, c.TipoDeComida, c.CaloriasComida
+                     FROM menudiario md JOIN menucomidas mc ON md.IdMenuDiario = mc.IdMenuDiario
+                     JOIN comidas c ON mc.IdComidas = c.IdComidas
+                     WHERE md.IdDieta = ?;
+                     """;
+        int x = 0;
+        Comidas comida = null;
+        ArrayList<Comidas> lista = new ArrayList<>();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idDieta);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                comida = new Comidas();
+                comida.setIdComida(rs.getInt("mc.IdComidas"));
+                comida.setNombre(rs.getString("c.Nombre"));
+                comida.setTipoDeComida(rs.getString("c.TipoDeComida"));
+                comida.setCaloriasComida(rs.getDouble("c.CaloriasComida"));
+                lista.add(comida);
+                x++;
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Comidas");
+        }
+
+        return lista;
+    }
 
     //Actualizar MenuComidas
     //Paso 1: buscar el MenuDiario de una Dieta en un dia especifico
